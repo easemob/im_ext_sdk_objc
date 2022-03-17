@@ -1,5 +1,5 @@
 //
-//  ExtSdkCallbackObjcImpl.h
+//  ExtSdkCallbackObjcFlutter.h
 //  im_flutter_sdk
 //
 //  Created by asterisk on 2022/3/14.
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ExtSdkCallbackObjcImpl : NSObject <ExtSdkCallbackObjc>
+@interface ExtSdkCallbackObjcFlutter : NSObject <ExtSdkCallbackObjc>
 
 - (nonnull instancetype)init:(nonnull FlutterResult)result;
 

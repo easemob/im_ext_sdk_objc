@@ -1,21 +1,21 @@
 //
-//  ExtSdkCallbackObjcImpl.m
+//  ExtSdkCallbackObjcFlutter.m
 //  im_flutter_sdk
 //
 //  Created by asterisk on 2022/3/14.
 //
 
-#import "ExtSdkCallbackObjcImpl.h"
+#import "ExtSdkCallbackObjcFlutter.h"
 #import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkChannelManager.h"
 
-@interface ExtSdkCallbackObjcImpl () {
+@interface ExtSdkCallbackObjcFlutter () {
     FlutterResult _result;
 }
 
 @end
 
-@implementation ExtSdkCallbackObjcImpl
+@implementation ExtSdkCallbackObjcFlutter
 
 - (nonnull instancetype)init:(nonnull FlutterResult)result {
     _result = result;

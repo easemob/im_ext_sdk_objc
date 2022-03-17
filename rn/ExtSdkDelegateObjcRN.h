@@ -1,5 +1,5 @@
 //
-//  ExtSdkDelegateObjcImpl.h
+//  ExtSdkDelegateObjcRN.h
 //  im_flutter_sdk
 //
 //  Created by asterisk on 2022/3/14.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ExtSdkDelegateObjcImpl : NSObject <ExtSdkDelegateObjc>
+@interface ExtSdkDelegateObjcRN : NSObject <ExtSdkDelegateObjc>
 
 - (nonnull NSString *)getType;
 

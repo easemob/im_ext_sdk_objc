@@ -1,21 +1,21 @@
 //
-//  ExtSdkDelegateObjcImpl.m
+//  ExtSdkDelegateObjcFlutter.m
 //  im_flutter_sdk
 //
 //  Created by asterisk on 2022/3/14.
 //
 
-#import "ExtSdkDelegateObjcImpl.h"
+#import "ExtSdkDelegateObjcFlutter.h"
 #import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkChannelManager.h"
 
-@interface ExtSdkDelegateObjcImpl () {
+@interface ExtSdkDelegateObjcFlutter () {
     NSString* _listenerType;
 }
 
 @end
 
-@implementation ExtSdkDelegateObjcImpl
+@implementation ExtSdkDelegateObjcFlutter
 
 - (nonnull NSString *)getType {
     return _listenerType;

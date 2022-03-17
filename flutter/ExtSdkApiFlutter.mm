@@ -1,10 +1,10 @@
 #import "ExtSdkApiFlutter.h"
 #include "ExtSdkApiObjcImpl.h"
 #import "ExtSdkCallbackObjc.h"
-#import "ExtSdkCallbackObjcImpl.h"
+#import "ExtSdkCallbackObjcFlutter.h"
 #import "ExtSdkChannelManager.h"
 #import "ExtSdkDelegateObjc.h"
-#import "ExtSdkDelegateObjcImpl.h"
+#import "ExtSdkDelegateObjcFlutter.h"
 #include "ExtSdkObjectObjcImpl.h"
 #import "ExtSdkTest.h"
 #import "ExtSdkThreadUtilObjc.h"
@@ -75,7 +75,7 @@ static NSString *const TAG = @"ExtSdkApiFlutter";
         [[ExtSdkChannelManager getInstance] setRegistrar:registrar];
         [[ExtSdkChannelManager getInstance] add:SEND_CHANNEL];
         [[ExtSdkChannelManager getInstance] add:RECV_CHANNEL];
-        [[ExtSdkApiFlutter getInstance] addListener:[[ExtSdkDelegateObjcImpl alloc] init]];
+        [[ExtSdkApiFlutter getInstance] addListener:[[ExtSdkDelegateObjcFlutter alloc] init]];
         FlutterMethodChannel *send_channel = [[ExtSdkChannelManager getInstance] get:SEND_CHANNEL];
         id<FlutterPlugin, UIApplicationDelegate> flutter = [ExtSdkApiFlutter getInstance];
         [registrar addMethodCallDelegate:flutter channel:send_channel];
@@ -93,7 +93,7 @@ static NSString *const TAG = @"ExtSdkApiFlutter";
     //    __weak typeof(self) weakself = self; // TODO: 后续解决
     [ExtSdkThreadUtilObjc asyncExecute:^{
       id<NSObject> params = call.arguments;
-      id<ExtSdkCallbackObjc> callback = [[ExtSdkCallbackObjcImpl alloc] init:result];
+      id<ExtSdkCallbackObjc> callback = [[ExtSdkCallbackObjcFlutter alloc] init:result];
       [self callSdkApi:call.method withParams:params withCallback:callback];
     }];
 }
