@@ -6,8 +6,8 @@
 //
 
 #import "ExtSdkCallbackObjcFlutter.h"
-#import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkChannelManager.h"
+#import "ExtSdkThreadUtilObjc.h"
 
 @interface ExtSdkCallbackObjcFlutter () {
     FlutterResult _result;
@@ -23,18 +23,30 @@
 }
 
 - (void)onFail:(int)code withExtension:(nullable id<NSObject>)ext {
-    __weak typeof(self) weakself = self;
+    __weak typeof(self) weakSelf = self;
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
-        FlutterResult _result = [weakself getResult];
-        if (nil != _result) {
-            _result(ext);
-        }
+      typeof(self) strongSelf = weakSelf;
+      if (!strongSelf) {
+          return;
+      }
+      FlutterResult _result = [strongSelf getResult];
+      if (nil != _result) {
+          _result(ext);
+      }
     }];
 }
 
 - (void)onSuccess:(nullable id<NSObject>)data {
+    __weak typeof(self) weakSelf = self;
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
-        self->_result(data);
+      typeof(self) strongSelf = weakSelf;
+      if (!strongSelf) {
+          return;
+      }
+      FlutterResult _result = [strongSelf getResult];
+      if (nil != _result) {
+          _result(data);
+      }
     }];
 }
 

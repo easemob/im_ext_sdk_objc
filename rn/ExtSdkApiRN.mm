@@ -2,18 +2,16 @@
 #include "ExtSdkApiObjcImpl.h"
 #import "ExtSdkCallbackObjc.h"
 #import "ExtSdkCallbackObjcRN.h"
-//#import "ExtSdkChannelManager.h"
 #import "ExtSdkDelegateObjc.h"
 #import "ExtSdkDelegateObjcRN.h"
 #include "ExtSdkObjectObjcImpl.h"
-//#import "ExtSdkTest.h"
 #import "ExtSdkThreadUtilObjc.h"
 #import <HyphenateChat/EMClient.h>
 #import <UIKit/UIApplication.h>
 
 static NSString *const TAG = @"ExtSdkApiRN";
 
-@interface ExtSdkApiRN () <UIApplicationDelegate>
+@interface ExtSdkApiRN ()
 
 @end
 
@@ -81,7 +79,8 @@ RCT_EXPORT_METHOD(callMethod
                   : (NSDictionary *)params
                   : (RCTPromiseResolveBlock)resolve
                   : (RCTPromiseRejectBlock)reject) {
-    // TODO: no implement
+    ExtSdkCallbackObjcRN* callback = [[ExtSdkCallbackObjcRN alloc] initWithResolve:resolve withReject:reject];
+    [self callSdkApi:methodName withParams:params withCallback:callback];
 }
 
 #pragma mark - Others
@@ -97,13 +96,13 @@ RCT_EXPORT_METHOD(callMethod
                                                object:nil];
 }
 
-- (void)applicationWillEnterForeground:(id)application {
+- (void)applicationWillEnterForeground:(NSNotification*)notification {
     NSLog(@"%@: applicationWillEnterForeground:", TAG);
-    [[EMClient sharedClient] applicationWillEnterForeground:application];
+    [[EMClient sharedClient] applicationWillEnterForeground:[UIApplication sharedApplication]];
 }
-- (void)applicationDidEnterBackground:(id)application {
+- (void)applicationDidEnterBackground:(NSNotification*)notification {
     NSLog(@"%@: applicationDidEnterBackground:", TAG);
-    [[EMClient sharedClient] applicationDidEnterBackground:application];
+    [[EMClient sharedClient] applicationDidEnterBackground:[UIApplication sharedApplication]];
 }
 
 @end

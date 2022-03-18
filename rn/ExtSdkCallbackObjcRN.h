@@ -6,20 +6,15 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <React/RCTBridgeModule.h>
 #import "ExtSdkCallbackObjc.h"
-
-
-NS_ASSUME_NONNULL_BEGIN
 
 @interface ExtSdkCallbackObjcRN : NSObject <ExtSdkCallbackObjc>
 
-// - (nonnull instancetype)init:(nonnull FlutterResult)result;
+- (nonnull instancetype)initWithResolve:(nonnull RCTPromiseResolveBlock)resolve withReject:(nonnull RCTPromiseRejectBlock)reject;
 
 - (void)onFail:(int)code withExtension:(nullable id<NSObject>)ext;
 
 - (void)onSuccess:(nullable id<NSObject>)data;
 
 @end
-
-NS_ASSUME_NONNULL_END

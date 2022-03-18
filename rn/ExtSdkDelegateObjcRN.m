@@ -7,7 +7,6 @@
 
 #import "ExtSdkDelegateObjcRN.h"
 #import "ExtSdkThreadUtilObjc.h"
-//#import "ExtSdkChannelManager.h"
 
 @interface ExtSdkDelegateObjcRN () {
     NSString* _listenerType;
@@ -23,7 +22,7 @@
 
 - (void)onReceive:(nonnull NSString *)methodType withParams:(nullable id<NSObject>)data {
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
-        // [[[ExtSdkChannelManager getInstance] get:RECV_CHANNEL] invokeMethod:methodType arguments:data];
+        [self sendEventWithName:methodType body:data];
     }];
 }
 

@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
-#import <React/RCTEventEmitter.h>
 #import "ExtSdkApiObjc.h"
 
 @interface ExtSdkApiRN : NSObject <ExtSdkApiObjc, RCTBridgeModule>

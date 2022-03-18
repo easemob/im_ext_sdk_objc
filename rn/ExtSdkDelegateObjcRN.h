@@ -6,11 +6,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <React/RCTEventEmitter.h>
 #import "ExtSdkDelegateObjc.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface ExtSdkDelegateObjcRN : NSObject <ExtSdkDelegateObjc>
+@interface ExtSdkDelegateObjcRN : RCTEventEmitter <ExtSdkDelegateObjc>
 
 - (nonnull NSString *)getType;
 
@@ -19,5 +18,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setType:(nonnull NSString *)listenerType;
 
 @end
-
-NS_ASSUME_NONNULL_END
