@@ -269,7 +269,7 @@
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSArray *dictAry = param[@"messages"];
-    NSMutableArray *messages;
+    NSMutableArray *messages = [NSMutableArray array];
     for (NSDictionary *dict in dictAry) {
         [messages addObject:[EMMessage fromJsonObject:dict]];
     }
@@ -287,8 +287,9 @@
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     __block EMMessage *msg = [EMMessage fromJsonObject:param[@"message"]];
-    [EMClient.sharedClient.chatManager downloadMessageAttachment:msg
-        progress:^(int progress) {
+    EMMessage *needDownMSg = [EMClient.sharedClient.chatManager getMessageWithMessageId:msg.messageId];
+    [EMClient.sharedClient.chatManager downloadMessageAttachment:needDownMSg
+                                                        progress:^(int progress) {
           [weakSelf onReceive:ExtSdkMethodKeyOnMessageProgressUpdate
                    withParams:@{
                        @"progress" : @(progress),
@@ -323,8 +324,9 @@
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     __block EMMessage *msg = [EMMessage fromJsonObject:param[@"message"]];
-    [EMClient.sharedClient.chatManager downloadMessageThumbnail:msg
-        progress:^(int progress) {
+    EMMessage *needDownMSg = [EMClient.sharedClient.chatManager getMessageWithMessageId:msg.messageId];
+    [EMClient.sharedClient.chatManager downloadMessageThumbnail:needDownMSg
+                                                       progress:^(int progress) {
           [weakSelf onReceive:ExtSdkMethodKeyOnMessageProgressUpdate
                    withParams:@{
                        @"progress" : @(progress),

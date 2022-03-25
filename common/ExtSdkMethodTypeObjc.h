@@ -13,6 +13,7 @@ static NSString * _Nonnull const ExtSdkMethodKeyKickDevice = @"kickDevice";
 static NSString * _Nonnull const ExtSdkMethodKeyKickAllDevices = @"kickAllDevices";
 static NSString * _Nonnull const ExtSdkMethodKeyCurrentUser = @"currentUser";
 static NSString * _Nonnull const ExtSdkMethodKeyGetLoggedInDevicesFromServer = @"getLoggedInDevicesFromServer";
+static NSString * _Nonnull const ExtSdkMethodKeyGetToken = @"getToken";
 
 #pragma mark - EMClientDelegate
 static NSString * _Nonnull const ExtSdkMethodKeyOnConnected = @"onConnected";
@@ -227,6 +228,7 @@ static const int ExtSdkMethodKeyKickDeviceValue = 108;
 static const int ExtSdkMethodKeyKickAllDevicesValue = 109;
 static const int ExtSdkMethodKeyCurrentUserValue = 110;
 static const int ExtSdkMethodKeyGetLoggedInDevicesFromServerValue = 111;
+static const int ExtSdkMethodKeyGetTokenValue = 112;
 
 #pragma mark - EMClientDelegate value
 static const int ExtSdkMethodKeyOnConnectedValue = 200;

@@ -55,6 +55,7 @@ static NSString* const TAG = @"ExtSdkDispatch";
             case ExtSdkMethodKeyKickAllDevicesValue: [[ExtSdkClientWrapper getInstance] kickAllDevices:ps result:callback]; break;
             case ExtSdkMethodKeyCurrentUserValue: [[ExtSdkClientWrapper getInstance] getCurrentUser:ps result:callback]; break;
             case ExtSdkMethodKeyGetLoggedInDevicesFromServerValue: [[ExtSdkClientWrapper getInstance] getLoggedInDevicesFromServer:ps result:callback]; break;
+            case ExtSdkMethodKeyGetTokenValue: [[ExtSdkClientWrapper getInstance] getToken:ps result:callback]; break;
 
             /// #pragma mark - EMClientDelegate value
             case ExtSdkMethodKeyOnConnectedValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;

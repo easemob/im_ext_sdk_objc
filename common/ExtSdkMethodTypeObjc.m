@@ -29,6 +29,7 @@
             ExtSdkMethodKeyKickAllDevices: @(ExtSdkMethodKeyKickAllDevicesValue),
             ExtSdkMethodKeyCurrentUser: @(ExtSdkMethodKeyCurrentUserValue),
             ExtSdkMethodKeyGetLoggedInDevicesFromServer: @(ExtSdkMethodKeyGetLoggedInDevicesFromServerValue),
+            ExtSdkMethodKeyGetToken: @(ExtSdkMethodKeyGetTokenValue),
 
             /// EMClientDelegate
             ExtSdkMethodKeyOnConnected: @(ExtSdkMethodKeyOnConnectedValue),

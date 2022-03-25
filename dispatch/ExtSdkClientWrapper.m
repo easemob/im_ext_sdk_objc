@@ -33,6 +33,14 @@
 }
 
 #pragma mark - Actions
+
+- (void)getToken:(NSDictionary *)param result:(nonnull id<ExtSdkCallbackObjc>)result {
+    [self onResult:result
+        withMethodType:ExtSdkMethodKeyGetToken
+             withError:nil
+            withParams:EMClient.sharedClient.accessUserToken];
+}
+
 - (void)initSDKWithDict:(NSDictionary *)param
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
 
