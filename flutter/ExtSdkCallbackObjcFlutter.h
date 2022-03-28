@@ -5,14 +5,13 @@
 //  Created by asterisk on 2022/3/14.
 //
 
-#import <Foundation/Foundation.h>
-#import <Flutter/Flutter.h>
 #import "ExtSdkCallbackObjc.h"
-
+#import <Flutter/Flutter.h>
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ExtSdkCallbackObjcFlutter : NSObject <ExtSdkCallbackObjc>
+@interface ExtSdkCallbackObjcFlutter : NSObject <ExtSdkCallbackObjc, NSCopying>
 
 - (nonnull instancetype)init:(nonnull FlutterResult)result;
 

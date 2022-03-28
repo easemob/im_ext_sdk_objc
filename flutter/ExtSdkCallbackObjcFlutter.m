@@ -23,9 +23,9 @@
 }
 
 - (void)onFail:(int)code withExtension:(nullable id<NSObject>)ext {
-    __weak typeof(self) weakSelf = self;
+    __block ExtSdkCallbackObjcFlutter *clone = [self copy];
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
-      typeof(self) strongSelf = weakSelf;
+      typeof(self) strongSelf = clone;
       if (!strongSelf) {
           return;
       }
@@ -36,10 +36,17 @@
     }];
 }
 
+- (id)copyWithZone:(nullable NSZone *)zone {
+    // _result 浅拷贝
+    // ExtSdkCallbackObjcFlutter 深拷贝
+    ExtSdkCallbackObjcFlutter *clone = [[ExtSdkCallbackObjcFlutter alloc] init:_result];
+    return clone;
+}
+
 - (void)onSuccess:(nullable id<NSObject>)data {
-    __weak typeof(self) weakSelf = self;
+    __block ExtSdkCallbackObjcFlutter *clone = [self copy];
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
-      typeof(self) strongSelf = weakSelf;
+      typeof(self) strongSelf = clone;
       if (!strongSelf) {
           return;
       }

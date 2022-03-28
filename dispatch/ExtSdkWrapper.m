@@ -9,20 +9,22 @@
 #import "ExtSdkDispatch.h"
 #import "ExtSdkToJson.h"
 
-#define easemob_dispatch_main_async_safe(block)                                \
-    if ([NSThread isMainThread]) {                                             \
-        block();                                                               \
-    } else {                                                                   \
-        dispatch_async(dispatch_get_main_queue(), block);                      \
+#define easemob_dispatch_main_async_safe(block)                                                                        \
+    if ([NSThread isMainThread]) {                                                                                     \
+        block();                                                                                                       \
+    } else {                                                                                                           \
+        dispatch_async(dispatch_get_main_queue(), block);                                                              \
     }
 
+static NSString *const TAG = @"ExtSdkWrapper";
 @implementation ExtSdkWrapper
 
 - (void)onResult:(nonnull id<ExtSdkCallbackObjc>)result
     withMethodType:(nonnull NSString *)methodType
          withError:(nullable EMError *)error
         withParams:(nullable NSObject *)params {
-    if (nil != error) {
+    NSLog(@"%@: onResult: %@, %@, %@", TAG, methodType, error ? [error toJsonObject] : @"", params ? params : @"");
+    if (nil == error) {
         NSMutableDictionary *data = [NSMutableDictionary dictionary];
         if (params) {
             data[methodType] = params;
@@ -35,8 +37,7 @@
     }
 }
 
-- (void)onReceive:(NSString *)methodType
-       withParams:(nullable NSObject *)params {
+- (void)onReceive:(NSString *)methodType withParams:(nullable NSObject *)params {
     [[ExtSdkDispatch getInstance] onReceive:methodType withParams:params];
 }
 

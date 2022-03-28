@@ -37,7 +37,7 @@ static NSString* const TAG = @"ExtSdkDispatch";
 - (void)callSdkApi:(nonnull NSString *)methodType
         withParams:(nullable id<NSObject>)params
       withCallback:(nonnull id<ExtSdkCallbackObjc>)callback {
-    NSLog(@"%@: callSdkApi:", TAG);
+    NSLog(@"%@: callSdkApi: %@, %@", TAG, methodType, params != nil ? params : @"");
            NSDictionary * ps = (NSDictionary*)params;
 
     switch ([ExtSdkMethodTypeObjc getEnumValue:methodType]) {
@@ -248,10 +248,10 @@ static NSString* const TAG = @"ExtSdkDispatch";
 
 
             /// #pragma mark - EMUserInfoManagerWrapper value
-            case ExtSdkMethodKeyUpdateOwnUserInfoValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
-            case ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
-            case ExtSdkMethodKeyFetchUserInfoByIdValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
-            case ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
+            case ExtSdkMethodKeyUpdateOwnUserInfoValue: [[ExtSdkUserInfoManagerWrapper getInstance] updateOwnUserInfo: ps result:callback]; break;
+            case ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue: [[ExtSdkUserInfoManagerWrapper getInstance] updateOwnUserInfoWithType: ps result:callback]; break;
+            case ExtSdkMethodKeyFetchUserInfoByIdValue: [[ExtSdkUserInfoManagerWrapper getInstance] fetchUserInfoById: ps result:callback]; break;
+            case ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue: [[ExtSdkUserInfoManagerWrapper getInstance] fetchUserInfoByIdWithType: ps result:callback]; break;
 
     default:
             [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
