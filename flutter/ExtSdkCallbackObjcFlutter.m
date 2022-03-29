@@ -9,7 +9,7 @@
 #import "ExtSdkChannelManager.h"
 #import "ExtSdkThreadUtilObjc.h"
 
-@interface ExtSdkCallbackObjcFlutter () {
+@interface ExtSdkCallbackObjcFlutter () <NSCopying> {
     FlutterResult _result;
 }
 

@@ -1,14 +1,15 @@
-#import <Foundation/Foundation.h>
-#import <React/RCTBridgeModule.h>
 #import "ExtSdkApiObjc.h"
+#import <Foundation/Foundation.h>
 
-@interface ExtSdkApiRN : NSObject <ExtSdkApiObjc, RCTBridgeModule>
+@interface ExtSdkApiRN : NSObject <ExtSdkApiObjc>
 
 + (nonnull instancetype)getInstance;
 
 - (void)addListener:(nonnull id<ExtSdkDelegateObjc>)listener;
 
-- (void)callSdkApi:(nonnull NSString *)methodType withParams:(nullable id<NSObject>)params withCallback:(nonnull id<ExtSdkCallbackObjc>)callback;
+- (void)callSdkApi:(nonnull NSString *)methodType
+        withParams:(nullable id<NSObject>)params
+      withCallback:(nonnull id<ExtSdkCallbackObjc>)callback;
 
 - (void)delListener:(nonnull id<ExtSdkDelegateObjc>)listener;
 

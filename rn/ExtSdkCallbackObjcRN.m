@@ -8,7 +8,7 @@
 #import "ExtSdkCallbackObjcRN.h"
 #import "ExtSdkThreadUtilObjc.h"
 
-@interface ExtSdkCallbackObjcRN () {
+@interface ExtSdkCallbackObjcRN () <NSCopying> {
     RCTPromiseResolveBlock _resolve;
     RCTPromiseRejectBlock _reject;
 }
@@ -24,10 +24,17 @@
     return self;
 }
 
+- (id)copyWithZone:(nullable NSZone *)zone {
+    // _resolve _reject 浅拷贝
+    // ExtSdkCallbackObjcRN 深拷贝
+    ExtSdkCallbackObjcRN *clone = [[ExtSdkCallbackObjcRN alloc] initWithResolve:_resolve withReject:_reject];
+    return clone;
+}
+
 - (void)onFail:(int)code withExtension:(nullable id<NSObject>)ext {
-    __weak typeof(self) weakSelf = self;
+    __block ExtSdkCallbackObjcRN *clone = [self copy];
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
-      typeof(self) strongSelf = weakSelf;
+      typeof(self) strongSelf = clone;
       if (!strongSelf) {
           return;
       }
@@ -43,9 +50,9 @@
 }
 
 - (void)onSuccess:(nullable id<NSObject>)data {
-    __weak typeof(self) weakSelf = self;
+    __block ExtSdkCallbackObjcRN *clone = [self copy];
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
-      typeof(self) strongSelf = weakSelf;
+      typeof(self) strongSelf = clone;
       if (!strongSelf) {
           return;
       }

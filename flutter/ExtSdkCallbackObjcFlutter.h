@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ExtSdkCallbackObjcFlutter : NSObject <ExtSdkCallbackObjc, NSCopying>
+@interface ExtSdkCallbackObjcFlutter : NSObject <ExtSdkCallbackObjc>
 
 - (nonnull instancetype)init:(nonnull FlutterResult)result;
 
