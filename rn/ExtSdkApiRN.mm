@@ -3,6 +3,8 @@
 #import "ExtSdkCallbackObjcRN.h"
 #import "ExtSdkDelegateObjcRN.h"
 #include "ExtSdkObjectObjcImpl.h"
+#import <HyphenateChat/EMClient.h>
+#import <UIKit/UIApplication.h>
 
 static NSString *const TAG = @"ExtSdkApiRN";
 
@@ -56,6 +58,35 @@ static NSString *const TAG = @"ExtSdkApiRN";
     NSLog(@"%@: unInit:", TAG);
     EXT_SDK_NAMESPACE_USING
     ExtSdkApi::getInstance()->unInit();
+}
+
+#pragma mark - Others
+
+- (instancetype)initInternal {
+    //    if (super = [super init]) {
+    [self registerSystemNotify];
+    //    }
+    return self;
+}
+
+- (void)registerSystemNotify {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillEnterForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)notification {
+    NSLog(@"%@: applicationWillEnterForeground:", TAG);
+    [[EMClient sharedClient] applicationWillEnterForeground:[UIApplication sharedApplication]];
+}
+- (void)applicationDidEnterBackground:(NSNotification *)notification {
+    NSLog(@"%@: applicationDidEnterBackground:", TAG);
+    [[EMClient sharedClient] applicationDidEnterBackground:[UIApplication sharedApplication]];
 }
 
 @end

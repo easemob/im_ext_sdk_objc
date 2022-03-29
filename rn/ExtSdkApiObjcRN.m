@@ -9,19 +9,10 @@
 #import "ExtSdkCallbackObjcRN.h"
 #import "ExtSdkDelegateObjcRN.h"
 #import "ExtSdkThreadUtilObjc.h"
-#import <HyphenateChat/EMClient.h>
-#import <UIKit/UIApplication.h>
 
 static NSString *const TAG = @"ExtSdkApiRN";
 
 @implementation ExtSdkApiRN (Objc)
-
-- (instancetype)init {
-    //    if (super = [super init]) {
-    [self registerSystemNotify];
-    //    }
-    return self;
-}
 
 #pragma mark - RCTBridgeModule
 
@@ -39,26 +30,12 @@ RCT_EXPORT_METHOD(callMethod
     }];
 }
 
-#pragma mark - Others
-
-- (void)registerSystemNotify {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillEnterForeground)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
+- (dispatch_queue_t)methodQueue {
+    return dispatch_get_main_queue();
 }
 
-- (void)applicationWillEnterForeground:(NSNotification *)notification {
-    NSLog(@"%@: applicationWillEnterForeground:", TAG);
-    [[EMClient sharedClient] applicationWillEnterForeground:[UIApplication sharedApplication]];
-}
-- (void)applicationDidEnterBackground:(NSNotification *)notification {
-    NSLog(@"%@: applicationDidEnterBackground:", TAG);
-    [[EMClient sharedClient] applicationDidEnterBackground:[UIApplication sharedApplication]];
++ (BOOL)requiresMainQueueSetup {
+    return YES;
 }
 
 @end
