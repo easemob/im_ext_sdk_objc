@@ -1,9 +1,7 @@
 #import "ExtSdkApiObjc.h"
 #import <Foundation/Foundation.h>
 
-@interface ExtSdkApiRN : NSObject <ExtSdkApiObjc>
-
-+ (nonnull instancetype)getInstance;
+@interface ExtSdkApiRNImpl : NSObject <ExtSdkApiObjc>
 
 - (void)addListener:(nonnull id<ExtSdkDelegateObjc>)listener;
 

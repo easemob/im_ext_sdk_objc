@@ -44,8 +44,6 @@
 - (void)initSDKWithDict:(NSDictionary *)param
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
 
-    __weak typeof(self) weakSelf = self;
-
     EMOptions *options = [EMOptions fromJsonObject:param];
     //    options.enableConsoleLog = YES;
     [EMClient.sharedClient initializeSDKWithOptions:options];
@@ -56,7 +54,7 @@
     if (options.apnsCertName.length > 0) {
         [self _registerAPNs];
     }
-    [weakSelf onResult:result
+    [self onResult:result
         withMethodType:ExtSdkMethodKeyInit
              withError:nil
             withParams:@{
@@ -135,10 +133,9 @@
 
 - (void)changeAppKey:(NSDictionary *)param
               result:(nonnull id<ExtSdkCallbackObjc>)result {
-    __weak typeof(self) weakSelf = self;
     NSString *appKey = param[@"appKey"];
     EMError *aError = [EMClient.sharedClient changeAppkey:appKey];
-    [weakSelf onResult:result
+    [self onResult:result
         withMethodType:ExtSdkMethodKeyChangeAppKey
              withError:aError
             withParams:@(!aError)];
@@ -146,9 +143,8 @@
 
 - (void)getCurrentUser:(NSDictionary *)param
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
-    __weak typeof(self) weakSelf = self;
     NSString *username = EMClient.sharedClient.currentUsername;
-    [weakSelf onResult:result
+    [self onResult:result
         withMethodType:ExtSdkMethodKeyCurrentUser
              withError:nil
             withParams:username];
@@ -215,8 +211,7 @@
 
 - (void)isLoggedInBefore:(NSDictionary *)param
                   result:(nonnull id<ExtSdkCallbackObjc>)result {
-    __weak typeof(self) weakSelf = self;
-    [weakSelf onResult:result
+    [self onResult:result
         withMethodType:ExtSdkMethodKeyIsLoggedInBefore
              withError:nil
             withParams:@(EMClient.sharedClient.isLoggedIn)];

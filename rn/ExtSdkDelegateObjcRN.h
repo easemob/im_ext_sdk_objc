@@ -5,11 +5,15 @@
 //  Created by asterisk on 2022/3/14.
 //
 
+#import "ExtSdkDelegateObjc.h"
 #import <Foundation/Foundation.h>
 #import <React/RCTEventEmitter.h>
-#import "ExtSdkDelegateObjc.h"
 
-@interface ExtSdkDelegateObjcRN : RCTEventEmitter <ExtSdkDelegateObjc>
+@class ExtSdkApiRN;
+
+@interface ExtSdkDelegateObjcRN : NSObject <ExtSdkDelegateObjc>
+
+- (instancetype)initWithApi:(ExtSdkApiRN*)sdk;
 
 - (nonnull NSString *)getType;
 

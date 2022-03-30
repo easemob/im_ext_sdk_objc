@@ -6,24 +6,31 @@
 //
 
 #import "ExtSdkDelegateObjcRN.h"
-#import "ExtSdkThreadUtilObjc.h"
+#import "ExtSdkApiObjcRN.h"
 
 @interface ExtSdkDelegateObjcRN () {
-    NSString* _listenerType;
+    NSString *_listenerType;
+    __weak ExtSdkApiRN *_weak;
 }
 
 @end
 
 @implementation ExtSdkDelegateObjcRN
 
+- (instancetype)initWithApi:(ExtSdkApiRN *)sdk {
+    _weak = sdk;
+    _listenerType = @"";
+    return self;
+}
+
 - (nonnull NSString *)getType {
     return _listenerType;
 }
 
 - (void)onReceive:(nonnull NSString *)methodType withParams:(nullable id<NSObject>)data {
-    [ExtSdkThreadUtilObjc mainThreadExecute:^{
-        [self sendEventWithName:methodType body:data];
-    }];
+    if (_weak) {
+        [_weak onReceive:methodType withParams:data];
+    }
 }
 
 - (void)setType:(nonnull NSString *)listenerType {
@@ -31,4 +38,3 @@
 }
 
 @end
-

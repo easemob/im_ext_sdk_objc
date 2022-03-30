@@ -5,13 +5,17 @@
 //  Created by asterisk on 2022/3/29.
 //
 
-#import "ExtSdkApiRN.h"
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ExtSdkApiRN (Objc) <RCTBridgeModule>
+@interface ExtSdkApiRN : RCTEventEmitter <RCTBridgeModule>
+
+//+ (nonnull instancetype)getInstance;
+
+- (void)onReceive:(nonnull NSString *)methodType withParams:(nullable id<NSObject>)data;
 
 @end
 
