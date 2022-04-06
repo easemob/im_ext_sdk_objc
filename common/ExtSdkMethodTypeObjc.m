@@ -30,13 +30,17 @@
             ExtSdkMethodKeyCurrentUser: @(ExtSdkMethodKeyCurrentUserValue),
             ExtSdkMethodKeyGetLoggedInDevicesFromServer: @(ExtSdkMethodKeyGetLoggedInDevicesFromServerValue),
             ExtSdkMethodKeyGetToken: @(ExtSdkMethodKeyGetTokenValue),
+            ExtSdkMethodKeyLoginWithAgoraToken: @(ExtSdkMethodKeyLoginWithAgoraTokenValue),
+            ExtSdkMethodKeyGetCurrentUser: @(ExtSdkMethodKeyGetCurrentUserValue),
+            ExtSdkMethodKeyIsConnected: @(ExtSdkMethodKeyIsConnectedValue),
 
             /// EMClientDelegate
             ExtSdkMethodKeyOnConnected: @(ExtSdkMethodKeyOnConnectedValue),
             ExtSdkMethodKeyOnDisconnected: @(ExtSdkMethodKeyOnDisconnectedValue),
             ExtSdkMethodKeyOnMultiDeviceEvent: @(ExtSdkMethodKeyOnMultiDeviceEventValue),
-
             ExtSdkMethodKeySendDataToFlutter: @(ExtSdkMethodKeySendDataToFlutterValue),
+            ExtSdkMethodKeyOnTokenWillExpire: @(ExtSdkMethodKeyOnTokenWillExpireValue),
+            ExtSdkMethodKeyOnTokenDidExpire: @(ExtSdkMethodKeyOnTokenDidExpireValue),
 
             /// EMContactManagerWrapper
             ExtSdkMethodKeyAddContact: @(ExtSdkMethodKeyAddContactValue),
@@ -217,15 +221,19 @@
             ExtSdkMethodKeyUpdateImPushStyle: @(ExtSdkMethodKeyUpdateImPushStyleValue),
             ExtSdkMethodKeyUpdateGroupPushService: @(ExtSdkMethodKeyUpdateGroupPushServiceValue),
             ExtSdkMethodKeyGetNoDisturbGroups: @(ExtSdkMethodKeyGetNoDisturbGroupsValue),
-            ExtSdkMethodKeyBindDeviceToken: @(ExtSdkMethodKeyBindDeviceTokenValue),
-
+            
 
             /// EMUserInfoManagerWrapper
             ExtSdkMethodKeyUpdateOwnUserInfo: @(ExtSdkMethodKeyUpdateOwnUserInfoValue),
             ExtSdkMethodKeyUpdateOwnUserInfoWithType: @(ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue),
             ExtSdkMethodKeyFetchUserInfoById: @(ExtSdkMethodKeyFetchUserInfoByIdValue),
             ExtSdkMethodKeyFetchUserInfoByIdWithType: @(ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue),
-
+            ExtSdkMethodKeyBindDeviceToken: @(ExtSdkMethodKeyBindDeviceTokenValue),
+            ExtSdkMethodKeyEnablePush: @(ExtSdkMethodKeyEnablePushValue),
+            ExtSdkMethodKeyDisablePush: @(ExtSdkMethodKeyDisablePushValue),
+            ExtSdkMethodKeyGetNoPushGroups: @(ExtSdkMethodKeyGetNoPushGroupsValue),
+            ExtSdkMethodKeySetNoDisturbUsers: @(ExtSdkMethodKeySetNoDisturbUsersValue),
+            ExtSdkMethodKeyGetNoDisturbUsersFromServer: @(ExtSdkMethodKeyGetNoDisturbUsersFromServerValue),
 
 
         };

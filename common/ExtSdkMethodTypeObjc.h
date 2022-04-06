@@ -11,16 +11,20 @@ static NSString * _Nonnull const ExtSdkMethodKeyUploadLog = @"uploadLog";
 static NSString * _Nonnull const ExtSdkMethodKeyCompressLogs = @"compressLogs";
 static NSString * _Nonnull const ExtSdkMethodKeyKickDevice = @"kickDevice";
 static NSString * _Nonnull const ExtSdkMethodKeyKickAllDevices = @"kickAllDevices";
-static NSString * _Nonnull const ExtSdkMethodKeyCurrentUser = @"currentUser";
+static NSString * _Nonnull const ExtSdkMethodKeyCurrentUser = @"currentUser"; // 作废 2022.04.06
 static NSString * _Nonnull const ExtSdkMethodKeyGetLoggedInDevicesFromServer = @"getLoggedInDevicesFromServer";
 static NSString * _Nonnull const ExtSdkMethodKeyGetToken = @"getToken";
+static NSString * _Nonnull const ExtSdkMethodKeyLoginWithAgoraToken = @"loginWithAgoraToken";
+static NSString * _Nonnull const ExtSdkMethodKeyGetCurrentUser = @"getCurrentUser";
+static NSString * _Nonnull const ExtSdkMethodKeyIsConnected = @"isConnected";
 
 #pragma mark - EMClientDelegate
 static NSString * _Nonnull const ExtSdkMethodKeyOnConnected = @"onConnected";
 static NSString * _Nonnull const ExtSdkMethodKeyOnDisconnected = @"onDisconnected";
 static NSString * _Nonnull const ExtSdkMethodKeyOnMultiDeviceEvent = @"onMultiDeviceEvent";
-
 static NSString * _Nonnull const ExtSdkMethodKeySendDataToFlutter = @"onSendDataToFlutter";
+static NSString * _Nonnull const ExtSdkMethodKeyOnTokenWillExpire = @"onTokenWillExpire";
+static NSString * _Nonnull const ExtSdkMethodKeyOnTokenDidExpire = @"onTokenDidExpire";
 
 #pragma mark - EMContactManagerWrapper
 static NSString * _Nonnull const ExtSdkMethodKeyAddContact = @"addContact";
@@ -136,7 +140,7 @@ static NSString * _Nonnull const ExtSdkMethodKeyFetchChatRoomWhiteListFromServer
 static NSString * _Nonnull const ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServer = @"isMemberInChatRoomWhiteListFromServer";
 
 static NSString * _Nonnull const ExtSdkMethodKeyMuteAllChatRoomMembers = @"muteAllChatRoomMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyUnMuteAllChatRoomMembers = @"umMuteAllChatRoomMembers";
+static NSString * _Nonnull const ExtSdkMethodKeyUnMuteAllChatRoomMembers = @"unMuteAllChatRoomMembers";
 
 
 static NSString * _Nonnull const ExtSdkMethodKeyChatroomChanged = @"onChatRoomChanged";
@@ -202,6 +206,11 @@ static NSString * _Nonnull const ExtSdkMethodKeyUpdateImPushStyle = @"updateImPu
 static NSString * _Nonnull const ExtSdkMethodKeyUpdateGroupPushService = @"updateGroupPushService";
 static NSString * _Nonnull const ExtSdkMethodKeyGetNoDisturbGroups = @"getNoDisturbGroups";
 static NSString * _Nonnull const ExtSdkMethodKeyBindDeviceToken = @"updateAPNsPushToken";
+static NSString * _Nonnull const ExtSdkMethodKeyEnablePush = @"enableOfflinePush";
+static NSString * _Nonnull const ExtSdkMethodKeyDisablePush = @"disableOfflinePush";
+static NSString * _Nonnull const ExtSdkMethodKeyGetNoPushGroups = @"getNoPushGroups";
+static NSString * _Nonnull const ExtSdkMethodKeySetNoDisturbUsers = @"setNoDisturbUsers";
+static NSString * _Nonnull const ExtSdkMethodKeyGetNoDisturbUsersFromServer = @"getNoDisturbUsersFromServer";
 
 
 #pragma mark - EMUserInfoManagerWrapper
@@ -212,7 +221,9 @@ static NSString * _Nonnull const ExtSdkMethodKeyFetchUserInfoByIdWithType = @"fe
 
 
 
-
+// ############################################################################
+// value start
+// ############################################################################
 
 
 #pragma mark - EMClientWrapper value
@@ -229,13 +240,17 @@ static const int ExtSdkMethodKeyKickAllDevicesValue = 109;
 static const int ExtSdkMethodKeyCurrentUserValue = 110;
 static const int ExtSdkMethodKeyGetLoggedInDevicesFromServerValue = 111;
 static const int ExtSdkMethodKeyGetTokenValue = 112;
+static const int ExtSdkMethodKeyLoginWithAgoraTokenValue = 113;
+static const int ExtSdkMethodKeyGetCurrentUserValue = 114;
+static const int ExtSdkMethodKeyIsConnectedValue = 115;
 
 #pragma mark - EMClientDelegate value
 static const int ExtSdkMethodKeyOnConnectedValue = 200;
 static const int ExtSdkMethodKeyOnDisconnectedValue = 201;
 static const int ExtSdkMethodKeyOnMultiDeviceEventValue = 202;
-
 static const int ExtSdkMethodKeySendDataToFlutterValue = 203;
+static const int ExtSdkMethodKeyOnTokenWillExpireValue = 204;
+static const int ExtSdkMethodKeyOnTokenDidExpireValue = 205;
 
 #pragma mark - EMContactManagerWrapper value
 static const int ExtSdkMethodKeyAddContactValue = 300;
@@ -416,14 +431,18 @@ static const int ExtSdkMethodKeyImPushNoDisturbValue = 1003;
 static const int ExtSdkMethodKeyUpdateImPushStyleValue = 1004;
 static const int ExtSdkMethodKeyUpdateGroupPushServiceValue = 1005;
 static const int ExtSdkMethodKeyGetNoDisturbGroupsValue = 1006;
-static const int ExtSdkMethodKeyBindDeviceTokenValue = 1007;
-
 
 #pragma mark - EMUserInfoManagerWrapper value
 static const int ExtSdkMethodKeyUpdateOwnUserInfoValue = 1100;
 static const int ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue = 1101;
 static const int ExtSdkMethodKeyFetchUserInfoByIdValue = 1102;
 static const int ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue = 1103;
+static const int ExtSdkMethodKeyBindDeviceTokenValue = 1104;
+static const int ExtSdkMethodKeyEnablePushValue = 1105;
+static const int ExtSdkMethodKeyDisablePushValue = 1106;
+static const int ExtSdkMethodKeyGetNoPushGroupsValue = 1107;
+static const int ExtSdkMethodKeySetNoDisturbUsersValue = 1108;
+static const int ExtSdkMethodKeyGetNoDisturbUsersFromServerValue = 1109;
 
 @interface ExtSdkMethodTypeObjc : NSObject
 

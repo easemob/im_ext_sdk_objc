@@ -45,6 +45,26 @@ NS_ASSUME_NONNULL_BEGIN
          withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result;
 
+- (void)setNoDisturbUsers:(NSDictionary *)param
+              channelName:(NSString *)aChannelName
+                   result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)getNoDisturbUsersFromServer:(NSDictionary *)param
+                        channelName:(NSString *)aChannelName
+                             result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)enablePush:(NSDictionary *)param
+       channelName:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)disablePush:(NSDictionary *)param
+        channelName:(NSString *)aChannelName
+             result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)getNoPushGroups:(NSDictionary *)param
+            channelName:(NSString *)aChannelName
+                 result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 @end
 
 NS_ASSUME_NONNULL_END

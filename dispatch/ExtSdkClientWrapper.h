@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nonnull instancetype)getInstance;
 
-- (void)getToken:(NSDictionary *)param result:(nonnull id<ExtSdkCallbackObjc>)result;
+- (void)getToken:(NSDictionary *)param
+          result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)initSDKWithDict:(NSDictionary *)param
                  result:(nonnull id<ExtSdkCallbackObjc>)result;
@@ -43,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)kickAllDevices:(NSDictionary *)param
                 result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 - (void)isLoggedInBefore:(NSDictionary *)param
                   result:(nonnull id<ExtSdkCallbackObjc>)result;
 
@@ -51,6 +53,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)getLoggedInDevicesFromServer:(NSDictionary *)param
                               result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)loginWithAgoraToken:(NSDictionary *)param
+                     result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)isConnected:(NSDictionary *)param
+             result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 @end
 

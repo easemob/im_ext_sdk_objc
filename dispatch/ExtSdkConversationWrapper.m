@@ -61,7 +61,7 @@
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
                         completion:^(EMConversation *conversation) {
-                          EMMessage *msg = conversation.latestMessage;
+                          EMChatMessage *msg = conversation.latestMessage;
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeyGetLatestMsg
                                    withError:nil
@@ -75,7 +75,7 @@
     [self
         getConversationWithParam:param
                       completion:^(EMConversation *conversation) {
-                        EMMessage *msg = conversation.lastReceivedMessage;
+                        EMChatMessage *msg = conversation.lastReceivedMessage;
                         [weakSelf onResult:result
                             withMethodType:ExtSdkMethodKeyGetLatestMsgFromOthers
                                  withError:nil
@@ -154,7 +154,7 @@
     [self getConversationWithParam:param
                         completion:^(EMConversation *conversation) {
                           NSDictionary *msgDict = param[@"msg"];
-                          EMMessage *msg = [EMMessage fromJsonObject:msgDict];
+                          EMChatMessage *msg = [EMChatMessage fromJsonObject:msgDict];
 
                           EMError *error = nil;
                           [conversation insertMessage:msg error:&error];
@@ -171,7 +171,7 @@
     [self getConversationWithParam:param
                         completion:^(EMConversation *conversation) {
                           NSDictionary *msgDict = param[@"msg"];
-                          EMMessage *msg = [EMMessage fromJsonObject:msgDict];
+                          EMChatMessage *msg = [EMChatMessage fromJsonObject:msgDict];
 
                           EMError *error = nil;
                           [conversation appendMessage:msg error:&error];
@@ -189,7 +189,7 @@
         getConversationWithParam:param
                       completion:^(EMConversation *conversation) {
                         NSDictionary *msgDict = param[@"msg"];
-                        EMMessage *msg = [EMMessage fromJsonObject:msgDict];
+                        EMChatMessage *msg = [EMChatMessage fromJsonObject:msgDict];
 
                         EMError *error = nil;
                         [conversation updateMessageChange:msg error:&error];
@@ -238,7 +238,7 @@
     [self getConversationWithParam:param
                         completion:^(EMConversation *conversation) {
                           EMError *error = nil;
-                          EMMessage *msg =
+                          EMChatMessage *msg =
                               [conversation loadMessageWithId:msgId
                                                         error:&error];
 
@@ -273,7 +273,7 @@
                                                    EMError *aError) {
                                         NSMutableArray *msgJsonAry =
                                             [NSMutableArray array];
-                                        for (EMMessage *msg in aMessages) {
+                                        for (EMChatMessage *msg in aMessages) {
                                             [msgJsonAry addObject:[msg toJsonObject]];
                                         }
                                         [weakSelf onResult:result
@@ -304,7 +304,7 @@
                                                       EMError *aError) {
                                            NSMutableArray *jsonMsgs =
                                                [NSMutableArray array];
-                                           for (EMMessage *msg in aMessages) {
+                                           for (EMChatMessage *msg in aMessages) {
                                                [jsonMsgs
                                                    addObject:[msg toJsonObject]];
                                            }
@@ -340,7 +340,7 @@
                                                       EMError *aError) {
                                            NSMutableArray *msgJsonAry =
                                                [NSMutableArray array];
-                                           for (EMMessage *msg in aMessages) {
+                                           for (EMChatMessage *msg in aMessages) {
                                                [msgJsonAry
                                                    addObject:[msg toJsonObject]];
                                            }
@@ -369,7 +369,7 @@
                                                  EMError *aError) {
                                       NSMutableArray *msgJsonAry =
                                           [NSMutableArray array];
-                                      for (EMMessage *msg in aMessages) {
+                                      for (EMChatMessage *msg in aMessages) {
                                           [msgJsonAry addObject:[msg toJsonObject]];
                                       }
                                       [weakSelf onResult:result

@@ -224,11 +224,15 @@
                     pageNumber:[param[@"pageNum"] intValue]
                       pageSize:[param[@"pageSize"] intValue]
                     completion:^(NSArray *aList, EMError *aError) {
+                      NSMutableArray *array = [NSMutableArray array];
+                      for (EMGroupSharedFile *file in aList) {
+                          [array addObject:[file toJsonObject]];
+                      }
                       [weakSelf onResult:result
                           withMethodType:
                               ExtSdkMethodKeyGetGroupFileListFromServer
                                withError:aError
-                              withParams:aList];
+                              withParams:array];
                     }];
 }
 - (void)getGroupAnnouncementFromServer:(NSDictionary *)param
@@ -261,7 +265,7 @@
 }
 
 - (void)inviterUser:(NSDictionary *)param
-              result:(nonnull id<ExtSdkCallbackObjc>)result {
+             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
         addMembers:param[@"members"]
@@ -510,18 +514,16 @@
 
 - (void)removeWhiteList:(NSDictionary *)param
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
-    //    __weak typeof(self) weakSelf = self;
-    //    [EMClient.sharedClient.groupManager
-    //    removeWhiteListMembers:param[@"members"]
-    //                                                     fromGroup:param[@"groupId"]
-    //                                                    completion:^(EMGroup
-    //                                                    *aGroup, EMError
-    //                                                    *aError) {
-    //        [weakSelf onResult:result
-    //                      withMethodType:ExtSdkMethodKeyAddWhiteList
-    //                            withError:aError
-    //                           withParams:[aGroup toJsonObject]];
-    //    }];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.groupManager
+        removeWhiteListMembers:param[@"members"]
+                     fromGroup:param[@"groupId"]
+                    completion:^(EMGroup *aGroup, EMError *aError) {
+                      [weakSelf onResult:result
+                          withMethodType:ExtSdkMethodKeyRemoveWhiteList
+                               withError:aError
+                              withParams:[aGroup toJsonObject]];
+                    }];
 }
 
 // TODO: dujiepeng.

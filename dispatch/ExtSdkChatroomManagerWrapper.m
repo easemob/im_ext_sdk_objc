@@ -25,7 +25,6 @@
     return instance;
 }
 
-
 #pragma mark - Actions
 
 - (void)getChatroomsFromServer:(NSDictionary *)param
@@ -120,7 +119,7 @@
 }
 
 - (void)fetchChatroomFromServer:(NSDictionary *)param
-                             result:(nonnull id<ExtSdkCallbackObjc>)result {
+                         result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *chatroomId = param[@"roomId"];
     [EMClient.sharedClient.roomManager
@@ -131,7 +130,8 @@
                                             withMethodType:
                                                 ExtSdkMethodKeyFetchChatRoomFromServer
                                                  withError:aError
-                                                withParams:[aChatroom toJsonObject]];
+                                                withParams:[aChatroom
+                                                               toJsonObject]];
                                       }];
 }
 
@@ -453,29 +453,101 @@
 // TODO: chatroom white list.
 - (void)addMembersToChatRoomWhiteList:(NSDictionary *)param
                                result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    NSArray *ary = param[@"members"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.roomManager
+        addWhiteListMembers:ary
+               fromChatroom:roomId
+                 completion:^(EMChatroom *aChatroom, EMError *aError) {
+                   [weakSelf onResult:result
+                       withMethodType:
+                           ExtSdkMethodKeyAddMembersToChatRoomWhiteList
+                            withError:aError
+                           withParams:nil];
+                 }];
 }
 
 - (void)removeMembersFromChatRoomWhiteList:(NSDictionary *)param
                                     result:
                                         (nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    NSArray *ary = param[@"members"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.roomManager
+        removeWhiteListMembers:ary
+                  fromChatroom:roomId
+                    completion:^(EMChatroom *aChatroom, EMError *aError) {
+                      [weakSelf onResult:result
+                          withMethodType:
+                              ExtSdkMethodKeyRemoveMembersFromChatRoomWhiteList
+                               withError:aError
+                              withParams:nil];
+                    }];
 }
 
 - (void)isMemberInChatRoomWhiteListFromServer:(NSDictionary *)param
                                        result:(nonnull id<ExtSdkCallbackObjc>)
                                                   result {
+    NSString *roomId = param[@"roomId"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.roomManager
+        isMemberInWhiteListFromServerWithChatroomId:roomId
+                                         completion:^(BOOL inWhiteList,
+                                                      EMError *aError) {
+                                           [weakSelf onResult:result
+                                               withMethodType:
+                                                   ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServer
+                                                    withError:aError
+                                                   withParams:@(inWhiteList)];
+                                         }];
 }
 
 - (void)fetchChatRoomWhiteListFromServer:(NSDictionary *)param
                                   result:
                                       (nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.roomManager
+        getChatroomWhiteListFromServerWithId:roomId
+                                  completion:^(NSArray *aList,
+                                               EMError *aError) {
+                                    [weakSelf onResult:result
+                                        withMethodType:
+                                            ExtSdkMethodKeyFetchChatRoomWhiteListFromServer
+                                             withError:aError
+                                            withParams:aList];
+                                  }];
 }
 
 - (void)muteAllChatRoomMembers:(NSDictionary *)param
                         result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.roomManager
+        muteAllMembersFromChatroom:roomId
+                        completion:^(EMChatroom *aChatroom, EMError *aError) {
+                          [weakSelf onResult:result
+                              withMethodType:
+                                  ExtSdkMethodKeyMuteAllChatRoomMembers
+                                   withError:aError
+                                  withParams:@(!aError)];
+                        }];
 }
 
 - (void)unMuteAllChatRoomMembers:(NSDictionary *)param
                           result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.roomManager
+        unmuteAllMembersFromChatroom:roomId
+                          completion:^(EMChatroom *aChatroom, EMError *aError) {
+                            [weakSelf onResult:result
+                                withMethodType:
+                                    ExtSdkMethodKeyUnMuteAllChatRoomMembers
+                                     withError:aError
+                                    withParams:@(!aError)];
+                          }];
 }
 
 #pragma mark - EMChatroomManagerDelegate

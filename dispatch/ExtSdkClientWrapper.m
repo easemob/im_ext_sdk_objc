@@ -5,7 +5,6 @@
 //  Created by 杜洁鹏 on 2019/10/8.
 //
 
-#import <UserNotifications/UserNotifications.h>
 #import "ExtSdkClientWrapper.h"
 #import "ExtSdkChatManagerWrapper.h"
 #import "ExtSdkChatroomManagerWrapper.h"
@@ -14,9 +13,10 @@
 #import "ExtSdkGroupManagerWrapper.h"
 #import "ExtSdkMethodTypeObjc.h"
 #import "ExtSdkPushManagerWrapper.h"
+#import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkToJson.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
-#import "ExtSdkThreadUtilObjc.h"
+#import <UserNotifications/UserNotifications.h>
 
 @interface ExtSdkClientWrapper () <EMClientDelegate, EMMultiDevicesDelegate>
 @end
@@ -34,7 +34,8 @@
 
 #pragma mark - Actions
 
-- (void)getToken:(NSDictionary *)param result:(nonnull id<ExtSdkCallbackObjc>)result {
+- (void)getToken:(NSDictionary *)param
+          result:(nonnull id<ExtSdkCallbackObjc>)result {
     [self onResult:result
         withMethodType:ExtSdkMethodKeyGetToken
              withError:nil
@@ -145,7 +146,7 @@
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *username = EMClient.sharedClient.currentUsername;
     [self onResult:result
-        withMethodType:ExtSdkMethodKeyCurrentUser
+        withMethodType:ExtSdkMethodKeyGetCurrentUser
              withError:nil
             withParams:username];
 }
@@ -235,8 +236,8 @@
                                             [NSMutableArray array];
                                         for (EMDeviceConfig
                                                  *deviceInfo in aList) {
-                                            [list
-                                                addObject:[deviceInfo toJsonObject]];
+                                            [list addObject:[deviceInfo
+                                                                toJsonObject]];
                                         }
 
                                         [weakSelf onResult:result
@@ -282,6 +283,16 @@
     [self onDisconnected:1]; // 需要明确具体的code
 }
 
+// 声网token即将过期
+- (void)tokenWillExpire:(int)aErrorCode {
+    [self onReceive:ExtSdkMethodKeyOnTokenWillExpire withParams:nil];
+}
+
+// 声网token过期
+- (void)tokenDidExpire:(int)aErrorCode {
+    [self onReceive:ExtSdkMethodKeyOnTokenDidExpire withParams:nil];
+}
+
 #pragma mark - ExtSdkMultiDevicesDelegate
 
 - (void)multiDevicesContactEventDidReceive:(EMMultiDevicesEvent)aEvent
@@ -308,54 +319,81 @@
 #pragma mark - register APNs
 - (void)_registerAPNs {
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
-        UIApplication *application = [UIApplication sharedApplication];
-        application.applicationIconBadgeNumber = 0;
+      UIApplication *application = [UIApplication sharedApplication];
+      application.applicationIconBadgeNumber = 0;
 
-        if (NSClassFromString(@"UNUserNotificationCenter")) {
-            //        [UNUserNotificationCenter currentNotificationCenter].delegate
-            //        = self;
-            [[UNUserNotificationCenter currentNotificationCenter]
-                requestAuthorizationWithOptions:UNAuthorizationOptionBadge |
-                                                UNAuthorizationOptionSound |
-                                                UNAuthorizationOptionAlert
-                              completionHandler:^(BOOL granted, NSError *error) {
-                                if (granted) {
-    #if !TARGET_IPHONE_SIMULATOR
-                                    [ExtSdkThreadUtilObjc mainThreadExecute:^{
-                                                                            [application registerForRemoteNotifications];
-                                    }];
-                                    
-    #endif
-                                }
-                              }];
-            return;
-        }
+      if (NSClassFromString(@"UNUserNotificationCenter")) {
+          //        [UNUserNotificationCenter
+          //        currentNotificationCenter].delegate = self;
+          [[UNUserNotificationCenter currentNotificationCenter]
+              requestAuthorizationWithOptions:UNAuthorizationOptionBadge |
+                                              UNAuthorizationOptionSound |
+                                              UNAuthorizationOptionAlert
+                            completionHandler:^(BOOL granted, NSError *error) {
+                              if (granted) {
+#if !TARGET_IPHONE_SIMULATOR
+                                  [ExtSdkThreadUtilObjc mainThreadExecute:^{
+                                    [application
+                                        registerForRemoteNotifications];
+                                  }];
 
-        if ([application
-                respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-            UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge |
-                                                       UIUserNotificationTypeSound |
-                                                       UIUserNotificationTypeAlert;
-            UIUserNotificationSettings *settings =
-                [UIUserNotificationSettings settingsForTypes:notificationTypes
-                                                  categories:nil];
-            [application registerUserNotificationSettings:settings];
-        }
+#endif
+                              }
+                            }];
+          return;
+      }
 
-    #if !TARGET_IPHONE_SIMULATOR
-        if ([application
-                respondsToSelector:@selector(registerForRemoteNotifications)]) {
-            [application registerForRemoteNotifications];
-        }
-    #endif
+      if ([application respondsToSelector:@selector
+                       (registerUserNotificationSettings:)]) {
+          UIUserNotificationType notificationTypes =
+              UIUserNotificationTypeBadge | UIUserNotificationTypeSound |
+              UIUserNotificationTypeAlert;
+          UIUserNotificationSettings *settings =
+              [UIUserNotificationSettings settingsForTypes:notificationTypes
+                                                categories:nil];
+          [application registerUserNotificationSettings:settings];
+      }
+
+#if !TARGET_IPHONE_SIMULATOR
+      if ([application
+              respondsToSelector:@selector(registerForRemoteNotifications)]) {
+          [application registerForRemoteNotifications];
+      }
+#endif
     }];
-    
+}
+
+- (void)loginWithAgoraToken:(NSDictionary *)param
+                     result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *username = param[@"username"];
+    NSString *agoraToken = param[@"agoratoken"];
+    [EMClient.sharedClient
+        loginWithUsername:username
+               agoraToken:agoraToken
+               completion:^(NSString *aUsername, EMError *aError) {
+                 [weakSelf onResult:result
+                     withMethodType:ExtSdkMethodKeyLoginWithAgoraToken
+                          withError:aError
+                         withParams:@{
+                             @"username" : aUsername,
+                             @"token" : EMClient.sharedClient.accessUserToken
+                         }];
+               }];
+}
+
+- (void)isConnected:(NSDictionary *)param
+             result:(nonnull id<ExtSdkCallbackObjc>)result {
+    [self onResult:result
+        withMethodType:ExtSdkMethodKeyIsConnected
+             withError:nil
+            withParams:@(EMClient.sharedClient.isConnected)];
 }
 
 #pragma mark - AppDelegate
 
 //- (BOOL)application:(UIApplication *)application
-//didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+// didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //
 //    return YES;
 //}

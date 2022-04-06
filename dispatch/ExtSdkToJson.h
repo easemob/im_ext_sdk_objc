@@ -16,7 +16,7 @@
 #import <HyphenateChat/EMGroupMessageAck.h>
 #import <HyphenateChat/EMGroupOptions.h>
 #import <HyphenateChat/EMGroupSharedFile.h>
-#import <HyphenateChat/EMMessage.h>
+#import <HyphenateChat/EMChatMessage.h>
 #import <HyphenateChat/EMMessageBody.h>
 #import <HyphenateChat/EMOptions.h>
 #import <HyphenateChat/EMPageResult.h>
@@ -72,8 +72,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)toJsonObject;
 @end
 
-@interface EMMessage (Json) <ExtSdkToJson>
-+ (EMMessage *)fromJsonObject:(NSDictionary *)aJson;
+@interface EMChatMessage (Json) <ExtSdkToJson>
++ (EMChatMessage *)fromJsonObject:(NSDictionary *)aJson;
 - (NSDictionary *)toJsonObject;
 @end
 

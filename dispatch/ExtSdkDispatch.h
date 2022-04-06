@@ -17,6 +17,7 @@
 
 - (void)unInit:(nullable id<NSObject>)params;
 
-- (void)onReceive:(nonnull NSString *)methodType withParams:(nullable NSObject *)params;
+- (void)onReceive:(nonnull NSString *)methodType
+       withParams:(nullable NSObject *)params;
 
 @end

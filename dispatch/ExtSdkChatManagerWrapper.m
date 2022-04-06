@@ -25,7 +25,6 @@
     return instance;
 }
 
-
 #pragma mark - Actions
 
 - (void)sendMessage:(NSDictionary *)param
@@ -33,7 +32,7 @@
              result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
-    __block EMMessage *msg = [EMMessage fromJsonObject:param];
+    __block EMChatMessage *msg = [EMChatMessage fromJsonObject:param];
 
     [EMClient.sharedClient.chatManager sendMessage:msg
         progress:^(int progress) {
@@ -43,7 +42,7 @@
                        @"localTime" : @(msg.localTime)
                    }];
         }
-        completion:^(EMMessage *message, EMError *error) {
+        completion:^(EMChatMessage *message, EMError *error) {
           if (error) {
               [weakSelf onReceive:ExtSdkMethodKeyOnMessageError
                        withParams:@{
@@ -71,7 +70,7 @@
                result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
-    __block EMMessage *msg = [EMMessage fromJsonObject:param];
+    __block EMChatMessage *msg = [EMChatMessage fromJsonObject:param];
 
     [EMClient.sharedClient.chatManager resendMessage:msg
         progress:^(int progress) {
@@ -81,7 +80,7 @@
                        @"localTime" : @(msg.localTime)
                    }];
         }
-        completion:^(EMMessage *message, EMError *error) {
+        completion:^(EMChatMessage *message, EMError *error) {
           if (error) {
               [weakSelf onReceive:ExtSdkMethodKeyOnMessageError
                        withParams:@{
@@ -159,7 +158,7 @@
                result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *msgId = param[@"msg_id"];
-    EMMessage *msg =
+    EMChatMessage *msg =
         [EMClient.sharedClient.chatManager getMessageWithMessageId:msgId];
     if (!msg) {
         EMError *error =
@@ -186,7 +185,7 @@
                          result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *msgId = param[@"msg_id"];
-    EMMessage *msg =
+    EMChatMessage *msg =
         [EMClient.sharedClient.chatManager getMessageWithMessageId:msgId];
     [weakSelf onResult:result
         withMethodType:aChannelName
@@ -253,10 +252,10 @@
            withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    EMMessage *msg = [EMMessage fromJsonObject:param[@"message"]];
+    EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
     [EMClient.sharedClient.chatManager
         updateMessage:msg
-           completion:^(EMMessage *aMessage, EMError *aError) {
+           completion:^(EMChatMessage *aMessage, EMError *aError) {
              [weakSelf onResult:result
                  withMethodType:aChannelName
                       withError:aError
@@ -271,7 +270,7 @@
     NSArray *dictAry = param[@"messages"];
     NSMutableArray *messages = [NSMutableArray array];
     for (NSDictionary *dict in dictAry) {
-        [messages addObject:[EMMessage fromJsonObject:dict]];
+        [messages addObject:[EMChatMessage fromJsonObject:dict]];
     }
     [[EMClient sharedClient].chatManager importMessages:messages
                                              completion:^(EMError *aError) {
@@ -286,17 +285,18 @@
             withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    __block EMMessage *msg = [EMMessage fromJsonObject:param[@"message"]];
-    EMMessage *needDownMSg = [EMClient.sharedClient.chatManager getMessageWithMessageId:msg.messageId];
+    __block EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
+    EMChatMessage *needDownMSg = [EMClient.sharedClient.chatManager
+        getMessageWithMessageId:msg.messageId];
     [EMClient.sharedClient.chatManager downloadMessageAttachment:needDownMSg
-                                                        progress:^(int progress) {
+        progress:^(int progress) {
           [weakSelf onReceive:ExtSdkMethodKeyOnMessageProgressUpdate
                    withParams:@{
                        @"progress" : @(progress),
                        @"localTime" : @(msg.localTime)
                    }];
         }
-        completion:^(EMMessage *message, EMError *error) {
+        completion:^(EMChatMessage *message, EMError *error) {
           if (error) {
               [weakSelf onReceive:ExtSdkMethodKeyOnMessageError
                        withParams:@{
@@ -323,17 +323,18 @@
            withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    __block EMMessage *msg = [EMMessage fromJsonObject:param[@"message"]];
-    EMMessage *needDownMSg = [EMClient.sharedClient.chatManager getMessageWithMessageId:msg.messageId];
+    __block EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
+    EMChatMessage *needDownMSg = [EMClient.sharedClient.chatManager
+        getMessageWithMessageId:msg.messageId];
     [EMClient.sharedClient.chatManager downloadMessageThumbnail:needDownMSg
-                                                       progress:^(int progress) {
+        progress:^(int progress) {
           [weakSelf onReceive:ExtSdkMethodKeyOnMessageProgressUpdate
                    withParams:@{
                        @"progress" : @(progress),
                        @"localTime" : @(msg.localTime)
                    }];
         }
-        completion:^(EMMessage *message, EMError *error) {
+        completion:^(EMChatMessage *message, EMError *error) {
           if (error) {
               [weakSelf onReceive:ExtSdkMethodKeyOnMessageError
                        withParams:@{
@@ -490,7 +491,7 @@
                 searchDirection:direction
                      completion:^(NSArray *aMessages, EMError *aError) {
                        NSMutableArray *msgList = [NSMutableArray array];
-                       for (EMMessage *msg in aMessages) {
+                       for (EMChatMessage *msg in aMessages) {
                            [msgList addObject:[msg toJsonObject]];
                        }
 
@@ -528,6 +529,34 @@
             withParams:@(true)];
 }
 
+- (void)deleteRemoteConversation:(NSDictionary *)param
+                     channelName:(NSString *)aChannelName
+                          result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *conversationId = param[@"conversationId"];
+    EMConversationType type = EMConversationTypeChat;
+    BOOL isDeleteRemoteMessage = [param[@"isDeleteRemoteMessage"] boolValue];
+    int intType = [param[@"conversationType"] intValue];
+    if (intType == 0) {
+        type = EMConversationTypeChat;
+    } else if (intType == 1) {
+        type = EMConversationTypeGroupChat;
+    } else {
+        type = EMConversationTypeChatRoom;
+    }
+
+    [EMClient.sharedClient.chatManager
+        deleteServerConversation:conversationId
+                conversationType:type
+          isDeleteServerMessages:isDeleteRemoteMessage
+                      completion:^(NSString *aConversationId, EMError *aError) {
+                        [weakSelf onResult:result
+                            withMethodType:aChannelName
+                                 withError:aError
+                                withParams:@(!aError)];
+                      }];
+}
+
 #pragma mark - ExtSdkChatManagerDelegate
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {
@@ -541,7 +570,7 @@
 
 - (void)messagesDidReceive:(NSArray *)aMessages {
     NSMutableArray *msgList = [NSMutableArray array];
-    for (EMMessage *msg in aMessages) {
+    for (EMChatMessage *msg in aMessages) {
         [msgList addObject:[msg toJsonObject]];
     }
     [self onReceive:ExtSdkMethodKeyOnMessagesReceived withParams:msgList];
@@ -549,7 +578,7 @@
 
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages {
     NSMutableArray *cmdMsgList = [NSMutableArray array];
-    for (EMMessage *msg in aCmdMessages) {
+    for (EMChatMessage *msg in aCmdMessages) {
         [cmdMsgList addObject:[msg toJsonObject]];
     }
 
@@ -558,7 +587,7 @@
 
 - (void)messagesDidRead:(NSArray *)aMessages {
     NSMutableArray *list = [NSMutableArray array];
-    for (EMMessage *msg in aMessages) {
+    for (EMChatMessage *msg in aMessages) {
         NSDictionary *json = [msg toJsonObject];
         [list addObject:json];
         [self onReceive:ExtSdkMethodKeyOnMessageReadAck withParams:json];
@@ -569,7 +598,7 @@
 
 - (void)messagesDidDeliver:(NSArray *)aMessages {
     NSMutableArray *list = [NSMutableArray array];
-    for (EMMessage *msg in aMessages) {
+    for (EMChatMessage *msg in aMessages) {
         NSDictionary *json = [msg toJsonObject];
         [list addObject:json];
         [self onReceive:ExtSdkMethodKeyOnMessageDeliveryAck
@@ -581,25 +610,25 @@
 
 - (void)messagesDidRecall:(NSArray *)aMessages {
     NSMutableArray *list = [NSMutableArray array];
-    for (EMMessage *msg in aMessages) {
+    for (EMChatMessage *msg in aMessages) {
         [list addObject:[msg toJsonObject]];
     }
 
     [self onReceive:ExtSdkMethodKeyOnMessagesRecalled withParams:list];
 }
 
-- (void)messageStatusDidChange:(EMMessage *)aMessage
+- (void)messageStatusDidChange:(EMChatMessage *)aMessage
                      withError:(EMError *)aError {
     [self onReceive:ExtSdkMethodKeyOnMessageStatusChanged
          withParams:@{@"message" : [aMessage toJsonObject]}];
 }
 
 // TODO: 安卓未找到对应回调
-- (void)messageAttachmentStatusDidChange:(EMMessage *)aMessage
+- (void)messageAttachmentStatusDidChange:(EMChatMessage *)aMessage
                                withError:(EMError *)aError {
 }
 
-- (void)groupMessageDidRead:(EMMessage *)aMessage
+- (void)groupMessageDidRead:(EMChatMessage *)aMessage
                   groupAcks:(NSArray *)aGroupAcks {
     NSMutableArray *list = [NSMutableArray array];
     for (EMGroupMessageAck *ack in aGroupAcks) {

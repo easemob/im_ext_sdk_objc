@@ -293,9 +293,9 @@
 }
 @end
 
-@implementation EMMessage (Json)
+@implementation EMChatMessage (Json)
 
-+ (EMMessage *)fromJsonObject:(NSDictionary *)aJson {
++ (EMChatMessage *)fromJsonObject:(NSDictionary *)aJson {
     EMMessageBody *body = [EMMessageBody fromJsonObject:aJson[@"body"]];
     if (!body) {
         return nil;
@@ -309,7 +309,7 @@
     NSString *to = aJson[@"to"];
     NSString *conversationId = aJson[@"conversationId"];
 
-    EMMessage *msg = [[EMMessage alloc] initWithConversationID:conversationId
+    EMChatMessage *msg = [[EMChatMessage alloc] initWithConversationID:conversationId
                                                           from:from
                                                             to:to
                                                           body:body

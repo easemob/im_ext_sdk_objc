@@ -56,13 +56,17 @@ static NSString* const TAG = @"ExtSdkDispatch";
             case ExtSdkMethodKeyCurrentUserValue: [[ExtSdkClientWrapper getInstance] getCurrentUser:ps result:callback]; break;
             case ExtSdkMethodKeyGetLoggedInDevicesFromServerValue: [[ExtSdkClientWrapper getInstance] getLoggedInDevicesFromServer:ps result:callback]; break;
             case ExtSdkMethodKeyGetTokenValue: [[ExtSdkClientWrapper getInstance] getToken:ps result:callback]; break;
+            case ExtSdkMethodKeyLoginWithAgoraTokenValue: [[ExtSdkClientWrapper getInstance] loginWithAgoraToken:ps result:callback]; break;
+            case ExtSdkMethodKeyIsConnectedValue: [[ExtSdkClientWrapper getInstance] isConnected:ps result:callback]; break;
+            case ExtSdkMethodKeyGetCurrentUserValue: [[ExtSdkClientWrapper getInstance] getCurrentUser:ps result:callback]; break;
 
             /// #pragma mark - EMClientDelegate value
             case ExtSdkMethodKeyOnConnectedValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
             case ExtSdkMethodKeyOnDisconnectedValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
             case ExtSdkMethodKeyOnMultiDeviceEventValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
-
             case ExtSdkMethodKeySendDataToFlutterValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
+            case ExtSdkMethodKeyOnTokenWillExpireValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
+            case ExtSdkMethodKeyOnTokenDidExpireValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
 
             /// #pragma mark - EMContactManagerWrapper value
             case ExtSdkMethodKeyAddContactValue: [[ExtSdkContactManagerWrapper getInstance] addContact:ps result:callback]; break;
@@ -245,6 +249,11 @@ static NSString* const TAG = @"ExtSdkDispatch";
             case ExtSdkMethodKeyUpdateGroupPushServiceValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
             case ExtSdkMethodKeyGetNoDisturbGroupsValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
             case ExtSdkMethodKeyBindDeviceTokenValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
+            case ExtSdkMethodKeyEnablePushValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
+            case ExtSdkMethodKeyDisablePushValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
+            case ExtSdkMethodKeyGetNoPushGroupsValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
+            case ExtSdkMethodKeySetNoDisturbUsersValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
+            case ExtSdkMethodKeyGetNoDisturbUsersFromServerValue: [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]]; break;
 
 
             /// #pragma mark - EMUserInfoManagerWrapper value
