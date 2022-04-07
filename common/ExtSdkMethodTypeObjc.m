@@ -83,6 +83,7 @@
             ExtSdkMethodKeySearchChatMsgFromDB: @(ExtSdkMethodKeySearchChatMsgFromDBValue),
             ExtSdkMethodKeyGetMessage: @(ExtSdkMethodKeyGetMessageValue),
             ExtSdkMethodKeyAsyncFetchGroupAcks: @(ExtSdkMethodKeyAsyncFetchGroupAcksValue),
+            ExtSdkMethodKeydeleteRemoteConversation: @(ExtSdkMethodKeydeleteRemoteConversationValue),
 
             /// EMChatManagerDelegate
             ExtSdkMethodKeyOnMessagesReceived: @(ExtSdkMethodKeyOnMessagesReceivedValue),

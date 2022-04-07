@@ -58,11 +58,7 @@
     [self onResult:result
         withMethodType:ExtSdkMethodKeyInit
              withError:nil
-            withParams:@{
-                @"currentUsername" : EMClient.sharedClient.currentUsername
-                    ?: @"",
-                @"isLoginBefore" : @(EMClient.sharedClient.isLoggedIn)
-            }];
+            withParams:nil];
 }
 
 - (void)createAccount:(NSDictionary *)param
@@ -248,6 +244,33 @@
                                       }];
 }
 
+- (void)loginWithAgoraToken:(NSDictionary *)param
+                     result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *username = param[@"username"];
+    NSString *agoraToken = param[@"agoratoken"];
+    [EMClient.sharedClient
+        loginWithUsername:username
+               agoraToken:agoraToken
+               completion:^(NSString *aUsername, EMError *aError) {
+                 [weakSelf onResult:result
+                     withMethodType:ExtSdkMethodKeyLoginWithAgoraToken
+                          withError:aError
+                         withParams:@{
+                             @"username" : aUsername,
+                             @"token" : EMClient.sharedClient.accessUserToken
+                         }];
+               }];
+}
+
+- (void)isConnected:(NSDictionary *)param
+             result:(nonnull id<ExtSdkCallbackObjc>)result {
+    [self onResult:result
+        withMethodType:ExtSdkMethodKeyIsConnected
+             withError:nil
+            withParams:@(EMClient.sharedClient.isConnected)];
+}
+
 #pragma - mark ExtSdkClientDelegate
 
 - (void)connectionStateDidChange:(EMConnectionState)aConnectionState {
@@ -361,33 +384,6 @@
       }
 #endif
     }];
-}
-
-- (void)loginWithAgoraToken:(NSDictionary *)param
-                     result:(nonnull id<ExtSdkCallbackObjc>)result {
-    __weak typeof(self) weakSelf = self;
-    NSString *username = param[@"username"];
-    NSString *agoraToken = param[@"agoratoken"];
-    [EMClient.sharedClient
-        loginWithUsername:username
-               agoraToken:agoraToken
-               completion:^(NSString *aUsername, EMError *aError) {
-                 [weakSelf onResult:result
-                     withMethodType:ExtSdkMethodKeyLoginWithAgoraToken
-                          withError:aError
-                         withParams:@{
-                             @"username" : aUsername,
-                             @"token" : EMClient.sharedClient.accessUserToken
-                         }];
-               }];
-}
-
-- (void)isConnected:(NSDictionary *)param
-             result:(nonnull id<ExtSdkCallbackObjc>)result {
-    [self onResult:result
-        withMethodType:ExtSdkMethodKeyIsConnected
-             withError:nil
-            withParams:@(EMClient.sharedClient.isConnected)];
 }
 
 #pragma mark - AppDelegate

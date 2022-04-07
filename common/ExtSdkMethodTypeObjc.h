@@ -67,6 +67,7 @@ static NSString * _Nonnull const ExtSdkMethodKeyFetchHistoryMessages = @"fetchHi
 static NSString * _Nonnull const ExtSdkMethodKeySearchChatMsgFromDB = @"searchChatMsgFromDB";
 static NSString * _Nonnull const ExtSdkMethodKeyGetMessage = @"getMessage";
 static NSString * _Nonnull const ExtSdkMethodKeyAsyncFetchGroupAcks = @"asyncFetchGroupAcks";
+static NSString * _Nonnull const ExtSdkMethodKeydeleteRemoteConversation = @"deleteRemoteConversation";
 
 #pragma mark - EMChatManagerDelegate
 static NSString * _Nonnull const ExtSdkMethodKeyOnMessagesReceived = @"onMessagesReceived";
@@ -293,6 +294,7 @@ static const int ExtSdkMethodKeyFetchHistoryMessagesValue = 519;
 static const int ExtSdkMethodKeySearchChatMsgFromDBValue = 520;
 static const int ExtSdkMethodKeyGetMessageValue = 521;
 static const int ExtSdkMethodKeyAsyncFetchGroupAcksValue = 522;
+static const int ExtSdkMethodKeydeleteRemoteConversationValue = 523;
 
 #pragma mark - EMChatManagerDelegate value
 static const int ExtSdkMethodKeyOnMessagesReceivedValue = 600;
