@@ -333,4 +333,16 @@ RCT_EXPORT_METHOD(callMethod
     ];
 }
 
+- (void)invalidate NS_REQUIRES_SUPER {
+    [super invalidate];
+    NSLog(@"%@: invalidate:", TAG);
+}
+
+- (void)addListener:(NSString *)eventName {
+    NSLog(@"%@: addListener: %@", TAG, eventName);
+}
+- (void)removeListeners:(double)count {
+    NSLog(@"%@: removeListeners: %f", TAG, count);
+}
+
 @end

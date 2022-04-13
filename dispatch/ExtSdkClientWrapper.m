@@ -53,7 +53,9 @@
     }
     //    options.enableConsoleLog = YES;
     [EMClient.sharedClient initializeSDKWithOptions:options];
+    [EMClient.sharedClient removeDelegate:self];
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];
+    [EMClient.sharedClient removeMultiDevicesDelegate:self];
     [EMClient.sharedClient addMultiDevicesDelegate:self delegateQueue:nil];
 
     // 如果有证书名，说明要使用Apns
@@ -276,7 +278,7 @@
             withParams:@(EMClient.sharedClient.isConnected)];
 }
 
-#pragma - mark ExtSdkClientDelegate
+#pragma - mark EMClientDelegate
 
 - (void)connectionStateDidChange:(EMConnectionState)aConnectionState {
     BOOL isConnected = aConnectionState == EMConnectionConnected;
@@ -321,7 +323,7 @@
     [self onReceive:ExtSdkMethodKeyOnTokenDidExpire withParams:nil];
 }
 
-#pragma mark - ExtSdkMultiDevicesDelegate
+#pragma mark - EMMultiDevicesDelegate
 
 - (void)multiDevicesContactEventDidReceive:(EMMultiDevicesEvent)aEvent
                                   username:(NSString *)aUsername
