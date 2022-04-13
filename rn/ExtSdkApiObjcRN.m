@@ -41,6 +41,7 @@ static NSString *const TAG = @"ExtSdkApiRN";
     if (self) {
         self->impl = [[ExtSdkApiRNImpl alloc] init];
         self->delegate = [[ExtSdkDelegateObjcRN alloc] initWithApi:self];
+        [self->impl addListener:[[ExtSdkDelegateObjcRN alloc] initWithApi:self]];
         [self registerSystemNotify];
     }
     return self;
@@ -127,13 +128,17 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyCurrentUser,
         ExtSdkMethodKeyGetLoggedInDevicesFromServer,
         ExtSdkMethodKeyGetToken,
+        ExtSdkMethodKeyLoginWithAgoraToken,
+        ExtSdkMethodKeyGetCurrentUser,
+        ExtSdkMethodKeyIsConnected,
 
         /// EMClientDelegate
         ExtSdkMethodKeyOnConnected,
         ExtSdkMethodKeyOnDisconnected,
         ExtSdkMethodKeyOnMultiDeviceEvent,
-
         ExtSdkMethodKeySendDataToFlutter,
+        ExtSdkMethodKeyOnTokenWillExpire,
+        ExtSdkMethodKeyOnTokenDidExpire,
 
         /// EMContactManagerWrapper
         ExtSdkMethodKeyAddContact,
@@ -314,6 +319,11 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyUpdateGroupPushService,
         ExtSdkMethodKeyGetNoDisturbGroups,
         ExtSdkMethodKeyBindDeviceToken,
+        ExtSdkMethodKeyEnablePush,
+        ExtSdkMethodKeyDisablePush,
+        ExtSdkMethodKeyGetNoPushGroups,
+        ExtSdkMethodKeySetNoDisturbUsers,
+        ExtSdkMethodKeyGetNoDisturbUsersFromServer,
 
         /// EMUserInfoManagerWrapper
         ExtSdkMethodKeyUpdateOwnUserInfo,

@@ -38,14 +38,18 @@
       if (!strongSelf) {
           return;
       }
-      RCTPromiseRejectBlock callback = [strongSelf getReject];
-      if (nil != callback) {
-          NSDictionary *map = (NSDictionary *)ext;
-          NSDictionary *error = map[@"error"];
-          NSNumber *code = error[@"code"];
-          NSString *description = error[@"description"];
-          callback([NSString stringWithFormat:@"%d", [code intValue]], description, nil);
-      }
+        RCTPromiseResolveBlock callback = [strongSelf getResolve];
+        if (nil != callback) {
+            callback(ext);
+        }
+//      RCTPromiseRejectBlock callback = [strongSelf getReject]; // todo: 后续修改
+//      if (nil != callback) {
+//          NSDictionary *map = (NSDictionary *)ext;
+//          NSDictionary *error = map[@"error"];
+//          NSNumber *code = error[@"code"];
+//          NSString *description = error[@"description"];
+//          callback([NSString stringWithFormat:@"%d", [code intValue]], description, nil);
+//      }
     }];
 }
 

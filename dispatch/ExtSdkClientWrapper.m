@@ -46,6 +46,11 @@
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     EMOptions *options = [EMOptions fromJsonObject:param];
+    if (nil == options) {
+        EMError *e = [EMError errorWithDescription:@"params parse error." code:1];
+        [self onResult:result withMethodType:ExtSdkMethodKeyInit withError:e withParams:nil];
+        return;
+    }
     //    options.enableConsoleLog = YES;
     [EMClient.sharedClient initializeSDKWithOptions:options];
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];

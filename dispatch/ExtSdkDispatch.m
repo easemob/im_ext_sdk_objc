@@ -1,6 +1,7 @@
 #import "ExtSdkDispatch.h"
 #import "ExtSdkDelegateObjc.h"
 #import "ExtSdkMethodTypeObjc.h"
+#import "ExtSdkTypeUtilObjc.h"
 
 #import "ExtSdkClientWrapper.h"
 #import "ExtSdkChatManagerWrapper.h"
@@ -39,6 +40,17 @@ static NSString* const TAG = @"ExtSdkDispatch";
       withCallback:(nonnull id<ExtSdkCallbackObjc>)callback {
     NSLog(@"%@: callSdkApi: %@, %@", TAG, methodType, params != nil ? params : @"");
            NSDictionary * ps = (NSDictionary*)params;
+    
+    if ([ExtSdkTypeUtilObjc currentArchitectureType] == ExtSdkArchitectureTypeValueFlutter) {
+        
+    } else if ([ExtSdkTypeUtilObjc currentArchitectureType] == ExtSdkArchitectureTypeValueUnity) {
+        
+    } else if ([ExtSdkTypeUtilObjc currentArchitectureType] == ExtSdkArchitectureTypeValueRN) {
+        NSArray* a = [ps allValues];
+        ps = a.firstObject;
+    } else {
+        @throw @"This type is not supported.";
+    }
 
     switch ([ExtSdkMethodTypeObjc getEnumValue:methodType]) {
             
