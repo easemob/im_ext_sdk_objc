@@ -36,25 +36,28 @@
 
     [EMClient.sharedClient.chatManager sendMessage:msg
         progress:^(int progress) {
-          [weakSelf onReceive:ExtSdkMethodKeyOnMessageProgressUpdate
+          [weakSelf onReceive:aChannelName
                    withParams:@{
                        @"progress" : @(progress),
-                       @"localTime" : @(msg.localTime)
+                       @"localTime" : @(msg.localTime),
+                       @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
                    }];
         }
         completion:^(EMChatMessage *message, EMError *error) {
           if (error) {
-              [weakSelf onReceive:ExtSdkMethodKeyOnMessageError
+              [weakSelf onReceive:aChannelName
                        withParams:@{
                            @"error" : [error toJsonObject],
                            @"localTime" : @(msg.localTime),
-                           @"message" : [message toJsonObject]
+                           @"message" : [message toJsonObject],
+                           @"callbackType" : ExtSdkMethodKeyOnMessageError
                        }];
           } else {
-              [weakSelf onReceive:ExtSdkMethodKeyOnMessageSuccess
+              [weakSelf onReceive:aChannelName
                        withParams:@{
                            @"message" : [message toJsonObject],
-                           @"localTime" : @(msg.localTime)
+                           @"localTime" : @(msg.localTime),
+                           @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
                        }];
           }
         }];
@@ -74,25 +77,28 @@
 
     [EMClient.sharedClient.chatManager resendMessage:msg
         progress:^(int progress) {
-          [weakSelf onReceive:ExtSdkMethodKeyOnMessageProgressUpdate
+          [weakSelf onReceive:aChannelName
                    withParams:@{
                        @"progress" : @(progress),
-                       @"localTime" : @(msg.localTime)
+                       @"localTime" : @(msg.localTime),
+                       @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
                    }];
         }
         completion:^(EMChatMessage *message, EMError *error) {
           if (error) {
-              [weakSelf onReceive:ExtSdkMethodKeyOnMessageError
+              [weakSelf onReceive:aChannelName
                        withParams:@{
                            @"error" : [error toJsonObject],
                            @"localTime" : @(msg.localTime),
-                           @"message" : [message toJsonObject]
+                           @"message" : [message toJsonObject],
+                           @"callbackType" : ExtSdkMethodKeyOnMessageError
                        }];
           } else {
-              [weakSelf onReceive:ExtSdkMethodKeyOnMessageSuccess
+              [weakSelf onReceive:aChannelName
                        withParams:@{
                            @"message" : [message toJsonObject],
-                           @"localTime" : @(msg.localTime)
+                           @"localTime" : @(msg.localTime),
+                           @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
                        }];
           }
         }];
