@@ -339,9 +339,11 @@ RCT_EXPORT_METHOD(callMethod
 }
 
 - (void)addListener:(NSString *)eventName {
+    [super addListener:eventName];
     NSLog(@"%@: addListener: %@", TAG, eventName);
 }
 - (void)removeListeners:(double)count {
+    [super removeListeners:count];
     NSLog(@"%@: removeListeners: %f", TAG, count);
 }
 
