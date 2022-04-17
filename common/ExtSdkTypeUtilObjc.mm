@@ -1,6 +1,6 @@
 //
 //  ExtSdkTypeUtilObjc.m
-//  react-native-easemob
+//  react-native-chat-sdk
 //
 //  Created by asterisk on 2022/4/13.
 //

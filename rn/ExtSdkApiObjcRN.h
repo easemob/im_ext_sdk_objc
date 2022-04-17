@@ -1,6 +1,6 @@
 //
 //  ExtSdkApiObjcRN.h
-//  react-native-easemob
+//  react-native-chat-sdk
 //
 //  Created by asterisk on 2022/3/29.
 //
