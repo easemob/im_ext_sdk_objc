@@ -57,6 +57,8 @@
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];
     [EMClient.sharedClient removeMultiDevicesDelegate:self];
     [EMClient.sharedClient addMultiDevicesDelegate:self delegateQueue:nil];
+    
+    [ExtSdkChatManagerWrapper.getInstance initSdk];
 
     // 如果有证书名，说明要使用Apns
     if (options.apnsCertName.length > 0) {

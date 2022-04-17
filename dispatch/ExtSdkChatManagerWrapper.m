@@ -25,6 +25,10 @@
     return instance;
 }
 
+- (void)initSdk {
+    [EMClient.sharedClient.chatManager addDelegate:self delegateQueue:nil];
+}
+
 #pragma mark - Actions
 
 - (void)sendMessage:(NSDictionary *)param
@@ -563,7 +567,7 @@
                       }];
 }
 
-#pragma mark - ExtSdkChatManagerDelegate
+#pragma mark - EMChatManagerDelegate
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {
     [self onReceive:ExtSdkMethodKeyOnConversationUpdate withParams:nil];

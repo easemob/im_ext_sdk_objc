@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nonnull instancetype)getInstance;
 
+- (void)initSdk;
+
 - (void)sendMessage:(NSDictionary *)param
      withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result;
