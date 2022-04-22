@@ -47,8 +47,12 @@
 
     EMOptions *options = [EMOptions fromJsonObject:param];
     if (nil == options) {
-        EMError *e = [EMError errorWithDescription:@"params parse error." code:1];
-        [self onResult:result withMethodType:ExtSdkMethodKeyInit withError:e withParams:nil];
+        EMError *e = [EMError errorWithDescription:@"params parse error."
+                                              code:1];
+        [self onResult:result
+            withMethodType:ExtSdkMethodKeyInit
+                 withError:e
+                withParams:nil];
         return;
     }
     //    options.enableConsoleLog = YES;
@@ -57,7 +61,7 @@
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];
     [EMClient.sharedClient removeMultiDevicesDelegate:self];
     [EMClient.sharedClient addMultiDevicesDelegate:self delegateQueue:nil];
-    
+
     [ExtSdkChatManagerWrapper.getInstance initSdk];
 
     // 如果有证书名，说明要使用Apns
@@ -249,7 +253,7 @@
                                             withMethodType:
                                                 ExtSdkMethodKeyGetLoggedInDevicesFromServer
                                                  withError:aError
-                                                withParams:nil];
+                                                withParams:list];
                                       }];
 }
 
@@ -278,6 +282,16 @@
         withMethodType:ExtSdkMethodKeyIsConnected
              withError:nil
             withParams:@(EMClient.sharedClient.isConnected)];
+}
+
+- (void)renewToken:(NSDictionary *)param
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *newAgoraToken = param[@"agora_token"];
+    [EMClient.sharedClient renewToken:newAgoraToken];
+    [self onResult:result
+        withMethodType:ExtSdkMethodKeyRenewToken
+             withError:nil
+            withParams:nil];
 }
 
 #pragma - mark EMClientDelegate
