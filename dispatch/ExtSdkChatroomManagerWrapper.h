@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nonnull instancetype)getInstance;
 
+- (void)initSDK;
+
 - (void)getChatroomsFromServer:(NSDictionary *)param
                         result:(nonnull id<ExtSdkCallbackObjc>)result;
 

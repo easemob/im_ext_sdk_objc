@@ -26,6 +26,7 @@
 }
 
 - (void)initSdk {
+    [EMClient.sharedClient.chatManager removeDelegate:self];
     [EMClient.sharedClient.chatManager addDelegate:self delegateQueue:nil];
 }
 

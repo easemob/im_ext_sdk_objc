@@ -27,6 +27,11 @@
     return instance;
 }
 
+- (void)initSdk {
+    [EMClient.sharedClient.groupManager removeDelegate:self];
+    [EMClient.sharedClient.groupManager addDelegate:self delegateQueue:nil];
+}
+
 #pragma mark - Actions
 
 - (void)getGroupWithId:(NSDictionary *)param

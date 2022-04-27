@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nonnull instancetype)getInstance;
 
+- (void)initSdk;
+
 - (void)getGroupWithId:(NSDictionary *)param
                 result:(nonnull id<ExtSdkCallbackObjc>)result;
 
