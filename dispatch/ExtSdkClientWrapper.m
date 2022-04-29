@@ -55,7 +55,7 @@
                 withParams:nil];
         return;
     }
-    //    options.enableConsoleLog = YES;
+        options.enableConsoleLog = YES;
     [EMClient.sharedClient initializeSDKWithOptions:options];
     [EMClient.sharedClient removeDelegate:self];
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];
