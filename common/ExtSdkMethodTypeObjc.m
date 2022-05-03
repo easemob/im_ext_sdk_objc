@@ -33,6 +33,7 @@
             ExtSdkMethodKeyLoginWithAgoraToken: @(ExtSdkMethodKeyLoginWithAgoraTokenValue),
             ExtSdkMethodKeyGetCurrentUser: @(ExtSdkMethodKeyGetCurrentUserValue),
             ExtSdkMethodKeyIsConnected: @(ExtSdkMethodKeyIsConnectedValue),
+            ExtSdkMethodKeyRenewToken: @(ExtSdkMethodKeyRenewTokenValue),
 
             /// EMClientDelegate
             ExtSdkMethodKeyOnConnected: @(ExtSdkMethodKeyOnConnectedValue),

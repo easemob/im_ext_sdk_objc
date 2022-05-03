@@ -26,6 +26,7 @@
 }
 
 - (void)initSdk {
+    [EMClient.sharedClient.chatManager removeDelegate:self];
     [EMClient.sharedClient.chatManager addDelegate:self delegateQueue:nil];
 }
 
@@ -295,30 +296,34 @@
             withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    __block EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
+    __block EMChatMessage *msg =
+        [EMChatMessage fromJsonObject:param[@"message"]];
     EMChatMessage *needDownMSg = [EMClient.sharedClient.chatManager
         getMessageWithMessageId:msg.messageId];
     [EMClient.sharedClient.chatManager downloadMessageAttachment:needDownMSg
         progress:^(int progress) {
-          [weakSelf onReceive:ExtSdkMethodKeyOnMessageProgressUpdate
+          [weakSelf onReceive:aChannelName
                    withParams:@{
                        @"progress" : @(progress),
-                       @"localTime" : @(msg.localTime)
+                       @"localTime" : @(msg.localTime),
+                       @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
                    }];
         }
         completion:^(EMChatMessage *message, EMError *error) {
           if (error) {
-              [weakSelf onReceive:ExtSdkMethodKeyOnMessageError
+              [weakSelf onReceive:aChannelName
                        withParams:@{
                            @"error" : [error toJsonObject],
                            @"localTime" : @(msg.localTime),
-                           @"message" : [message toJsonObject]
+                           @"message" : [message toJsonObject],
+                           @"callbackType" : ExtSdkMethodKeyOnMessageError
                        }];
           } else {
-              [weakSelf onReceive:ExtSdkMethodKeyOnMessageSuccess
+              [weakSelf onReceive:aChannelName
                        withParams:@{
                            @"message" : [message toJsonObject],
-                           @"localTime" : @(msg.localTime)
+                           @"localTime" : @(msg.localTime),
+                           @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
                        }];
           }
         }];
@@ -333,30 +338,34 @@
            withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    __block EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
+    __block EMChatMessage *msg =
+        [EMChatMessage fromJsonObject:param[@"message"]];
     EMChatMessage *needDownMSg = [EMClient.sharedClient.chatManager
         getMessageWithMessageId:msg.messageId];
     [EMClient.sharedClient.chatManager downloadMessageThumbnail:needDownMSg
         progress:^(int progress) {
-          [weakSelf onReceive:ExtSdkMethodKeyOnMessageProgressUpdate
+          [weakSelf onReceive:aChannelName
                    withParams:@{
                        @"progress" : @(progress),
-                       @"localTime" : @(msg.localTime)
+                       @"localTime" : @(msg.localTime),
+                       @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
                    }];
         }
         completion:^(EMChatMessage *message, EMError *error) {
           if (error) {
-              [weakSelf onReceive:ExtSdkMethodKeyOnMessageError
+              [weakSelf onReceive:aChannelName
                        withParams:@{
                            @"error" : [error toJsonObject],
                            @"localTime" : @(msg.localTime),
-                           @"message" : [message toJsonObject]
+                           @"message" : [message toJsonObject],
+                           @"callbackType" : ExtSdkMethodKeyOnMessageError
                        }];
           } else {
-              [weakSelf onReceive:ExtSdkMethodKeyOnMessageSuccess
+              [weakSelf onReceive:aChannelName
                        withParams:@{
                            @"message" : [message toJsonObject],
-                           @"localTime" : @(msg.localTime)
+                           @"localTime" : @(msg.localTime),
+                           @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
                        }];
           }
         }];

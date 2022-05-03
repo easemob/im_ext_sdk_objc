@@ -1,6 +1,6 @@
 //
 //  ExtSdkApiObjcRN.m
-//  react-native-easemob
+//  react-native-chat-sdk
 //
 //  Created by asterisk on 2022/3/29.
 //
@@ -62,11 +62,11 @@ static NSString *const TAG = @"ExtSdkApiRN";
 
 - (void)registerSystemNotify {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillEnterForeground)
+                                             selector:@selector(applicationWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground)
+                                             selector:@selector(applicationDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
 }

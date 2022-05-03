@@ -253,7 +253,7 @@
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
 
-    EMMessageBodyType type = [EMMessageBody typeFromString:param[@"type"]];
+    EMMessageBodyType type = [EMMessageBody typeFromString:param[@"msg_type"]];
     long long timeStamp = [param[@"timeStamp"] longLongValue];
     int count = [param[@"count"] intValue];
     NSString *sender = param[@"sender"];

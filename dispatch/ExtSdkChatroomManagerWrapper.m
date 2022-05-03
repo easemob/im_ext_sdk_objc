@@ -25,6 +25,11 @@
     return instance;
 }
 
+- (void)initSDK {
+    [EMClient.sharedClient.roomManager removeDelegate:self];
+    [EMClient.sharedClient.roomManager addDelegate:self delegateQueue:nil];
+}
+
 #pragma mark - Actions
 
 - (void)getChatroomsFromServer:(NSDictionary *)param

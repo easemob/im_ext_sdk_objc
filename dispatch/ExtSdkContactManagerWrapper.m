@@ -23,6 +23,10 @@
     return instance;
 }
 
+- (void)initSdk {
+    [EMClient.sharedClient.contactManager removeDelegate:self];
+    [EMClient.sharedClient.contactManager addDelegate:self delegateQueue:nil];
+}
 
 #pragma mark - Actions
 - (void)addContact:(NSDictionary *)param

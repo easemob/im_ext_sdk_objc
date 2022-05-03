@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nonnull instancetype)getInstance;
 
+- (void)initSdk;
+
 - (void)addContact:(NSDictionary *)param
             result:(nonnull id<ExtSdkCallbackObjc>)result;
 

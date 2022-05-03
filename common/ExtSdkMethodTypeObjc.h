@@ -17,6 +17,7 @@ static NSString * _Nonnull const ExtSdkMethodKeyGetToken = @"getToken";
 static NSString * _Nonnull const ExtSdkMethodKeyLoginWithAgoraToken = @"loginWithAgoraToken";
 static NSString * _Nonnull const ExtSdkMethodKeyGetCurrentUser = @"getCurrentUser";
 static NSString * _Nonnull const ExtSdkMethodKeyIsConnected = @"isConnected";
+static NSString * _Nonnull const ExtSdkMethodKeyRenewToken = @"renewToken";
 
 #pragma mark - EMClientDelegate
 static NSString * _Nonnull const ExtSdkMethodKeyOnConnected = @"onConnected";
@@ -244,6 +245,7 @@ static const int ExtSdkMethodKeyGetTokenValue = 112;
 static const int ExtSdkMethodKeyLoginWithAgoraTokenValue = 113;
 static const int ExtSdkMethodKeyGetCurrentUserValue = 114;
 static const int ExtSdkMethodKeyIsConnectedValue = 115;
+static const int ExtSdkMethodKeyRenewTokenValue = 116;
 
 #pragma mark - EMClientDelegate value
 static const int ExtSdkMethodKeyOnConnectedValue = 200;
