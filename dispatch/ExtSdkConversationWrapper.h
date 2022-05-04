@@ -25,9 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)markMsgAsRead:(NSDictionary *)param
                result:(nonnull id<ExtSdkCallbackObjc>)result;
 
-- (void)syncConversationName:(NSDictionary *)param
-                      result:(nonnull id<ExtSdkCallbackObjc>)result;
-
 - (void)syncConversationExt:(NSDictionary *)param
                      result:(nonnull id<ExtSdkCallbackObjc>)result;
 

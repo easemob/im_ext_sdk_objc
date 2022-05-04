@@ -308,11 +308,12 @@
     NSString *to = aJson[@"to"];
     NSString *conversationId = aJson[@"conversationId"];
 
-    EMChatMessage *msg = [[EMChatMessage alloc] initWithConversationID:conversationId
-                                                          from:from
-                                                            to:to
-                                                          body:body
-                                                           ext:nil];
+    EMChatMessage *msg =
+        [[EMChatMessage alloc] initWithConversationID:conversationId
+                                                 from:from
+                                                   to:to
+                                                 body:body
+                                                  ext:nil];
     if (aJson[@"msgId"]) {
         msg.messageId = aJson[@"msgId"];
     }
@@ -927,6 +928,27 @@
     data[@"noDisturbStartHour"] = @(self.noDisturbingStartH);
     data[@"noDisturbEndHour"] = @(self.noDisturbingEndH);
     return data;
+}
+
+@end
+
+@implementation EMPresence (Json)
+
+- (nonnull NSDictionary *)toJsonObject {
+
+    return @{
+        //        @"publisher": self.publisher,
+        //        @"statusDetails": self.stat
+
+    };
+}
+
+@end
+
+@implementation EMPresenceStatusDetail (Helper)
+
+- (nonnull NSDictionary *)toJsonObject {
+    return @{@"device" : self.device, @"statue" : @(self.status)};
 }
 
 @end

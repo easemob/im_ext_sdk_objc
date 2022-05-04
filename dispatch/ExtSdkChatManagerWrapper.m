@@ -521,33 +521,6 @@
                      }];
 }
 
-- (void)updateConversationsName:(NSDictionary *)param
-                 withMethodType:(NSString *)aChannelName
-                         result:(nonnull id<ExtSdkCallbackObjc>)result {
-    __weak typeof(self) weakSelf = self;
-    NSDictionary *namesMap = param[@"name_map"];
-
-    NSArray *conversationsList =
-        EMClient.sharedClient.chatManager.getAllConversations;
-    for (EMConversation *con in conversationsList) {
-        if (namesMap[con.conversationId]) {
-            NSMutableDictionary *ext = [con.ext mutableCopy];
-            if (!ext) {
-                ext = [NSMutableDictionary dictionary];
-            }
-            NSString *current = ext[@"con_name"] ?: @"";
-            if (![current isEqualToString:namesMap[@"con_name"]]) {
-                ext[@"con_name"] = namesMap[@"con_name"];
-                con.ext = ext;
-            }
-        }
-    }
-    [weakSelf onResult:result
-        withMethodType:aChannelName
-             withError:nil
-            withParams:@(true)];
-}
-
 - (void)deleteRemoteConversation:(NSDictionary *)param
                      channelName:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result {
@@ -638,8 +611,6 @@
 
 - (void)messageStatusDidChange:(EMChatMessage *)aMessage
                      withError:(EMError *)aError {
-    [self onReceive:ExtSdkMethodKeyOnMessageStatusChanged
-         withParams:@{@"message" : [aMessage toJsonObject]}];
 }
 
 // TODO: 安卓未找到对应回调
