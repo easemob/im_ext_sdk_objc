@@ -42,6 +42,13 @@
             ExtSdkMethodKeySendDataToFlutter: @(ExtSdkMethodKeySendDataToFlutterValue),
             ExtSdkMethodKeyOnTokenWillExpire: @(ExtSdkMethodKeyOnTokenWillExpireValue),
             ExtSdkMethodKeyOnTokenDidExpire: @(ExtSdkMethodKeyOnTokenDidExpireValue),
+            ExtSdkMethodKeyOnUserDidLoginFromOtherDevice: @(ExtSdkMethodKeyOnUserDidLoginFromOtherDeviceValue),
+            ExtSdkMethodKeyOnUserDidRemoveFromServer: @(ExtSdkMethodKeyOnUserDidRemoveFromServerValue),
+            ExtSdkMethodKeyOnUserDidForbidByServer: @(ExtSdkMethodKeyOnUserDidForbidByServerValue),
+            ExtSdkMethodKeyOnUserDidChangePassword: @(ExtSdkMethodKeyOnUserDidChangePasswordValue),
+            ExtSdkMethodKeyOnUserDidLoginTooManyDevice: @(ExtSdkMethodKeyOnUserDidLoginTooManyDeviceValue),
+            ExtSdkMethodKeyOnUserKickedByOtherDevice: @(ExtSdkMethodKeyOnUserKickedByOtherDeviceValue),
+            ExtSdkMethodKeyOnUserAuthenticationFailed: @(ExtSdkMethodKeyOnUserAuthenticationFailedValue),
 
             /// EMContactManagerWrapper
             ExtSdkMethodKeyAddContact: @(ExtSdkMethodKeyAddContactValue),
@@ -223,19 +230,20 @@
             ExtSdkMethodKeyUpdateImPushStyle: @(ExtSdkMethodKeyUpdateImPushStyleValue),
             ExtSdkMethodKeyUpdateGroupPushService: @(ExtSdkMethodKeyUpdateGroupPushServiceValue),
             ExtSdkMethodKeyGetNoDisturbGroups: @(ExtSdkMethodKeyGetNoDisturbGroupsValue),
-            
-
-            /// EMUserInfoManagerWrapper
-            ExtSdkMethodKeyUpdateOwnUserInfo: @(ExtSdkMethodKeyUpdateOwnUserInfoValue),
-            ExtSdkMethodKeyUpdateOwnUserInfoWithType: @(ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue),
-            ExtSdkMethodKeyFetchUserInfoById: @(ExtSdkMethodKeyFetchUserInfoByIdValue),
-            ExtSdkMethodKeyFetchUserInfoByIdWithType: @(ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue),
             ExtSdkMethodKeyBindDeviceToken: @(ExtSdkMethodKeyBindDeviceTokenValue),
             ExtSdkMethodKeyEnablePush: @(ExtSdkMethodKeyEnablePushValue),
             ExtSdkMethodKeyDisablePush: @(ExtSdkMethodKeyDisablePushValue),
             ExtSdkMethodKeyGetNoPushGroups: @(ExtSdkMethodKeyGetNoPushGroupsValue),
             ExtSdkMethodKeySetNoDisturbUsers: @(ExtSdkMethodKeySetNoDisturbUsersValue),
             ExtSdkMethodKeyGetNoDisturbUsersFromServer: @(ExtSdkMethodKeyGetNoDisturbUsersFromServerValue),
+            ExtSdkMethodKeyUpdateUserPushService: @(ExtSdkMethodKeyUpdateUserPushServiceValue),
+            ExtSdkMethodKeyGetNoPushUsers: @(ExtSdkMethodKeyGetNoPushUsersValue),
+
+            /// EMUserInfoManagerWrapper
+            ExtSdkMethodKeyUpdateOwnUserInfo: @(ExtSdkMethodKeyUpdateOwnUserInfoValue),
+            ExtSdkMethodKeyUpdateOwnUserInfoWithType: @(ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue),
+            ExtSdkMethodKeyFetchUserInfoById: @(ExtSdkMethodKeyFetchUserInfoByIdValue),
+            ExtSdkMethodKeyFetchUserInfoByIdWithType: @(ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue),
 
 
         };

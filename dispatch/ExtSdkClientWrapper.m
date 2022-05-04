@@ -6,6 +6,7 @@
 //
 
 #import "ExtSdkClientWrapper.h"
+#import "EMPresenceManagerWrapper.h"
 #import "ExtSdkChatManagerWrapper.h"
 #import "ExtSdkChatroomManagerWrapper.h"
 #import "ExtSdkContactManagerWrapper.h"
@@ -16,6 +17,7 @@
 #import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkToJson.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
+#import "ExtSdkPresenceManagerWrapper.h"
 #import <UserNotifications/UserNotifications.h>
 
 @interface ExtSdkClientWrapper () <EMClientDelegate, EMMultiDevicesDelegate>
@@ -55,7 +57,7 @@
                 withParams:nil];
         return;
     }
-        options.enableConsoleLog = YES;
+    options.enableConsoleLog = YES;
     [EMClient.sharedClient initializeSDKWithOptions:options];
     [EMClient.sharedClient removeDelegate:self];
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];
@@ -66,11 +68,8 @@
     [ExtSdkChatroomManagerWrapper.getInstance initSDK];
     [ExtSdkContactManagerWrapper.getInstance initSdk];
     [ExtSdkGroupManagerWrapper.getInstance initSdk];
+    [ExtSdkPresenceManagerWrapper.getInstance initSdk];
 
-    // 如果有证书名，说明要使用Apns
-    if (options.apnsCertName.length > 0) {
-        [self _registerAPNs];
-    }
     [self onResult:result
         withMethodType:ExtSdkMethodKeyInit
              withError:nil
@@ -302,44 +301,49 @@
 - (void)connectionStateDidChange:(EMConnectionState)aConnectionState {
     BOOL isConnected = aConnectionState == EMConnectionConnected;
     if (isConnected) {
-        [self onConnected];
+        [self onReceive:ExtSdkMethodKeyOnConnected withParams:nil];
     } else {
-        [self onDisconnected:2]; // 需要明确具体的code
+        [self onReceive:ExtSdkMethodKeyOnDisconnected withParams:nil];
     }
 }
 
 - (void)autoLoginDidCompleteWithError:(EMError *)aError {
-    if (aError) {
-        [self onDisconnected:1]; // 需要明确具体的code
-    } else {
-        [self onConnected];
-    }
 }
 
-- (void)userAccountDidLoginFromOtherDevice {
-    [self onDisconnected:206];
-}
-
-- (void)userAccountDidRemoveFromServer {
-    [self onDisconnected:207];
-}
-
-- (void)userDidForbidByServer {
-    [self onDisconnected:305];
-}
-
-- (void)userAccountDidForcedToLogout:(EMError *)aError {
-    [self onDisconnected:1]; // 需要明确具体的code
-}
-
-// 声网token即将过期
 - (void)tokenWillExpire:(int)aErrorCode {
     [self onReceive:ExtSdkMethodKeyOnTokenWillExpire withParams:nil];
 }
 
-// 声网token过期
 - (void)tokenDidExpire:(int)aErrorCode {
     [self onReceive:ExtSdkMethodKeyOnTokenDidExpire withParams:nil];
+}
+
+- (void)userAccountDidLoginFromOtherDevice {
+    [self onReceive:ExtSdkMethodKeyOnUserDidLoginFromOtherDevice
+         withParams:nil];
+}
+
+- (void)userAccountDidRemoveFromServer {
+    [self onReceive:ExtSdkMethodKeyOnUserDidRemoveFromServer withParams:nil];
+}
+
+- (void)userDidForbidByServer {
+    [self onReceive:ExtSdkMethodKeyOnUserDidForbidByServer withParams:nil];
+}
+
+- (void)userAccountDidForcedToLogout:(EMError *)aError {
+    if (aError.code == EMErrorUserKickedByChangePassword) {
+        [self onReceive:ExtSdkMethodKeyOnUserDidChangePassword withParams:nil];
+    } else if (aError.code == EMErrorUserLoginTooManyDevices) {
+        [self onReceive:ExtSdkMethodKeyOnUserDidLoginTooManyDevice
+             withParams:nil];
+    } else if (aError.code == EMErrorUserKickedByOtherDevice) {
+        [self onReceive:ExtSdkMethodKeyOnUserKickedByOtherDevice
+             withParams:nil];
+    } else if (aError.code == EMErrorUserAuthenticationFailed) {
+        [self onReceive:ExtSdkMethodKeyOnUserAuthenticationFailed
+             withParams:nil];
+    }
 }
 
 #pragma mark - EMMultiDevicesDelegate
@@ -347,81 +351,21 @@
 - (void)multiDevicesContactEventDidReceive:(EMMultiDevicesEvent)aEvent
                                   username:(NSString *)aUsername
                                        ext:(NSString *)aExt {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    data[@"event"] = @(aEvent);
+    data[@"target"] = aUsername;
+    data[@"ext"] = aExt;
+    [self onReceive:ExtSdkMethodKeyOnMultiDeviceEvent withParams:data];
 }
 
 - (void)multiDevicesGroupEventDidReceive:(EMMultiDevicesEvent)aEvent
                                  groupId:(NSString *)aGroupId
                                      ext:(id)aExt {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    data[@"event"] = @(aEvent);
+    data[@"target"] = aGroupId;
+    data[@"userNames"] = aExt;
+    [self onReceive:ExtSdkMethodKeyOnMultiDeviceEvent withParams:data];
 }
-
-#pragma mark - Merge Android and iOS Method
-- (void)onConnected {
-    [self onReceive:ExtSdkMethodKeyOnConnected
-         withParams:@{@"connected" : @(YES)}];
-}
-
-- (void)onDisconnected:(int)errorCode {
-    [self onReceive:ExtSdkMethodKeyOnDisconnected
-         withParams:@{@"errorCode" : @(errorCode)}];
-}
-
-#pragma mark - register APNs
-- (void)_registerAPNs {
-    [ExtSdkThreadUtilObjc mainThreadExecute:^{
-      UIApplication *application = [UIApplication sharedApplication];
-      application.applicationIconBadgeNumber = 0;
-
-      if (NSClassFromString(@"UNUserNotificationCenter")) {
-          //        [UNUserNotificationCenter
-          //        currentNotificationCenter].delegate = self;
-          [[UNUserNotificationCenter currentNotificationCenter]
-              requestAuthorizationWithOptions:UNAuthorizationOptionBadge |
-                                              UNAuthorizationOptionSound |
-                                              UNAuthorizationOptionAlert
-                            completionHandler:^(BOOL granted, NSError *error) {
-                              if (granted) {
-#if !TARGET_IPHONE_SIMULATOR
-                                  [ExtSdkThreadUtilObjc mainThreadExecute:^{
-                                    [application
-                                        registerForRemoteNotifications];
-                                  }];
-
-#endif
-                              }
-                            }];
-          return;
-      }
-
-      if ([application respondsToSelector:@selector
-                       (registerUserNotificationSettings:)]) {
-          UIUserNotificationType notificationTypes =
-              UIUserNotificationTypeBadge | UIUserNotificationTypeSound |
-              UIUserNotificationTypeAlert;
-          UIUserNotificationSettings *settings =
-              [UIUserNotificationSettings settingsForTypes:notificationTypes
-                                                categories:nil];
-          [application registerUserNotificationSettings:settings];
-      }
-
-#if !TARGET_IPHONE_SIMULATOR
-      if ([application
-              respondsToSelector:@selector(registerForRemoteNotifications)]) {
-          [application registerForRemoteNotifications];
-      }
-#endif
-    }];
-}
-
-#pragma mark - AppDelegate
-
-//- (BOOL)application:(UIApplication *)application
-// didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//
-//    return YES;
-//}
-//
-//- (void)applicationDidBecomeActive:(UIApplication *)application {
-//
-//}
 
 @end

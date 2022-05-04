@@ -94,10 +94,6 @@ NS_ASSUME_NONNULL_BEGIN
              withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result;
 
-- (void)updateConversationsName:(NSDictionary *)param
-                 withMethodType:(NSString *)aChannelName
-                         result:(nonnull id<ExtSdkCallbackObjc>)result;
-
 - (void)deleteRemoteConversation:(NSDictionary *)param
                      channelName:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result;

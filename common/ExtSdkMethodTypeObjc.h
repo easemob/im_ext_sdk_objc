@@ -11,7 +11,7 @@ static NSString * _Nonnull const ExtSdkMethodKeyUploadLog = @"uploadLog";
 static NSString * _Nonnull const ExtSdkMethodKeyCompressLogs = @"compressLogs";
 static NSString * _Nonnull const ExtSdkMethodKeyKickDevice = @"kickDevice";
 static NSString * _Nonnull const ExtSdkMethodKeyKickAllDevices = @"kickAllDevices";
-static NSString * _Nonnull const ExtSdkMethodKeyCurrentUser = @"currentUser"; // 作废 2022.04.06
+static NSString * _Nonnull const ExtSdkMethodKeyCurrentUser = @"currentUser"; // deprecated 2022.04.06
 static NSString * _Nonnull const ExtSdkMethodKeyGetLoggedInDevicesFromServer = @"getLoggedInDevicesFromServer";
 static NSString * _Nonnull const ExtSdkMethodKeyGetToken = @"getToken";
 static NSString * _Nonnull const ExtSdkMethodKeyLoginWithAgoraToken = @"loginWithAgoraToken";
@@ -26,6 +26,14 @@ static NSString * _Nonnull const ExtSdkMethodKeyOnMultiDeviceEvent = @"onMultiDe
 static NSString * _Nonnull const ExtSdkMethodKeySendDataToFlutter = @"onSendDataToFlutter";
 static NSString * _Nonnull const ExtSdkMethodKeyOnTokenWillExpire = @"onTokenWillExpire";
 static NSString * _Nonnull const ExtSdkMethodKeyOnTokenDidExpire = @"onTokenDidExpire";
+
+static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidLoginFromOtherDevice = @"onUserDidLoginFromOtherDevice";
+static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidRemoveFromServer = @"onUserDidRemoveFromServer";
+static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidForbidByServer = @"onUserDidForbidByServer";
+static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidChangePassword = @"onUserDidChangePassword";
+static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidLoginTooManyDevice = @"onUserDidLoginTooManyDevice";
+static NSString * _Nonnull const ExtSdkMethodKeyOnUserKickedByOtherDevice = @"onUserKickedByOtherDevice";
+static NSString * _Nonnull const ExtSdkMethodKeyOnUserAuthenticationFailed = @"onUserAuthenticationFailed";
 
 #pragma mark - EMContactManagerWrapper
 static NSString * _Nonnull const ExtSdkMethodKeyAddContact = @"addContact";
@@ -87,7 +95,7 @@ static NSString * _Nonnull const ExtSdkMethodKeyOnMessageSuccess = @"onMessageSu
 static NSString * _Nonnull const ExtSdkMethodKeyOnMessageError = @"onMessageError";
 static NSString * _Nonnull const ExtSdkMethodKeyOnMessageReadAck = @"onMessageReadAck";
 static NSString * _Nonnull const ExtSdkMethodKeyOnMessageDeliveryAck = @"onMessageDeliveryAck";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessageStatusChanged = @"onMessageStatusChanged";
+static NSString * _Nonnull const ExtSdkMethodKeyOnMessageStatusChanged = @"onMessageStatusChanged"; // deprecated 2022.05.04
 
 #pragma mark - EMConversationWrapper
 
@@ -95,7 +103,7 @@ static NSString * _Nonnull const ExtSdkMethodKeyGetUnreadMsgCount = @"getUnreadM
 static NSString * _Nonnull const ExtSdkMethodKeyMarkAllMsgsAsRead = @"markAllMessagesAsRead";
 static NSString * _Nonnull const ExtSdkMethodKeyMarkMsgAsRead = @"markMessageAsRead";
 static NSString * _Nonnull const ExtSdkMethodKeySyncConversationExt = @"syncConversationExt";
-static NSString * _Nonnull const ExtSdkMethodKeySyncConversationName = @"syncConversationName";
+static NSString * _Nonnull const ExtSdkMethodKeySyncConversationName = @"syncConversationName"; // deprecated 2022.05.04
 static NSString * _Nonnull const ExtSdkMethodKeyRemoveMsg = @"removeMessage";
 static NSString * _Nonnull const ExtSdkMethodKeyGetLatestMsg = @"getLatestMessage";
 static NSString * _Nonnull const ExtSdkMethodKeyGetLatestMsgFromOthers = @"getLatestMessageFromOthers";
@@ -203,16 +211,18 @@ static NSString * _Nonnull const ExtSdkMethodKeyGetImPushConfig = @"getImPushCon
 static NSString * _Nonnull const ExtSdkMethodKeyGetImPushConfigFromServer = @"getImPushConfigFromServer";
 static NSString * _Nonnull const ExtSdkMethodKeyUpdatePushNickname = @"updatePushNickname";
 
-static NSString * _Nonnull const ExtSdkMethodKeyImPushNoDisturb = @"imPushNoDisturb";
+static NSString * _Nonnull const ExtSdkMethodKeyImPushNoDisturb = @"imPushNoDisturb"; // deprecated 2022.05.04
 static NSString * _Nonnull const ExtSdkMethodKeyUpdateImPushStyle = @"updateImPushStyle";
 static NSString * _Nonnull const ExtSdkMethodKeyUpdateGroupPushService = @"updateGroupPushService";
-static NSString * _Nonnull const ExtSdkMethodKeyGetNoDisturbGroups = @"getNoDisturbGroups";
+static NSString * _Nonnull const ExtSdkMethodKeyGetNoDisturbGroups = @"getNoDisturbGroups"; // deprecated 2022.05.04
 static NSString * _Nonnull const ExtSdkMethodKeyBindDeviceToken = @"updateAPNsPushToken";
 static NSString * _Nonnull const ExtSdkMethodKeyEnablePush = @"enableOfflinePush";
 static NSString * _Nonnull const ExtSdkMethodKeyDisablePush = @"disableOfflinePush";
 static NSString * _Nonnull const ExtSdkMethodKeyGetNoPushGroups = @"getNoPushGroups";
-static NSString * _Nonnull const ExtSdkMethodKeySetNoDisturbUsers = @"setNoDisturbUsers";
-static NSString * _Nonnull const ExtSdkMethodKeyGetNoDisturbUsersFromServer = @"getNoDisturbUsersFromServer";
+static NSString * _Nonnull const ExtSdkMethodKeySetNoDisturbUsers = @"setNoDisturbUsers"; // deprecated 2022.05.04
+static NSString * _Nonnull const ExtSdkMethodKeyGetNoDisturbUsersFromServer = @"getNoDisturbUsersFromServer"; // deprecated 2022.05.04
+static NSString * _Nonnull const ExtSdkMethodKeyUpdateUserPushService = @"updateUserPushService";
+static NSString * _Nonnull const ExtSdkMethodKeyGetNoPushUsers = @"getNoPushUsers";
 
 
 #pragma mark - EMUserInfoManagerWrapper
@@ -254,6 +264,13 @@ static const int ExtSdkMethodKeyOnMultiDeviceEventValue = 202;
 static const int ExtSdkMethodKeySendDataToFlutterValue = 203;
 static const int ExtSdkMethodKeyOnTokenWillExpireValue = 204;
 static const int ExtSdkMethodKeyOnTokenDidExpireValue = 205;
+static const int ExtSdkMethodKeyOnUserDidLoginFromOtherDeviceValue = 206;
+static const int ExtSdkMethodKeyOnUserDidRemoveFromServerValue = 207;
+static const int ExtSdkMethodKeyOnUserDidForbidByServerValue = 208;
+static const int ExtSdkMethodKeyOnUserDidChangePasswordValue = 209;
+static const int ExtSdkMethodKeyOnUserDidLoginTooManyDeviceValue = 210;
+static const int ExtSdkMethodKeyOnUserKickedByOtherDeviceValue = 211;
+static const int ExtSdkMethodKeyOnUserAuthenticationFailedValue = 212;
 
 #pragma mark - EMContactManagerWrapper value
 static const int ExtSdkMethodKeyAddContactValue = 300;
@@ -435,18 +452,21 @@ static const int ExtSdkMethodKeyImPushNoDisturbValue = 1003;
 static const int ExtSdkMethodKeyUpdateImPushStyleValue = 1004;
 static const int ExtSdkMethodKeyUpdateGroupPushServiceValue = 1005;
 static const int ExtSdkMethodKeyGetNoDisturbGroupsValue = 1006;
+static const int ExtSdkMethodKeyBindDeviceTokenValue = 1007;
+static const int ExtSdkMethodKeyEnablePushValue = 1008;
+static const int ExtSdkMethodKeyDisablePushValue = 1009;
+static const int ExtSdkMethodKeyGetNoPushGroupsValue = 1010;
+static const int ExtSdkMethodKeySetNoDisturbUsersValue = 1011;
+static const int ExtSdkMethodKeyGetNoDisturbUsersFromServerValue = 1012;
+static const int ExtSdkMethodKeyUpdateUserPushServiceValue = 1013;
+static const int ExtSdkMethodKeyGetNoPushUsersValue = 1014;
 
 #pragma mark - EMUserInfoManagerWrapper value
 static const int ExtSdkMethodKeyUpdateOwnUserInfoValue = 1100;
 static const int ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue = 1101;
 static const int ExtSdkMethodKeyFetchUserInfoByIdValue = 1102;
 static const int ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue = 1103;
-static const int ExtSdkMethodKeyBindDeviceTokenValue = 1104;
-static const int ExtSdkMethodKeyEnablePushValue = 1105;
-static const int ExtSdkMethodKeyDisablePushValue = 1106;
-static const int ExtSdkMethodKeyGetNoPushGroupsValue = 1107;
-static const int ExtSdkMethodKeySetNoDisturbUsersValue = 1108;
-static const int ExtSdkMethodKeyGetNoDisturbUsersFromServerValue = 1109;
+
 
 @interface ExtSdkMethodTypeObjc : NSObject
 

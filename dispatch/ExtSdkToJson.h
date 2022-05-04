@@ -22,6 +22,7 @@
 #import <HyphenateChat/EMPageResult.h>
 #import <HyphenateChat/EMPushOptions.h>
 #import <HyphenateChat/EMUserInfo.h>
+#import <HyphenateChat/EMPresence.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -89,6 +90,14 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface EMPageResult (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface EMPresence (Helper) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface EMPresenceStatusDetail (Json) <ExtSdkToJson>
 - (NSDictionary *)toJsonObject;
 @end
 

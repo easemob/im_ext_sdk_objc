@@ -142,6 +142,41 @@ static NSString *const TAG = @"ExtSdkDispatch";
             withExtension:[NSString stringWithFormat:@"not implement: %@",
                                                      methodType]];
         break;
+    case ExtSdkMethodKeyOnUserDidLoginFromOtherDeviceValue:
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
+        break;
+    case ExtSdkMethodKeyOnUserDidRemoveFromServerValue:
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
+        break;
+    case ExtSdkMethodKeyOnUserDidForbidByServerValue:
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
+        break;
+    case ExtSdkMethodKeyOnUserDidChangePasswordValue:
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
+        break;
+    case ExtSdkMethodKeyOnUserDidLoginTooManyDeviceValue:
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
+        break;
+    case ExtSdkMethodKeyOnUserKickedByOtherDeviceValue:
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
+        break;
+    case ExtSdkMethodKeyOnUserAuthenticationFailedValue:
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
+        break;
 
     /// #pragma mark - EMContactManagerWrapper value
     case ExtSdkMethodKeyAddContactValue:
@@ -305,10 +340,9 @@ static NSString *const TAG = @"ExtSdkDispatch";
     // [callback onFail:1 withExtension:[NSString stringWithFormat:@"not
     // implement: %@", methodType]]; break;
     case ExtSdkMethodKeyUpdateConversationsNameValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            updateConversationsName:ps
-                     withMethodType:ExtSdkMethodKeyUpdateConversationsName
-                             result:callback];
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
         break;
     case ExtSdkMethodKeyFetchHistoryMessagesValue:
         [[ExtSdkChatManagerWrapper getInstance]
@@ -429,8 +463,9 @@ static NSString *const TAG = @"ExtSdkDispatch";
                                                               result:callback];
         break;
     case ExtSdkMethodKeySyncConversationNameValue:
-        [[ExtSdkConversationWrapper getInstance] syncConversationName:ps
-                                                               result:callback];
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
         break;
     case ExtSdkMethodKeyRemoveMsgValue:
         [[ExtSdkConversationWrapper getInstance] removeMsg:ps result:callback];
@@ -843,19 +878,20 @@ static NSString *const TAG = @"ExtSdkDispatch";
 
     /// #pragma mark - EMPushManagerWrapper value
     case ExtSdkMethodKeyGetImPushConfigValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance] getImPushConfig:ps
+                                                 withMethodType:methodType
+                                                         result:callback];
         break;
     case ExtSdkMethodKeyGetImPushConfigFromServerValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance]
+            getImPushConfigFromServer:ps
+                       withMethodType:methodType
+                               result:callback];
         break;
     case ExtSdkMethodKeyUpdatePushNicknameValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance] updatePushNickname:ps
+                                                    withMethodType:methodType
+                                                            result:callback];
         break;
 
     case ExtSdkMethodKeyImPushNoDisturbValue:
@@ -864,14 +900,15 @@ static NSString *const TAG = @"ExtSdkDispatch";
                                                      methodType]];
         break;
     case ExtSdkMethodKeyUpdateImPushStyleValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance] updateImPushStyle:ps
+                                                   withMethodType:methodType
+                                                           result:callback];
         break;
     case ExtSdkMethodKeyUpdateGroupPushServiceValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance]
+            updateGroupPushService:ps
+                    withMethodType:methodType
+                            result:callback];
         break;
     case ExtSdkMethodKeyGetNoDisturbGroupsValue:
         [callback onFail:1
@@ -879,24 +916,24 @@ static NSString *const TAG = @"ExtSdkDispatch";
                                                      methodType]];
         break;
     case ExtSdkMethodKeyBindDeviceTokenValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance] bindDeviceToken:ps
+                                                 withMethodType:methodType
+                                                         result:callback];
         break;
     case ExtSdkMethodKeyEnablePushValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance] enablePush:ps
+                                            withMethodType:methodType
+                                                    result:callback];
         break;
     case ExtSdkMethodKeyDisablePushValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance] disablePush:ps
+                                             withMethodType:methodType
+                                                     result:callback];
         break;
     case ExtSdkMethodKeyGetNoPushGroupsValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [[ExtSdkPushManagerWrapper getInstance] getNoPushGroups:ps
+                                                 withMethodType:methodType
+                                                         result:callback];
         break;
     case ExtSdkMethodKeySetNoDisturbUsersValue:
         [callback onFail:1
@@ -907,6 +944,16 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [callback onFail:1
             withExtension:[NSString stringWithFormat:@"not implement: %@",
                                                      methodType]];
+        break;
+    case ExtSdkMethodKeyUpdateUserPushServiceValue:
+        [[ExtSdkPushManagerWrapper getInstance] updateUserPushService:ps
+                                                       withMethodType:methodType
+                                                               result:callback];
+        break;
+    case ExtSdkMethodKeyGetNoPushUsersValue:
+        [[ExtSdkPushManagerWrapper getInstance] getNoPushUsers:ps
+                                                withMethodType:methodType
+                                                        result:callback];
         break;
 
     /// #pragma mark - EMUserInfoManagerWrapper value
