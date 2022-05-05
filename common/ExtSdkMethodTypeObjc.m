@@ -92,6 +92,9 @@
             ExtSdkMethodKeyGetMessage: @(ExtSdkMethodKeyGetMessageValue),
             ExtSdkMethodKeyAsyncFetchGroupAcks: @(ExtSdkMethodKeyAsyncFetchGroupAcksValue),
             ExtSdkMethodKeydeleteRemoteConversation: @(ExtSdkMethodKeydeleteRemoteConversationValue),
+            
+            ExtSdkMethodKeyTranslateMessage: @(ExtSdkMethodKeyTranslateMessageValue),
+            ExtSdkMethodKeyFetchSupportedLanguages: @(ExtSdkMethodKeyFetchSupportedLanguagesValue),
 
             /// EMChatManagerDelegate
             ExtSdkMethodKeyOnMessagesReceived: @(ExtSdkMethodKeyOnMessagesReceivedValue),
@@ -111,6 +114,9 @@
             ExtSdkMethodKeyOnMessageReadAck: @(ExtSdkMethodKeyOnMessageReadAckValue),
             ExtSdkMethodKeyOnMessageDeliveryAck: @(ExtSdkMethodKeyOnMessageDeliveryAckValue),
             ExtSdkMethodKeyOnMessageStatusChanged: @(ExtSdkMethodKeyOnMessageStatusChangedValue),
+            
+            /// EMPresenceManagerDelegate
+            ExtSdkMethodKeyOnPresenceStatusChanged: @(ExtSdkMethodKeyOnPresenceStatusChangedValue),
 
             /// EMConversationWrapper
 
@@ -245,6 +251,13 @@
             ExtSdkMethodKeyFetchUserInfoById: @(ExtSdkMethodKeyFetchUserInfoByIdValue),
             ExtSdkMethodKeyFetchUserInfoByIdWithType: @(ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue),
 
+            /// EMPresenceManagerWrapper
+            ExtSdkMethodKeyPublishPresenceWithDescription: @(ExtSdkMethodKeyPublishPresenceWithDescriptionValue),
+            ExtSdkMethodKeyPresenceSubscribe: @(ExtSdkMethodKeyPresenceSubscribeValue),
+            ExtSdkMethodKeyPresenceUnsubscribe: @(ExtSdkMethodKeyPresenceUnsubscribeValue),
+            ExtSdkMethodKeyFetchSubscribedMembersWithPageNum: @(ExtSdkMethodKeyFetchSubscribedMembersWithPageNumValue),
+            ExtSdkMethodKeyFetchPresenceStatus: @(ExtSdkMethodKeyFetchPresenceStatusValue),
+            
 
         };
     });

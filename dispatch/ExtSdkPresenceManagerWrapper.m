@@ -6,6 +6,8 @@
 //
 
 #import "ExtSdkPresenceManagerWrapper.h"
+#import "ExtSdkMethodTypeObjc.h"
+#import "ExtSdkToJson.h"
 
 @interface ExtSdkPresenceManagerWrapper () <EMPresenceManagerDelegate>
 
@@ -42,29 +44,82 @@
                             }];
 }
 
-- (void)subscribe:(NSArray<NSString *> *)members
-           expiry:(NSInteger)expiry
-       completion:(void (^)(NSArray<EMPresence *> *presences,
-                            EMError *error))aCompletion {
+- (void)subscribe:(NSDictionary *)param
+      channelName:(NSString *)aChannelName
+           result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSArray *members = param[@"members"];
+    NSInteger expiry = [param[@"expiry"] integerValue];
+
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.presenceManager
+         subscribe:members
+            expiry:expiry
+        completion:^(NSArray<EMPresence *> *presences, EMError *error) {
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:error
+                  withParams:[presences toJsonArray]];
+        }];
 }
 
-- (void)unsubscribe:(NSArray<NSString *> *)members
-         completion:(void (^)(EMError *error))aCompletion {
+- (void)unsubscribe:(NSDictionary *)param
+        channelName:(NSString *)aChannelName
+             result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSArray *members = param[@"members"];
+
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.presenceManager unsubscribe:members
+                                            completion:^(EMError *error) {
+                                              [weakSelf onResult:result
+                                                  withMethodType:aChannelName
+                                                       withError:error
+                                                      withParams:nil];
+                                            }];
 }
 
-- (void)fetchSubscribedMembersWithPageNum:(NSUInteger)pageNum
-                                 pageSize:(NSUInteger)pageSize
-                               Completion:
-                                   (void (^)(NSArray<NSString *> *members,
-                                             EMError *error))aCompletion {
+- (void)fetchSubscribedMembersWithPageNum:(NSDictionary *)param
+                              channelName:(NSString *)aChannelName
+                                   result:
+                                       (nonnull id<ExtSdkCallbackObjc>)result {
+    int pageNum = [param[@"pageNum"] intValue];
+    int pageSize = [param[@"pageSize"] intValue];
+
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.presenceManager
+        fetchSubscribedMembersWithPageNum:pageNum
+                                 pageSize:pageSize
+                               Completion:^(NSArray<NSString *> *members,
+                                            EMError *error) {
+                                 [weakSelf onResult:result
+                                     withMethodType:aChannelName
+                                          withError:error
+                                         withParams:members];
+                               }];
 }
 
-- (void)fetchPresenceStatus:(NSArray<NSString *> *)members
-                 completion:(void (^)(NSArray<EMPresence *> *presences,
-                                      EMError *error))aCompletion {
+- (void)fetchPresenceStatus:(NSDictionary *)param
+                channelName:(NSString *)aChannelName
+                     result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSArray *members = param[@"members"];
+
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.presenceManager
+        fetchPresenceStatus:members
+                 completion:^(NSArray<EMPresence *> *presences,
+                              EMError *error) {
+                   [weakSelf onResult:result
+                       withMethodType:aChannelName
+                            withError:error
+                           withParams:[presences toJsonArray]];
+                 }];
 }
+
+#pragma mark - EMPresenceManagerDelegate
 
 - (void)presenceStatusDidChanged:(NSArray<EMPresence *> *)presences {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    data[@"presences"] = [presences toJsonArray];
+    [self onReceive:ExtSdkMethodKeyOnPresenceStatusChanged withParams:data];
 }
 
 @end

@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import <HyphenateChat/EMChatMessage.h>
 #import <HyphenateChat/EMChatroom.h>
 #import <HyphenateChat/EMConversation.h>
 #import <HyphenateChat/EMCursorResult.h>
@@ -16,13 +17,13 @@
 #import <HyphenateChat/EMGroupMessageAck.h>
 #import <HyphenateChat/EMGroupOptions.h>
 #import <HyphenateChat/EMGroupSharedFile.h>
-#import <HyphenateChat/EMChatMessage.h>
 #import <HyphenateChat/EMMessageBody.h>
 #import <HyphenateChat/EMOptions.h>
 #import <HyphenateChat/EMPageResult.h>
-#import <HyphenateChat/EMPushOptions.h>
-#import <HyphenateChat/EMUserInfo.h>
 #import <HyphenateChat/EMPresence.h>
+#import <HyphenateChat/EMPushOptions.h>
+#import <HyphenateChat/EMTranslateLanguage.h>
+#import <HyphenateChat/EMUserInfo.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -97,10 +98,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)toJsonObject;
 @end
 
-@interface EMPresenceStatusDetail (Json) <ExtSdkToJson>
-- (NSDictionary *)toJsonObject;
-@end
-
 @interface EMPushOptions (Json) <ExtSdkToJson>
 - (NSDictionary *)toJsonObject;
 @end
@@ -108,6 +105,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EMUserInfo (Json) <ExtSdkToJson>
 - (NSDictionary *)toJsonObject;
 + (EMUserInfo *)fromJsonObject:(NSDictionary *)aJson;
+@end
+
+@interface EMTranslateLanguage (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface NSArray (Json)
+- (NSArray *)toJsonArray;
 @end
 
 NS_ASSUME_NONNULL_END

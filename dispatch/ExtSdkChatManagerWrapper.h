@@ -98,6 +98,14 @@ NS_ASSUME_NONNULL_BEGIN
                      channelName:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result;
 
+- (void)translateMessage:(NSDictionary *)param
+             channelName:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchSupportLanguages:(NSDictionary *)param
+                  channelName:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 @end
 
 NS_ASSUME_NONNULL_END
