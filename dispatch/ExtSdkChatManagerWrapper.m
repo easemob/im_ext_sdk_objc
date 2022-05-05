@@ -549,6 +549,39 @@
                       }];
 }
 
+- (void)translateMessage:(NSDictionary *)param
+             channelName:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result {
+    EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
+    NSArray *languages = param[@"languages"];
+
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager
+        translateMessage:msg
+         targetLanguages:languages
+              completion:^(EMChatMessage *message, EMError *error) {
+                [weakSelf onResult:result
+                    withMethodType:aChannelName
+                         withError:error
+                        withParams:@{@"message" : [message toJsonObject]}];
+              }];
+}
+
+- (void)fetchSupportLanguages:(NSDictionary *)param
+                  channelName:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager
+        fetchSupportedLangurages:^(
+            NSArray<EMTranslateLanguage *> *_Nullable languages,
+            EMError *_Nullable error) {
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:error
+                  withParams:[languages toJsonArray]];
+        }];
+}
+
 #pragma mark - EMChatManagerDelegate
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {

@@ -78,6 +78,9 @@ static NSString * _Nonnull const ExtSdkMethodKeyGetMessage = @"getMessage";
 static NSString * _Nonnull const ExtSdkMethodKeyAsyncFetchGroupAcks = @"asyncFetchGroupAcks";
 static NSString * _Nonnull const ExtSdkMethodKeydeleteRemoteConversation = @"deleteRemoteConversation";
 
+static NSString * _Nonnull const ExtSdkMethodKeyTranslateMessage = @"translateMessage";
+static NSString * _Nonnull const ExtSdkMethodKeyFetchSupportedLanguages = @"fetchSupportLanguages";
+
 #pragma mark - EMChatManagerDelegate
 static NSString * _Nonnull const ExtSdkMethodKeyOnMessagesReceived = @"onMessagesReceived";
 static NSString * _Nonnull const ExtSdkMethodKeyOnCmdMessagesReceived = @"onCmdMessagesReceived";
@@ -96,6 +99,9 @@ static NSString * _Nonnull const ExtSdkMethodKeyOnMessageError = @"onMessageErro
 static NSString * _Nonnull const ExtSdkMethodKeyOnMessageReadAck = @"onMessageReadAck";
 static NSString * _Nonnull const ExtSdkMethodKeyOnMessageDeliveryAck = @"onMessageDeliveryAck";
 static NSString * _Nonnull const ExtSdkMethodKeyOnMessageStatusChanged = @"onMessageStatusChanged"; // deprecated 2022.05.04
+
+#pragma mark - EMPresenceManagerDelegate
+static NSString * _Nonnull const ExtSdkMethodKeyOnPresenceStatusChanged = @"onPresenceStatusChanged";
 
 #pragma mark - EMConversationWrapper
 
@@ -231,6 +237,13 @@ static NSString * _Nonnull const ExtSdkMethodKeyUpdateOwnUserInfoWithType = @"up
 static NSString * _Nonnull const ExtSdkMethodKeyFetchUserInfoById = @"fetchUserInfoById";
 static NSString * _Nonnull const ExtSdkMethodKeyFetchUserInfoByIdWithType = @"fetchUserInfoByIdWithType";
 
+#pragma make - EMPresenceManagerWrapper
+static NSString * _Nonnull const ExtSdkMethodKeyPublishPresenceWithDescription = @"publishPresenceWithDescription";
+static NSString * _Nonnull const ExtSdkMethodKeyPresenceSubscribe = @"presenceSubscribe";
+static NSString * _Nonnull const ExtSdkMethodKeyPresenceUnsubscribe = @"presenceUnsubscribe";
+static NSString * _Nonnull const ExtSdkMethodKeyFetchSubscribedMembersWithPageNum = @"fetchSubscribedMembersWithPageNum";
+static NSString * _Nonnull const ExtSdkMethodKeyFetchPresenceStatus = @"fetchPresenceStatus";
+
 
 
 // ############################################################################
@@ -315,6 +328,9 @@ static const int ExtSdkMethodKeyGetMessageValue = 521;
 static const int ExtSdkMethodKeyAsyncFetchGroupAcksValue = 522;
 static const int ExtSdkMethodKeydeleteRemoteConversationValue = 523;
 
+static const int ExtSdkMethodKeyTranslateMessageValue = 524;
+static const int ExtSdkMethodKeyFetchSupportedLanguagesValue = 525;
+
 #pragma mark - EMChatManagerDelegate value
 static const int ExtSdkMethodKeyOnMessagesReceivedValue = 600;
 static const int ExtSdkMethodKeyOnCmdMessagesReceivedValue = 601;
@@ -333,6 +349,9 @@ static const int ExtSdkMethodKeyOnMessageErrorValue = 1202;
 static const int ExtSdkMethodKeyOnMessageReadAckValue = 1203;
 static const int ExtSdkMethodKeyOnMessageDeliveryAckValue = 1204;
 static const int ExtSdkMethodKeyOnMessageStatusChangedValue = 1205;
+
+#pragma mark - EMPresenceManagerDelegate
+static const int ExtSdkMethodKeyOnPresenceStatusChangedValue = 1300;
 
 #pragma mark - EMConversationWrapper value
 
@@ -466,6 +485,13 @@ static const int ExtSdkMethodKeyUpdateOwnUserInfoValue = 1100;
 static const int ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue = 1101;
 static const int ExtSdkMethodKeyFetchUserInfoByIdValue = 1102;
 static const int ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue = 1103;
+
+#pragma make - EMPresenceManagerWrapper
+static const int ExtSdkMethodKeyPublishPresenceWithDescriptionValue = 1400;
+static const int ExtSdkMethodKeyPresenceSubscribeValue = 1401;
+static const int ExtSdkMethodKeyPresenceUnsubscribeValue = 1402;
+static const int ExtSdkMethodKeyFetchSubscribedMembersWithPageNumValue = 1403;
+static const int ExtSdkMethodKeyFetchPresenceStatusValue = 1404;
 
 
 @interface ExtSdkMethodTypeObjc : NSObject

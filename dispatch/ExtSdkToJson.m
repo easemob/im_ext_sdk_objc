@@ -151,7 +151,7 @@
     ret[@"noticeEnable"] = @(self.isPushNotificationEnabled);
     ret[@"messageBlocked"] = @(self.isBlocked);
     ret[@"isAllMemberMuted"] = @(self.isMuteAllMembers);
-    ret[@"options"] = [self.setting toJsonObject];
+    ret[@"options"] = [self.settings toJsonObject];
     ret[@"permissionType"] =
         @([EMGroup premissionTypeToInt:self.permissionType]);
 
@@ -205,7 +205,7 @@
 @implementation EMGroupOptions (Json)
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-    ret[@"maxCount"] = @(self.maxUsersCount);
+    ret[@"maxCount"] = @(self.maxUsers);
     ret[@"ext"] = self.ext;
     ret[@"style"] = @([EMGroupOptions styleToInt:self.style]);
     ret[@"inviteNeedConfirm"] = @(self.IsInviteNeedConfirm);
@@ -214,7 +214,7 @@
 
 + (EMGroupOptions *)formJson:(NSDictionary *)dict {
     EMGroupOptions *options = [[EMGroupOptions alloc] init];
-    options.maxUsersCount = [dict[@"maxCount"] intValue];
+    options.maxUsers = [dict[@"maxCount"] intValue];
     options.ext = dict[@"ext"];
     options.IsInviteNeedConfirm = [dict[@"inviteNeedConfirm"] boolValue];
     options.style = [EMGroupOptions styleFromInt:[dict[@"style"] intValue]];
@@ -273,7 +273,7 @@
     data[@"fileId"] = self.fileId;
     data[@"name"] = self.fileName;
     data[@"owner"] = self.fileOwner;
-    data[@"createTime"] = @(self.createTime);
+    data[@"createTime"] = @(self.createdAt);
     data[@"fileSize"] = @(self.fileSize);
     return data;
 }
@@ -284,6 +284,7 @@
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     data[@"msg_id"] = self.messageId;
+    data[@"ack_id"] = self.readAckId;
     data[@"from"] = self.from;
     data[@"content"] = self.content;
     data[@"count"] = @(self.readCount);
@@ -533,12 +534,16 @@
 @implementation EMTextMessageBody (Json)
 
 + (EMMessageBody *)fromJsonObject:(NSDictionary *)aJson {
-    return [[EMTextMessageBody alloc] initWithText:aJson[@"content"]];
+    EMTextMessageBody *body =
+        [[EMTextMessageBody alloc] initWithText:aJson[@"content"]];
+    body.targetLanguages = aJson[@"targetLanguages"];
+    return body;
 }
 
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
     ret[@"content"] = self.text;
+    ret[@"targetLanguages"] = self.targetLanguages;
     return ret;
 }
 
@@ -613,7 +618,6 @@
     if ([dic isKindOfClass:[NSNull class]]) {
         dic = nil;
     }
-
     EMCustomMessageBody *ret =
         [[EMCustomMessageBody alloc] initWithEvent:aJson[@"event"] ext:dic];
     return ret;
@@ -853,13 +857,13 @@
     data[@"requireAck"] = @(self.enableRequireReadAck);
     data[@"requireDeliveryAck"] = @(self.enableDeliveryAck);
     data[@"sortMessageByServerTime"] = @(self.sortMessageByServerTime);
-    data[@"acceptInvitationAlways"] = @(self.isAutoAcceptFriendInvitation);
-    data[@"autoAcceptGroupInvitation"] = @(self.isAutoAcceptGroupInvitation);
-    data[@"deleteMessagesAsExitGroup"] = @(self.isDeleteMessagesWhenExitGroup);
+    data[@"acceptInvitationAlways"] = @(self.autoAcceptFriendInvitation);
+    data[@"autoAcceptGroupInvitation"] = @(self.autoAcceptGroupInvitation);
+    data[@"deleteMessagesAsExitGroup"] = @(self.deleteMessagesOnLeaveGroup);
     data[@"deleteMessagesAsExitChatRoom"] =
-        @(self.isDeleteMessagesWhenExitChatRoom);
-    data[@"isAutoDownload"] = @(self.isAutoDownloadThumbnail);
-    data[@"isChatRoomOwnerLeaveAllowed"] = @(self.isChatroomOwnerLeaveAllowed);
+        @(self.deleteMessagesOnLeaveChatroom);
+    data[@"isAutoDownload"] = @(self.autoDownloadThumbnail);
+    data[@"isChatRoomOwnerLeaveAllowed"] = @(self.canChatroomOwnerLeave);
     data[@"serverTransfer"] = @(self.isAutoTransferMessageAttachments);
     data[@"usingHttpsOnly"] = @(self.usingHttpsOnly);
     data[@"pushConfig"] =
@@ -880,16 +884,16 @@
     options.enableDeliveryAck = [aJson[@"requireDeliveryAck"] boolValue];
     options.sortMessageByServerTime =
         [aJson[@"sortMessageByServerTime"] boolValue];
-    options.isAutoAcceptFriendInvitation =
+    options.autoAcceptFriendInvitation =
         [aJson[@"acceptInvitationAlways"] boolValue];
-    options.isAutoAcceptGroupInvitation =
+    options.autoAcceptGroupInvitation =
         [aJson[@"autoAcceptGroupInvitation"] boolValue];
-    options.isDeleteMessagesWhenExitGroup =
+    options.deleteMessagesOnLeaveGroup =
         [aJson[@"deleteMessagesAsExitGroup"] boolValue];
-    options.isDeleteMessagesWhenExitChatRoom =
+    options.deleteMessagesOnLeaveChatroom =
         [aJson[@"deleteMessagesAsExitChatRoom"] boolValue];
-    options.isAutoDownloadThumbnail = [aJson[@"isAutoDownload"] boolValue];
-    options.isChatroomOwnerLeaveAllowed =
+    options.autoDownloadThumbnail = [aJson[@"isAutoDownload"] boolValue];
+    options.canChatroomOwnerLeave =
         [aJson[@"isChatRoomOwnerLeaveAllowed"] boolValue];
     options.isAutoTransferMessageAttachments =
         [aJson[@"serverTransfer"] boolValue];
@@ -923,10 +927,10 @@
 @implementation EMPushOptions (Json)
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    data[@"noDisturb"] = @(self.isNoDisturbEnable);
+    data[@"noDisturb"] = @(self.silentModeEnabled);
     data[@"pushStyle"] = @(self.displayStyle != EMPushDisplayStyleSimpleBanner);
-    data[@"noDisturbStartHour"] = @(self.noDisturbingStartH);
-    data[@"noDisturbEndHour"] = @(self.noDisturbingEndH);
+    data[@"noDisturbStartHour"] = @(self.silentModeStart);
+    data[@"noDisturbEndHour"] = @(self.silentModeEnd);
     return data;
 }
 
@@ -935,20 +939,17 @@
 @implementation EMPresence (Json)
 
 - (nonnull NSDictionary *)toJsonObject {
-
+    NSMutableDictionary *details = [NSMutableDictionary dictionary];
+    for (EMPresenceStatusDetail *detail in self.statusDetails) {
+        details[detail.device] = @(detail.status);
+    }
     return @{
-        //        @"publisher": self.publisher,
-        //        @"statusDetails": self.stat
-
+        @"publisher" : self.publisher,
+        @"statusDetails" : details,
+        @"statusDescription" : self.statusDescription,
+        @"lastTime" : @(self.lastTime),
+        @"expirytime" : @(self.expirytime)
     };
-}
-
-@end
-
-@implementation EMPresenceStatusDetail (Helper)
-
-- (nonnull NSDictionary *)toJsonObject {
-    return @{@"device" : self.device, @"statue" : @(self.status)};
 }
 
 @end
@@ -958,7 +959,7 @@
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
     ret[@"userId"] = self.userId;
-    ret[@"nickName"] = self.nickName;
+    ret[@"nickName"] = self.nickname;
     ret[@"avatarUrl"] = self.avatarUrl;
     ret[@"mail"] = self.mail;
     ret[@"phone"] = self.phone;
@@ -973,7 +974,7 @@
 + (EMUserInfo *)fromJsonObject:(NSDictionary *)aJson {
     EMUserInfo *userInfo = EMUserInfo.new;
     userInfo.userId = aJson[@"userId"] ?: @"";
-    userInfo.nickName = aJson[@"nickName"] ?: @"";
+    userInfo.nickname = aJson[@"nickName"] ?: @"";
     userInfo.avatarUrl = aJson[@"avatarUrl"] ?: @"";
     userInfo.mail = aJson[@"mail"] ?: @"";
     userInfo.phone = aJson[@"phone"] ?: @"";
@@ -988,4 +989,29 @@
     return [userInfo copy];
 }
 
+@end
+
+@implementation EMTranslateLanguage (Json)
+
+- (nonnull NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+    ret[@"code"] = self.languageCode;
+    ret[@"name"] = self.languageName;
+    ret[@"nativeName"] = self.languageNativeName;
+    return ret;
+}
+
+@end
+
+@implementation NSArray (Json)
+- (NSArray *)toJsonArray {
+    NSMutableArray *ary = nil;
+    for (id<ExtSdkToJson> item in self) {
+        if (ary == nil) {
+            ary = [NSMutableArray array];
+        }
+        [ary addObject:[item toJsonObject]];
+    }
+    return ary;
+}
 @end

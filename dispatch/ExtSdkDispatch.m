@@ -9,6 +9,7 @@
 #import "ExtSdkContactManagerWrapper.h"
 #import "ExtSdkConversationWrapper.h"
 #import "ExtSdkGroupManagerWrapper.h"
+#import "ExtSdkPresenceManagerWrapper.h"
 #import "ExtSdkPushManagerWrapper.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
 
@@ -974,6 +975,50 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkUserInfoManagerWrapper getInstance]
             fetchUserInfoByIdWithType:ps
                                result:callback];
+        break;
+
+    case ExtSdkMethodKeyTranslateMessageValue:
+        [[ExtSdkChatManagerWrapper getInstance] translateMessage:ps
+                                                     channelName:methodType
+                                                          result:callback];
+        break;
+    case ExtSdkMethodKeyFetchSupportedLanguagesValue:
+        [[ExtSdkChatManagerWrapper getInstance] fetchSupportLanguages:ps
+                                                          channelName:methodType
+                                                               result:callback];
+        break;
+    case ExtSdkMethodKeyOnPresenceStatusChangedValue:
+        [callback onFail:1
+            withExtension:[NSString stringWithFormat:@"not implement: %@",
+                                                     methodType]];
+        break;
+    case ExtSdkMethodKeyPublishPresenceWithDescriptionValue:
+        [[ExtSdkPresenceManagerWrapper getInstance]
+            fetchPresenceStatus:ps
+                    channelName:methodType
+                         result:callback];
+        break;
+    case ExtSdkMethodKeyPresenceSubscribeValue:
+        [[ExtSdkPresenceManagerWrapper getInstance] subscribe:ps
+                                                  channelName:methodType
+                                                       result:callback];
+        break;
+    case ExtSdkMethodKeyPresenceUnsubscribeValue:
+        [[ExtSdkPresenceManagerWrapper getInstance] unsubscribe:ps
+                                                    channelName:methodType
+                                                         result:callback];
+        break;
+    case ExtSdkMethodKeyFetchSubscribedMembersWithPageNumValue:
+        [[ExtSdkPresenceManagerWrapper getInstance]
+            fetchSubscribedMembersWithPageNum:ps
+                                  channelName:methodType
+                                       result:callback];
+        break;
+    case ExtSdkMethodKeyFetchPresenceStatusValue:
+        [[ExtSdkPresenceManagerWrapper getInstance]
+            fetchPresenceStatus:ps
+                    channelName:methodType
+                         result:callback];
         break;
 
     default:
