@@ -139,7 +139,7 @@
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
     ret[@"groupId"] = self.groupId;
-    ret[@"name"] = self.groupName;
+    ret[@"groupName"] = self.groupName;
     ret[@"desc"] = self.description;
     ret[@"owner"] = self.owner;
     ret[@"announcement"] = self.announcement;
@@ -626,7 +626,7 @@
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
     ret[@"event"] = self.event;
-    ret[@"params"] = self.ext;
+    ret[@"params"] = self.customExt;
     return ret;
 }
 
