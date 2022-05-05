@@ -6,7 +6,6 @@
 //
 
 #import "ExtSdkClientWrapper.h"
-#import "EMPresenceManagerWrapper.h"
 #import "ExtSdkChatManagerWrapper.h"
 #import "ExtSdkChatroomManagerWrapper.h"
 #import "ExtSdkContactManagerWrapper.h"

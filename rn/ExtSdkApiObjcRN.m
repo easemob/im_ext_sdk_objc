@@ -140,6 +140,15 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyOnTokenWillExpire,
         ExtSdkMethodKeyOnTokenDidExpire,
 
+        ExtSdkMethodKeyOnUserDidLoginFromOtherDevice,
+        ExtSdkMethodKeyOnUserDidRemoveFromServer,
+        ExtSdkMethodKeyOnUserDidForbidByServer,
+        ExtSdkMethodKeyOnUserDidChangePassword,
+        ExtSdkMethodKeyOnUserDidLoginTooManyDevice,
+        ExtSdkMethodKeyOnUserKickedByOtherDevice,
+        ExtSdkMethodKeyOnUserAuthenticationFailed,
+
+
         /// EMContactManagerWrapper
         ExtSdkMethodKeyAddContact,
         ExtSdkMethodKeyDeleteContact,
@@ -182,6 +191,9 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyGetMessage,
         ExtSdkMethodKeyAsyncFetchGroupAcks,
 
+        ExtSdkMethodKeyTranslateMessage,
+        ExtSdkMethodKeyFetchSupportedLanguages,
+
         /// EMChatManagerDelegate
         ExtSdkMethodKeyOnMessagesReceived,
         ExtSdkMethodKeyOnCmdMessagesReceived,
@@ -200,6 +212,9 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyOnMessageReadAck,
         ExtSdkMethodKeyOnMessageDeliveryAck,
         ExtSdkMethodKeyOnMessageStatusChanged,
+
+        /// EMPresenceManagerDelegate
+        ExtSdkMethodKeyOnPresenceStatusChanged,
 
         /// EMConversationWrapper
 
@@ -324,12 +339,21 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyGetNoPushGroups,
         ExtSdkMethodKeySetNoDisturbUsers,
         ExtSdkMethodKeyGetNoDisturbUsersFromServer,
+        ExtSdkMethodKeyUpdateUserPushService,
+        ExtSdkMethodKeyGetNoPushUsers,
 
         /// EMUserInfoManagerWrapper
         ExtSdkMethodKeyUpdateOwnUserInfo,
         ExtSdkMethodKeyUpdateOwnUserInfoWithType,
         ExtSdkMethodKeyFetchUserInfoById,
         ExtSdkMethodKeyFetchUserInfoByIdWithType,
+
+        /// EMPresenceManagerWrapper
+        ExtSdkMethodKeyPublishPresenceWithDescription,
+        ExtSdkMethodKeyPresenceSubscribe,
+        ExtSdkMethodKeyPresenceUnsubscribe,
+        ExtSdkMethodKeyFetchSubscribedMembersWithPageNum,
+        ExtSdkMethodKeyFetchPresenceStatus
     ];
 }
 
