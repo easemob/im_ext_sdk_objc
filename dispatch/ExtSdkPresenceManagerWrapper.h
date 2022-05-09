@@ -15,21 +15,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)initSdk;
 
+- (void)publishPresenceWithDescription:(NSDictionary *)param
+                        withMethodType:(NSString *)aChannelName
+                                result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 - (void)subscribe:(NSDictionary *)param
-      channelName:(NSString *)aChannelName
-           result:(nonnull id<ExtSdkCallbackObjc>)result;
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)unsubscribe:(NSDictionary *)param
-        channelName:(NSString *)aChannelName
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)fetchSubscribedMembersWithPageNum:(NSDictionary *)param
-                              channelName:(NSString *)aChannelName
+                           withMethodType:(NSString *)aChannelName
                                    result:
                                        (nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)fetchPresenceStatus:(NSDictionary *)param
-                channelName:(NSString *)aChannelName
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 @end

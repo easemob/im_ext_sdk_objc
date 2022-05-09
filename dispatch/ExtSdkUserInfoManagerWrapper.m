@@ -25,8 +25,8 @@
     return instance;
 }
 
-
 - (void)updateOwnUserInfo:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     EMUserInfo *userInfo = [EMUserInfo fromJsonObject:param[@"userInfo"]];
@@ -43,6 +43,7 @@
 }
 
 - (void)updateOwnUserInfoWithType:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
 
@@ -63,6 +64,7 @@
 }
 
 - (void)fetchUserInfoById:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSArray *userIds = param[@"userIds"];
@@ -85,6 +87,7 @@
 }
 
 - (void)fetchUserInfoByIdWithType:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSArray *userIds = param[@"userIds"];

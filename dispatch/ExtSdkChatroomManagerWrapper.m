@@ -33,6 +33,7 @@
 #pragma mark - Actions
 
 - (void)getChatroomsFromServer:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSInteger page = [param[@"pageNum"] integerValue];
     NSInteger pageSize = [param[@"pageSize"] integerValue];
@@ -53,6 +54,7 @@
 }
 
 - (void)createChatRoom:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -77,6 +79,7 @@
 }
 
 - (void)joinChatRoom:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -92,6 +95,7 @@
 }
 
 - (void)leaveChatRoom:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -108,6 +112,7 @@
 }
 
 - (void)destroyChatRoom:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -124,6 +129,7 @@
 }
 
 - (void)fetchChatroomFromServer:(NSDictionary *)param
+                 withMethodType:(NSString *)aChannelName
                          result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *chatroomId = param[@"roomId"];
@@ -141,6 +147,7 @@
 }
 
 - (void)getChatRoom:(NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -152,6 +159,7 @@
 }
 
 - (void)getAllChatRooms:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -173,6 +181,7 @@
 }
 
 - (void)getChatroomMemberListFromServer:(NSDictionary *)param
+                         withMethodType:(NSString *)aChannelName
                                  result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -195,6 +204,7 @@
 }
 
 - (void)fetchChatroomBlockListFromServer:(NSDictionary *)param
+                          withMethodType:(NSString *)aChannelName
                                   result:
                                       (nonnull id<ExtSdkCallbackObjc>)result {
 
@@ -219,6 +229,7 @@
 }
 
 - (void)getChatroomMuteListFromServer:(NSDictionary *)param
+                       withMethodType:(NSString *)aChannelName
                                result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -240,6 +251,7 @@
 }
 
 - (void)fetchChatroomAnnouncement:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -258,6 +270,7 @@
 }
 
 - (void)chatRoomUpdateSubject:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *subject = param[@"subject"];
@@ -274,6 +287,7 @@
 }
 
 - (void)chatRoomUpdateDescription:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *description = param[@"description"];
@@ -290,6 +304,7 @@
 }
 
 - (void)chatRoomRemoveMembers:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -308,6 +323,7 @@
 }
 
 - (void)chatRoomBlockMembers:(NSDictionary *)param
+              withMethodType:(NSString *)aChannelName
                       result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -326,6 +342,7 @@
 }
 
 - (void)chatRoomUnblockMembers:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -344,6 +361,7 @@
 }
 
 - (void)changeChatRoomOwner:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -362,6 +380,7 @@
 }
 
 - (void)chatRoomAddAdmin:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -380,6 +399,7 @@
 }
 
 - (void)chatRoomRemoveAdmin:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -398,6 +418,7 @@
 }
 
 - (void)chatRoomMuteMembers:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -418,6 +439,7 @@
 }
 
 - (void)chatRoomUnmuteMembers:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -436,6 +458,7 @@
 }
 
 - (void)updateChatRoomAnnouncement:(NSDictionary *)param
+                    withMethodType:(NSString *)aChannelName
                             result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     __weak typeof(self) weakSelf = self;
@@ -455,8 +478,8 @@
                               }];
 }
 
-// TODO: chatroom white list.
 - (void)addMembersToChatRoomWhiteList:(NSDictionary *)param
+                       withMethodType:(NSString *)aChannelName
                                result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *roomId = param[@"roomId"];
     NSArray *ary = param[@"members"];
@@ -474,6 +497,7 @@
 }
 
 - (void)removeMembersFromChatRoomWhiteList:(NSDictionary *)param
+                            withMethodType:(NSString *)aChannelName
                                     result:
                                         (nonnull id<ExtSdkCallbackObjc>)result {
     NSString *roomId = param[@"roomId"];
@@ -492,6 +516,7 @@
 }
 
 - (void)isMemberInChatRoomWhiteListFromServer:(NSDictionary *)param
+                               withMethodType:(NSString *)aChannelName
                                        result:(nonnull id<ExtSdkCallbackObjc>)
                                                   result {
     NSString *roomId = param[@"roomId"];
@@ -509,6 +534,7 @@
 }
 
 - (void)fetchChatRoomWhiteListFromServer:(NSDictionary *)param
+                          withMethodType:(NSString *)aChannelName
                                   result:
                                       (nonnull id<ExtSdkCallbackObjc>)result {
     NSString *roomId = param[@"roomId"];
@@ -526,6 +552,7 @@
 }
 
 - (void)muteAllChatRoomMembers:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *roomId = param[@"roomId"];
     __weak typeof(self) weakSelf = self;
@@ -541,6 +568,7 @@
 }
 
 - (void)unMuteAllChatRoomMembers:(NSDictionary *)param
+                  withMethodType:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *roomId = param[@"roomId"];
     __weak typeof(self) weakSelf = self;

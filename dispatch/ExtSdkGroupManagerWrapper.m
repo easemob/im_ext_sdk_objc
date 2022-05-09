@@ -35,6 +35,7 @@
 #pragma mark - Actions
 
 - (void)getGroupWithId:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     EMGroup *group = [EMGroup groupWithId:param[@"groupId"]];
@@ -45,6 +46,7 @@
 }
 
 - (void)getJoinedGroups:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSArray *joinedGroups =
@@ -60,6 +62,7 @@
 }
 
 - (void)getGroupsWithoutPushNotification:(NSDictionary *)param
+                          withMethodType:(NSString *)aChannelName
                                   result:
                                       (nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
@@ -77,6 +80,7 @@
 }
 
 - (void)getJoinedGroupsFromServer:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -96,6 +100,7 @@
 }
 
 - (void)getPublicGroupsFromServer:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -112,6 +117,7 @@
 }
 
 - (void)createGroup:(NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -129,6 +135,7 @@
 }
 
 - (void)getGroupSpecificationFromServer:(NSDictionary *)param
+                         withMethodType:(NSString *)aChannelName
                                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -144,6 +151,7 @@
 }
 
 - (void)getGroupMemberListFromServer:(NSDictionary *)param
+                      withMethodType:(NSString *)aChannelName
                               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -161,6 +169,7 @@
 }
 
 - (void)getGroupBlockListFromServer:(NSDictionary *)param
+                     withMethodType:(NSString *)aChannelName
                              result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -177,6 +186,7 @@
 }
 
 - (void)getGroupMuteListFromServer:(NSDictionary *)param
+                    withMethodType:(NSString *)aChannelName
                             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -193,6 +203,7 @@
 }
 
 - (void)getGroupWhiteListFromServer:(NSDictionary *)param
+                     withMethodType:(NSString *)aChannelName
                              result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -207,6 +218,7 @@
 }
 
 - (void)isMemberInWhiteListFromServer:(NSDictionary *)param
+                       withMethodType:(NSString *)aChannelName
                                result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -222,6 +234,7 @@
 }
 
 - (void)getGroupFileListFromServer:(NSDictionary *)param
+                    withMethodType:(NSString *)aChannelName
                             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -240,7 +253,9 @@
                               withParams:array];
                     }];
 }
+
 - (void)getGroupAnnouncementFromServer:(NSDictionary *)param
+                        withMethodType:(NSString *)aChannelName
                                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -255,6 +270,7 @@
 }
 
 - (void)addMembers:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -270,6 +286,7 @@
 }
 
 - (void)inviterUser:(NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -285,6 +302,7 @@
 }
 
 - (void)removeMembers:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -299,6 +317,7 @@
 }
 
 - (void)blockMembers:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -313,6 +332,7 @@
 }
 
 - (void)unblockMembers:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -327,6 +347,7 @@
 }
 
 - (void)updateGroupSubject:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -341,6 +362,7 @@
 }
 
 - (void)updateDescription:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -355,6 +377,7 @@
 }
 
 - (void)leaveGroup:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -368,6 +391,7 @@
 }
 
 - (void)destroyGroup:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -381,6 +405,7 @@
 }
 
 - (void)blockGroup:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -394,6 +419,7 @@
 }
 
 - (void)unblockGroup:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -407,6 +433,7 @@
 }
 
 - (void)updateGroupOwner:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -421,7 +448,8 @@
 }
 
 - (void)addAdmin:(NSDictionary *)param
-          result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
           addAdmin:param[@"admin"]
@@ -435,6 +463,7 @@
 }
 
 - (void)removeAdmin:(NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -449,6 +478,7 @@
 }
 
 - (void)muteMembers:(NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -464,6 +494,7 @@
 }
 
 - (void)unMuteMembers:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -478,6 +509,7 @@
 }
 
 - (void)muteAllMembers:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -491,6 +523,7 @@
 }
 
 - (void)unMuteAllMembers:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -504,6 +537,7 @@
 }
 
 - (void)addWhiteList:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -518,6 +552,7 @@
 }
 
 - (void)removeWhiteList:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -531,43 +566,92 @@
                     }];
 }
 
-// TODO: dujiepeng.
 - (void)uploadGroupSharedFile:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    [EMClient.sharedClient.groupManager
-        uploadGroupSharedFileWithId:param[@"groupId"]
-        filePath:param[@"filePath"]
+    NSString *groupId = param[@"groupId"];
+    NSString *filePath = param[@"filePath"];
+    [EMClient.sharedClient.groupManager uploadGroupSharedFileWithId:groupId
+        filePath:filePath
         progress:^(int progress) {
-
+          [weakSelf onReceive:ExtSdkMethodKeyUploadGroupSharedFile
+                   withParams:@{
+                       @"progress" : @(progress),
+                       @"groupId" : groupId,
+                       @"filePath" : filePath,
+                       @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
+                   }];
         }
         completion:^(EMGroupSharedFile *aSharedFile, EMError *aError) {
-          [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyUploadGroupSharedFile
-                   withError:aError
-                  withParams:@(!aError)];
+          if (aError) {
+              [weakSelf onReceive:ExtSdkMethodKeyUploadGroupSharedFile
+                       withParams:@{
+                           @"error" : [aError toJsonObject],
+                           @"groupId" : groupId,
+                           @"filePath" : filePath,
+                           @"callbackType" : ExtSdkMethodKeyOnMessageError
+                       }];
+          } else {
+              [weakSelf onReceive:ExtSdkMethodKeyUploadGroupSharedFile
+                       withParams:@{
+                           @"groupId" : groupId,
+                           @"filePath" : filePath,
+                           @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
+                       }];
+          }
         }];
+    [self onResult:result
+        withMethodType:ExtSdkMethodKeyUploadGroupSharedFile
+             withError:nil
+            withParams:@(YES)];
 }
 
 - (void)downloadGroupSharedFile:(NSDictionary *)param
+                 withMethodType:(NSString *)aChannelName
                          result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    [EMClient.sharedClient.groupManager
-        downloadGroupSharedFileWithId:param[@"groupId"]
-        filePath:param[@"savePath"]
-        sharedFileId:param[@"fileId"]
+    NSString *groupId = param[@"groupId"];
+    NSString *savePath = param[@"savePath"];
+    NSString *fileId = param[@"fileId"];
+    [EMClient.sharedClient.groupManager downloadGroupSharedFileWithId:groupId
+        filePath:savePath
+        sharedFileId:fileId
         progress:^(int progress) {
-
+          [weakSelf onReceive:ExtSdkMethodKeyDownloadGroupSharedFile
+                   withParams:@{
+                       @"progress" : @(progress),
+                       @"groupId" : groupId,
+                       @"filePath" : savePath,
+                       @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
+                   }];
         }
         completion:^(EMGroup *aGroup, EMError *aError) {
-          [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyDownloadGroupSharedFile
-                   withError:aError
-                  withParams:@(!aError)];
+          if (aError) {
+              [weakSelf onReceive:ExtSdkMethodKeyDownloadGroupSharedFile
+                       withParams:@{
+                           @"error" : [aError toJsonObject],
+                           @"groupId" : groupId,
+                           @"filePath" : savePath,
+                           @"callbackType" : ExtSdkMethodKeyOnMessageError
+                       }];
+          } else {
+              [weakSelf onReceive:ExtSdkMethodKeyDownloadGroupSharedFile
+                       withParams:@{
+                           @"groupId" : groupId,
+                           @"filePath" : savePath,
+                           @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
+                       }];
+          }
         }];
+    [self onResult:result
+        withMethodType:ExtSdkMethodKeyDownloadGroupSharedFile
+             withError:nil
+            withParams:@(YES)];
 }
 
 - (void)removeGroupSharedFile:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -583,6 +667,7 @@
 }
 
 - (void)updateGroupAnnouncement:(NSDictionary *)param
+                 withMethodType:(NSString *)aChannelName
                          result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -598,6 +683,7 @@
 }
 
 - (void)updateGroupExt:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -612,6 +698,7 @@
 }
 
 - (void)joinPublicGroup:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -625,6 +712,7 @@
 }
 
 - (void)requestToJoinPublicGroup:(NSDictionary *)param
+                  withMethodType:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -640,6 +728,7 @@
 }
 
 - (void)acceptJoinApplication:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -654,6 +743,7 @@
 }
 
 - (void)declineJoinApplication:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -669,6 +759,7 @@
 }
 
 - (void)acceptInvitationFromGroup:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -684,6 +775,7 @@
 }
 
 - (void)declineInvitationFromGroup:(NSDictionary *)param
+                    withMethodType:(NSString *)aChannelName
                             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.groupManager
@@ -700,6 +792,7 @@
 }
 
 - (void)ignoreGroupPush:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
 

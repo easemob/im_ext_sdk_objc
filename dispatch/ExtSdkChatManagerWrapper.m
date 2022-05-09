@@ -522,7 +522,7 @@
 }
 
 - (void)deleteRemoteConversation:(NSDictionary *)param
-                     channelName:(NSString *)aChannelName
+                  withMethodType:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *conversationId = param[@"conversationId"];
@@ -550,7 +550,7 @@
 }
 
 - (void)translateMessage:(NSDictionary *)param
-             channelName:(NSString *)aChannelName
+          withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result {
     EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
     NSArray *languages = param[@"languages"];
@@ -568,7 +568,7 @@
 }
 
 - (void)fetchSupportLanguages:(NSDictionary *)param
-                  channelName:(NSString *)aChannelName
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.chatManager

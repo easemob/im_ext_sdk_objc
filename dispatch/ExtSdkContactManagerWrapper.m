@@ -30,6 +30,7 @@
 
 #pragma mark - Actions
 - (void)addContact:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -46,6 +47,7 @@
 }
 
 - (void)deleteContact:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -62,6 +64,7 @@
 }
 
 - (void)getAllContactsFromServer:(NSDictionary *)param
+                  withMethodType:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.contactManager
@@ -74,6 +77,7 @@
 }
 
 - (void)getAllContactsFromDB:(NSDictionary *)param
+              withMethodType:(NSString *)aChannelName
                       result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSArray *aList = EMClient.sharedClient.contactManager.getContacts;
@@ -84,6 +88,7 @@
 }
 
 - (void)addUserToBlockList:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -98,6 +103,7 @@
 }
 
 - (void)removeUserFromBlockList:(NSDictionary *)param
+                 withMethodType:(NSString *)aChannelName
                          result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -112,6 +118,7 @@
 }
 
 - (void)getBlockListFromServer:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.contactManager
@@ -125,6 +132,7 @@
 }
 
 - (void)getBlockListFromDB:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     NSArray *list = [EMClient.sharedClient.contactManager getBlackList];
@@ -135,6 +143,7 @@
 }
 
 - (void)acceptInvitation:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -149,6 +158,7 @@
 }
 
 - (void)declineInvitation:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -163,6 +173,7 @@
 }
 
 - (void)getSelfIdsOnOtherPlatform:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.contactManager

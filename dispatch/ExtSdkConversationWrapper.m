@@ -43,6 +43,7 @@
 
 #pragma mark - Actions
 - (void)getUnreadMsgCount:(nullable NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self
@@ -56,6 +57,7 @@
 }
 
 - (void)getLatestMsg:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
@@ -69,6 +71,7 @@
 }
 
 - (void)getLatestMsgFromOthers:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self
@@ -83,6 +86,7 @@
 }
 
 - (void)markMsgAsRead:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
@@ -100,6 +104,7 @@
 }
 
 - (void)syncConversationExt:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
@@ -114,6 +119,7 @@
 }
 
 - (void)markAllMsgsAsRead:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
@@ -128,7 +134,8 @@
 }
 
 - (void)insertMsg:(NSDictionary *)param
-           result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
                         completion:^(EMConversation *conversation) {
@@ -146,7 +153,8 @@
 }
 
 - (void)appendMsg:(NSDictionary *)param
-           result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
                         completion:^(EMConversation *conversation) {
@@ -164,6 +172,7 @@
 }
 
 - (void)updateConversationMsg:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self
@@ -183,7 +192,8 @@
 }
 
 - (void)removeMsg:(NSDictionary *)param
-           result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
                         completion:^(EMConversation *conversation) {
@@ -199,6 +209,7 @@
 }
 
 - (void)clearAllMsg:(NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
@@ -214,6 +225,7 @@
 
 #pragma mark - load messages
 - (void)loadMsgWithId:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *msgId = param[@"msg_id"];
@@ -232,6 +244,7 @@
 }
 
 - (void)loadMsgWithMsgType:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
 
@@ -269,6 +282,7 @@
 }
 
 - (void)loadMsgWithStartId:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *startId = param[@"startId"];
@@ -304,6 +318,7 @@
 }
 
 - (void)loadMsgWithKeywords:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *keywords = param[@"keywords"];
@@ -341,6 +356,7 @@
 }
 
 - (void)loadMsgWithTime:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     long long startTime = [param[@"startTime"] longLongValue];

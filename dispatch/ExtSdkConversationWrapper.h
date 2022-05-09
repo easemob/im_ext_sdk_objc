@@ -15,50 +15,68 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Actions
 - (void)getUnreadMsgCount:(nullable NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 - (void)getLatestMsg:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)getLatestMsgFromOthers:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)markMsgAsRead:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)syncConversationExt:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)markAllMsgsAsRead:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 - (void)insertMsg:(NSDictionary *)param
-           result:(nonnull id<ExtSdkCallbackObjc>)result;
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)appendMsg:(NSDictionary *)param
-           result:(nonnull id<ExtSdkCallbackObjc>)result;
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)updateConversationMsg:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)removeMsg:(NSDictionary *)param
-           result:(nonnull id<ExtSdkCallbackObjc>)result;
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)clearAllMsg:(NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 #pragma mark - load messages
 - (void)loadMsgWithId:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)loadMsgWithMsgType:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)loadMsgWithStartId:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)loadMsgWithKeywords:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)loadMsgWithTime:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result;
 @end
 

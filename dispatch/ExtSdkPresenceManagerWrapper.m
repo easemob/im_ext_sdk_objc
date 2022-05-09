@@ -30,7 +30,7 @@
 }
 
 - (void)publishPresenceWithDescription:(NSDictionary *)param
-                           channelName:(NSString *)aChannelName
+                        withMethodType:(NSString *)aChannelName
                                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *desc = param[@"desc"];
     __weak typeof(self) weakSelf = self;
@@ -45,8 +45,8 @@
 }
 
 - (void)subscribe:(NSDictionary *)param
-      channelName:(NSString *)aChannelName
-           result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSArray *members = param[@"members"];
     NSInteger expiry = [param[@"expiry"] integerValue];
 
@@ -63,7 +63,7 @@
 }
 
 - (void)unsubscribe:(NSDictionary *)param
-        channelName:(NSString *)aChannelName
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSArray *members = param[@"members"];
 
@@ -78,7 +78,7 @@
 }
 
 - (void)fetchSubscribedMembersWithPageNum:(NSDictionary *)param
-                              channelName:(NSString *)aChannelName
+                           withMethodType:(NSString *)aChannelName
                                    result:
                                        (nonnull id<ExtSdkCallbackObjc>)result {
     int pageNum = [param[@"pageNum"] intValue];
@@ -98,7 +98,7 @@
 }
 
 - (void)fetchPresenceStatus:(NSDictionary *)param
-                channelName:(NSString *)aChannelName
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSArray *members = param[@"members"];
 

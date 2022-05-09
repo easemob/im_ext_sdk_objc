@@ -14,13 +14,19 @@ NS_ASSUME_NONNULL_BEGIN
 + (nonnull instancetype)getInstance;
 
 - (void)updateOwnUserInfo:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 - (void)updateOwnUserInfoWithType:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)fetchUserInfoById:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 - (void)fetchUserInfoByIdWithType:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result;
 @end
 

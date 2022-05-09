@@ -16,36 +16,47 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initSdk;
 
 - (void)addContact:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)deleteContact:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)getAllContactsFromServer:(NSDictionary *)param
+                  withMethodType:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)getAllContactsFromDB:(NSDictionary *)param
+              withMethodType:(NSString *)aChannelName
                       result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)addUserToBlockList:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)removeUserFromBlockList:(NSDictionary *)param
+                 withMethodType:(NSString *)aChannelName
                          result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)getBlockListFromServer:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)getBlockListFromDB:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)acceptInvitation:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)declineInvitation:(NSDictionary *)param
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)getSelfIdsOnOtherPlatform:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 @end

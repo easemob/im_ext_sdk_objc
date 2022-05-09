@@ -12,11 +12,11 @@
 #import "ExtSdkConversationWrapper.h"
 #import "ExtSdkGroupManagerWrapper.h"
 #import "ExtSdkMethodTypeObjc.h"
+#import "ExtSdkPresenceManagerWrapper.h"
 #import "ExtSdkPushManagerWrapper.h"
 #import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkToJson.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
-#import "ExtSdkPresenceManagerWrapper.h"
 #import <UserNotifications/UserNotifications.h>
 
 @interface ExtSdkClientWrapper () <EMClientDelegate, EMMultiDevicesDelegate>
@@ -36,7 +36,8 @@
 #pragma mark - Actions
 
 - (void)getToken:(NSDictionary *)param
-          result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     [self onResult:result
         withMethodType:ExtSdkMethodKeyGetToken
              withError:nil
@@ -44,6 +45,7 @@
 }
 
 - (void)initSDKWithDict:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
 
     EMOptions *options = [EMOptions fromJsonObject:param];
@@ -56,7 +58,7 @@
                 withParams:nil];
         return;
     }
-    options.enableConsoleLog = YES;
+    options.enableConsoleLog = options.enableConsoleLog;
     [EMClient.sharedClient initializeSDKWithOptions:options];
     [EMClient.sharedClient removeDelegate:self];
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];
@@ -76,6 +78,7 @@
 }
 
 - (void)createAccount:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -92,7 +95,8 @@
 }
 
 - (void)login:(NSDictionary *)param
-       result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
     NSString *pwdOrToken = param[@"pwdOrToken"];
@@ -130,7 +134,8 @@
 }
 
 - (void)logout:(NSDictionary *)param
-        result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     BOOL unbindToken = [param[@"unbindToken"] boolValue];
     [EMClient.sharedClient logout:unbindToken
@@ -143,6 +148,7 @@
 }
 
 - (void)changeAppKey:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *appKey = param[@"appKey"];
     EMError *aError = [EMClient.sharedClient changeAppkey:appKey];
@@ -153,6 +159,7 @@
 }
 
 - (void)getCurrentUser:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *username = EMClient.sharedClient.currentUsername;
     [self onResult:result
@@ -162,7 +169,8 @@
 }
 
 - (void)uploadLog:(NSDictionary *)param
-           result:(nonnull id<ExtSdkCallbackObjc>)result {
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient
         uploadDebugLogToServerWithCompletion:^(EMError *aError) {
@@ -174,6 +182,7 @@
 }
 
 - (void)compressLogs:(NSDictionary *)param
+      withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient
@@ -186,6 +195,7 @@
 }
 
 - (void)kickDevice:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -205,6 +215,7 @@
 }
 
 - (void)kickAllDevices:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -221,6 +232,7 @@
 }
 
 - (void)isLoggedInBefore:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result {
     [self onResult:result
         withMethodType:ExtSdkMethodKeyIsLoggedInBefore
@@ -229,10 +241,12 @@
 }
 
 - (void)onMultiDeviceEvent:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
 }
 
 - (void)getLoggedInDevicesFromServer:(NSDictionary *)param
+                      withMethodType:(NSString *)aChannelName
                               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -259,6 +273,7 @@
 }
 
 - (void)loginWithAgoraToken:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *username = param[@"username"];
@@ -278,6 +293,7 @@
 }
 
 - (void)isConnected:(NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
     [self onResult:result
         withMethodType:ExtSdkMethodKeyIsConnected
@@ -286,6 +302,7 @@
 }
 
 - (void)renewToken:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *newAgoraToken = param[@"agora_token"];
     [EMClient.sharedClient renewToken:newAgoraToken];

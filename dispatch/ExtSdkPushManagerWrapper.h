@@ -38,23 +38,23 @@ NS_ASSUME_NONNULL_BEGIN
                  result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)enablePush:(NSDictionary *)param
-       withMethodType:(NSString *)aChannelName
+    withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)disablePush:(NSDictionary *)param
-        withMethodType:(NSString *)aChannelName
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)getNoPushGroups:(NSDictionary *)param
-            withMethodType:(NSString *)aChannelName
+         withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)updateUserPushService:(NSDictionary *)param
-                  withMethodType:(NSString *)aChannelName
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)getNoPushUsers:(NSDictionary *)param
-           withMethodType:(NSString *)aChannelName
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 @end

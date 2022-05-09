@@ -36,21 +36,15 @@ static NSString *const TAG = @"ExtSdkDispatch";
     _listener = listener;
 }
 
-- (void)callSdkApi:(nonnull NSString *)methodType
-        withParams:(nullable id<NSObject>)params
-      withCallback:(nonnull id<ExtSdkCallbackObjc>)callback {
-    NSLog(@"%@: callSdkApi: %@, %@", TAG, methodType,
-          params != nil ? params : @"");
+- (void)callSdkApi:(nonnull NSString *)methodType withParams:(nullable id<NSObject>)params withCallback:(nonnull id<ExtSdkCallbackObjc>)callback {
+    NSLog(@"%@: callSdkApi: %@, %@", TAG, methodType, params != nil ? params : @"");
     NSDictionary *ps = (NSDictionary *)params;
 
-    if ([ExtSdkTypeUtilObjc currentArchitectureType] ==
-        ExtSdkArchitectureTypeValueFlutter) {
+    if ([ExtSdkTypeUtilObjc currentArchitectureType] == ExtSdkArchitectureTypeValueFlutter) {
 
-    } else if ([ExtSdkTypeUtilObjc currentArchitectureType] ==
-               ExtSdkArchitectureTypeValueUnity) {
+    } else if ([ExtSdkTypeUtilObjc currentArchitectureType] == ExtSdkArchitectureTypeValueUnity) {
 
-    } else if ([ExtSdkTypeUtilObjc currentArchitectureType] ==
-               ExtSdkArchitectureTypeValueRN) {
+    } else if ([ExtSdkTypeUtilObjc currentArchitectureType] == ExtSdkArchitectureTypeValueRN) {
         NSArray *a = [ps allValues];
         ps = a.firstObject;
     } else {
@@ -61,970 +55,641 @@ static NSString *const TAG = @"ExtSdkDispatch";
 
     /// #pragma mark - EMClientWrapper value
     case ExtSdkMethodKeyInitValue:
-        [[ExtSdkClientWrapper getInstance] initSDKWithDict:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] initSDKWithDict:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyCreateAccountValue:
-        [[ExtSdkClientWrapper getInstance] createAccount:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] createAccount:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLoginValue:
-        [[ExtSdkClientWrapper getInstance] login:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] login:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLogoutValue:
-        [[ExtSdkClientWrapper getInstance] logout:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] logout:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChangeAppKeyValue:
-        [[ExtSdkClientWrapper getInstance] changeAppKey:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] changeAppKey:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyIsLoggedInBeforeValue:
-        [[ExtSdkClientWrapper getInstance] isLoggedInBefore:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] isLoggedInBefore:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUploadLogValue:
-        [[ExtSdkClientWrapper getInstance] uploadLog:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] uploadLog:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyCompressLogsValue:
-        [[ExtSdkClientWrapper getInstance] compressLogs:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] compressLogs:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyKickDeviceValue:
-        [[ExtSdkClientWrapper getInstance] kickDevice:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] kickDevice:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyKickAllDevicesValue:
-        [[ExtSdkClientWrapper getInstance] kickAllDevices:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] kickAllDevices:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyCurrentUserValue:
-        [[ExtSdkClientWrapper getInstance] getCurrentUser:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] getCurrentUser:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetLoggedInDevicesFromServerValue:
-        [[ExtSdkClientWrapper getInstance]
-            getLoggedInDevicesFromServer:ps
-                                  result:callback];
+        [[ExtSdkClientWrapper getInstance] getLoggedInDevicesFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetTokenValue:
-        [[ExtSdkClientWrapper getInstance] getToken:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] getToken:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLoginWithAgoraTokenValue:
-        [[ExtSdkClientWrapper getInstance] loginWithAgoraToken:ps
-                                                        result:callback];
+        [[ExtSdkClientWrapper getInstance] loginWithAgoraToken:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyIsConnectedValue:
-        [[ExtSdkClientWrapper getInstance] isConnected:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] isConnected:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetCurrentUserValue:
-        [[ExtSdkClientWrapper getInstance] getCurrentUser:ps result:callback];
+        [[ExtSdkClientWrapper getInstance] getCurrentUser:ps withMethodType:methodType result:callback];
         break;
 
     /// #pragma mark - EMClientDelegate value
     case ExtSdkMethodKeyOnConnectedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnDisconnectedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMultiDeviceEventValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeySendDataToFlutterValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnTokenWillExpireValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnTokenDidExpireValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnUserDidLoginFromOtherDeviceValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnUserDidRemoveFromServerValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnUserDidForbidByServerValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnUserDidChangePasswordValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnUserDidLoginTooManyDeviceValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnUserKickedByOtherDeviceValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnUserAuthenticationFailedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
 
     /// #pragma mark - EMContactManagerWrapper value
     case ExtSdkMethodKeyAddContactValue:
-        [[ExtSdkContactManagerWrapper getInstance] addContact:ps
-                                                       result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] addContact:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDeleteContactValue:
-        [[ExtSdkContactManagerWrapper getInstance] deleteContact:ps
-                                                          result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] deleteContact:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetAllContactsFromServerValue:
-        [[ExtSdkContactManagerWrapper getInstance]
-            getAllContactsFromServer:ps
-                              result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] getAllContactsFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetAllContactsFromDBValue:
-        [[ExtSdkContactManagerWrapper getInstance]
-            getAllContactsFromDB:ps
-                          result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] getAllContactsFromDB:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAddUserToBlockListValue:
-        [[ExtSdkContactManagerWrapper getInstance] addUserToBlockList:ps
-                                                               result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] addUserToBlockList:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyRemoveUserFromBlockListValue:
-        [[ExtSdkContactManagerWrapper getInstance]
-            removeUserFromBlockList:ps
-                             result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] removeUserFromBlockList:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetBlockListFromServerValue:
-        [[ExtSdkContactManagerWrapper getInstance]
-            getBlockListFromServer:ps
-                            result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] getBlockListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetBlockListFromDBValue:
-        [[ExtSdkContactManagerWrapper getInstance] getBlockListFromDB:ps
-                                                               result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] getBlockListFromDB:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAcceptInvitationValue:
-        [[ExtSdkContactManagerWrapper getInstance] acceptInvitation:ps
-                                                             result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] acceptInvitation:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDeclineInvitationValue:
-        [[ExtSdkContactManagerWrapper getInstance] declineInvitation:ps
-                                                              result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] declineInvitation:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetSelfIdsOnOtherPlatformValue:
-        [[ExtSdkContactManagerWrapper getInstance]
-            getSelfIdsOnOtherPlatform:ps
-                               result:callback];
+        [[ExtSdkContactManagerWrapper getInstance] getSelfIdsOnOtherPlatform:ps withMethodType:methodType result:callback];
         break;
 
     /// #pragma mark - EMContactDelegate value
     case ExtSdkMethodKeyOnContactChangedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
 
     /// #pragma mark - EMChatManagerWrapper value
     case ExtSdkMethodKeySendMessageValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-               sendMessage:ps
-            withMethodType:ExtSdkMethodKeySendMessage
-                    result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] sendMessage:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyResendMessageValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-             resendMessage:ps
-            withMethodType:ExtSdkMethodKeyResendMessage
-                    result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] resendMessage:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAckMessageReadValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            ackMessageRead:ps
-            withMethodType:ExtSdkMethodKeyAckMessageRead
-                    result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] ackMessageRead:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAckGroupMessageReadValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            ackGroupMessageRead:ps
-                 withMethodType:ExtSdkMethodKeyAckGroupMessageRead
-                         result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] ackGroupMessageRead:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAckConversationReadValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            ackConversationRead:ps
-                 withMethodType:ExtSdkMethodKeyAckConversationRead
-                         result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] ackConversationRead:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyRecallMessageValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-             recallMessage:ps
-            withMethodType:ExtSdkMethodKeyRecallMessage
-                    result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] recallMessage:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetConversationValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            getConversation:ps
-             withMethodType:ExtSdkMethodKeyGetConversation
-                     result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] getConversation:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyMarkAllChatMsgAsReadValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            markAllMessagesAsRead:ps
-                   withMethodType:ExtSdkMethodKeyMarkAllChatMsgAsRead
-                           result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] markAllMessagesAsRead:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetUnreadMessageCountValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            getUnreadMessageCount:ps
-                   withMethodType:ExtSdkMethodKeyGetUnreadMessageCount
-                           result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] getUnreadMessageCount:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateChatMessageValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            updateChatMessage:ps
-               withMethodType:ExtSdkMethodKeyUpdateChatMessage
-                       result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] updateChatMessage:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDownloadAttachmentValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            downloadAttachment:ps
-                withMethodType:ExtSdkMethodKeyDownloadAttachment
-                        result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] downloadAttachment:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDownloadThumbnailValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            downloadThumbnail:ps
-               withMethodType:ExtSdkMethodKeyDownloadThumbnail
-                       result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] downloadThumbnail:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyImportMessagesValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            importMessages:ps
-            withMethodType:ExtSdkMethodKeyImportMessages
-                    result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] importMessages:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLoadAllConversationsValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            loadAllConversations:ps
-                  withMethodType:ExtSdkMethodKeyLoadAllConversations
-                          result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] loadAllConversations:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetConversationsFromServerValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            getConversationsFromServer:ps
-                        withMethodType:ExtSdkMethodKeyGetConversationsFromServer
-                                result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] getConversationsFromServer:ps withMethodType:methodType result:callback];
         break;
 
     case ExtSdkMethodKeyDeleteConversationValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            deleteConversation:ps
-                withMethodType:ExtSdkMethodKeyDeleteConversation
-                        result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] deleteConversation:ps withMethodType:methodType result:callback];
         break;
-    // case ExtSdkMethodKeySetVoiceMessageListenedValue: [callback onFail:1
-    // withExtension:[NSString stringWithFormat:@"not implement: %@",
-    // methodType]]; break; case ExtSdkMethodKeyUpdateParticipantValue:
-    // [callback onFail:1 withExtension:[NSString stringWithFormat:@"not
-    // implement: %@", methodType]]; break;
+//    case ExtSdkMethodKeySetVoiceMessageListenedValue:
+//        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+//        break;
+//    case ExtSdkMethodKeyUpdateParticipantValue:
+//        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+//        break;
     case ExtSdkMethodKeyUpdateConversationsNameValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyFetchHistoryMessagesValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            fetchHistoryMessages:ps
-                  withMethodType:ExtSdkMethodKeyFetchHistoryMessages
-                          result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] fetchHistoryMessages:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeySearchChatMsgFromDBValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            searchChatMsgFromDB:ps
-                 withMethodType:ExtSdkMethodKeySearchChatMsgFromDB
-                         result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] searchChatMsgFromDB:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetMessageValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            getMessageWithMessageId:ps
-                     withMethodType:ExtSdkMethodKeyGetMessage
-                             result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] getMessageWithMessageId:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAsyncFetchGroupAcksValue:
-        [[ExtSdkChatManagerWrapper getInstance]
-            fetchGroupReadAck:ps
-               withMethodType:ExtSdkMethodKeyAsyncFetchGroupAcks
-                       result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] fetchGroupReadAck:ps withMethodType:methodType result:callback];
         break;
 
     /// #pragma mark - EMChatManagerDelegate value
     case ExtSdkMethodKeyOnMessagesReceivedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnCmdMessagesReceivedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMessagesReadValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnGroupMessageReadValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMessagesDeliveredValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMessagesRecalledValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
 
     case ExtSdkMethodKeyOnConversationUpdateValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnConversationHasReadValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
 
     /// #pragma mark - EMMessageListener value
     case ExtSdkMethodKeyOnMessageProgressUpdateValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMessageSuccessValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMessageErrorValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMessageReadAckValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMessageDeliveryAckValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyOnMessageStatusChangedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
 
         /// #pragma mark - EMConversationWrapper value
 
     case ExtSdkMethodKeyGetUnreadMsgCountValue:
-        [[ExtSdkConversationWrapper getInstance] getUnreadMsgCount:ps
-                                                            result:callback];
+        [[ExtSdkConversationWrapper getInstance] getUnreadMsgCount:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyMarkAllMsgsAsReadValue:
-        [[ExtSdkConversationWrapper getInstance] markAllMsgsAsRead:ps
-                                                            result:callback];
+        [[ExtSdkConversationWrapper getInstance] markAllMsgsAsRead:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyMarkMsgAsReadValue:
-        [[ExtSdkConversationWrapper getInstance] markMsgAsRead:ps
-                                                        result:callback];
+        [[ExtSdkConversationWrapper getInstance] markMsgAsRead:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeySyncConversationExtValue:
-        [[ExtSdkConversationWrapper getInstance] syncConversationExt:ps
-                                                              result:callback];
+        [[ExtSdkConversationWrapper getInstance] syncConversationExt:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeySyncConversationNameValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyRemoveMsgValue:
-        [[ExtSdkConversationWrapper getInstance] removeMsg:ps result:callback];
+        [[ExtSdkConversationWrapper getInstance] removeMsg:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetLatestMsgValue:
-        [[ExtSdkConversationWrapper getInstance] getLatestMsg:ps
-                                                       result:callback];
+        [[ExtSdkConversationWrapper getInstance] getLatestMsg:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetLatestMsgFromOthersValue:
-        [[ExtSdkConversationWrapper getInstance]
-            getLatestMsgFromOthers:ps
-                            result:callback];
+        [[ExtSdkConversationWrapper getInstance] getLatestMsgFromOthers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyClearAllMsgValue:
-        [[ExtSdkConversationWrapper getInstance] clearAllMsg:ps
-                                                      result:callback];
+        [[ExtSdkConversationWrapper getInstance] clearAllMsg:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyInsertMsgValue:
-        [[ExtSdkConversationWrapper getInstance] insertMsg:ps result:callback];
+        [[ExtSdkConversationWrapper getInstance] insertMsg:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAppendMsgValue:
-        [[ExtSdkConversationWrapper getInstance] appendMsg:ps result:callback];
+        [[ExtSdkConversationWrapper getInstance] appendMsg:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateConversationMsgValue:
-        [[ExtSdkConversationWrapper getInstance]
-            updateConversationMsg:ps
-                           result:callback];
+        [[ExtSdkConversationWrapper getInstance] updateConversationMsg:ps withMethodType:methodType result:callback];
         break;
 
     case ExtSdkMethodKeyLoadMsgWithIdValue:
-        [[ExtSdkConversationWrapper getInstance] loadMsgWithId:ps
-                                                        result:callback];
+        [[ExtSdkConversationWrapper getInstance] loadMsgWithId:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLoadMsgWithStartIdValue:
-        [[ExtSdkConversationWrapper getInstance] loadMsgWithStartId:ps
-                                                             result:callback];
+        [[ExtSdkConversationWrapper getInstance] loadMsgWithStartId:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLoadMsgWithKeywordsValue:
-        [[ExtSdkConversationWrapper getInstance] loadMsgWithKeywords:ps
-                                                              result:callback];
+        [[ExtSdkConversationWrapper getInstance] loadMsgWithKeywords:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLoadMsgWithMsgTypeValue:
-        [[ExtSdkConversationWrapper getInstance] loadMsgWithMsgType:ps
-                                                             result:callback];
+        [[ExtSdkConversationWrapper getInstance] loadMsgWithMsgType:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLoadMsgWithTimeValue:
-        [[ExtSdkConversationWrapper getInstance] loadMsgWithTime:ps
-                                                          result:callback];
+        [[ExtSdkConversationWrapper getInstance] loadMsgWithTime:ps withMethodType:methodType result:callback];
         break;
 
         /// #pragma mark - EMChatroomManagerWrapper value
 
     case ExtSdkMethodKeyJoinChatRoomValue:
-        [[ExtSdkChatroomManagerWrapper getInstance] joinChatRoom:ps
-                                                          result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] joinChatRoom:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLeaveChatRoomValue:
-        [[ExtSdkChatroomManagerWrapper getInstance] leaveChatRoom:ps
-                                                           result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] leaveChatRoom:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetChatroomsFromServerValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            getChatroomsFromServer:ps
-                            result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] getChatroomsFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchChatRoomFromServerValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            fetchChatroomFromServer:ps
-                             result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] fetchChatroomFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetChatRoomValue:
-        [[ExtSdkChatroomManagerWrapper getInstance] getChatRoom:ps
-                                                         result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] getChatRoom:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetAllChatRoomsValue:
-        [[ExtSdkChatroomManagerWrapper getInstance] getAllChatRooms:ps
-                                                             result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] getAllChatRooms:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyCreateChatRoomValue:
-        [[ExtSdkChatroomManagerWrapper getInstance] createChatRoom:ps
-                                                            result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] createChatRoom:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDestroyChatRoomValue:
-        [[ExtSdkChatroomManagerWrapper getInstance] destroyChatRoom:ps
-                                                             result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] destroyChatRoom:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomUpdateSubjectValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            chatRoomUpdateSubject:ps
-                           result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomUpdateSubject:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomUpdateDescriptionValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            chatRoomUpdateDescription:ps
-                               result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomUpdateDescription:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetChatroomMemberListFromServerValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            getChatroomMemberListFromServer:ps
-                                     result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] getChatroomMemberListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomMuteMembersValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            chatRoomMuteMembers:ps
-                         result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomMuteMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomUnmuteMembersValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            chatRoomUnmuteMembers:ps
-                           result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomUnmuteMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChangeChatRoomOwnerValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            changeChatRoomOwner:ps
-                         result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] changeChatRoomOwner:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomAddAdminValue:
-        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomAddAdmin:ps
-                                                              result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomAddAdmin:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomRemoveAdminValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            chatRoomRemoveAdmin:ps
-                         result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomRemoveAdmin:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetChatroomMuteListFromServerValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            getChatroomMuteListFromServer:ps
-                                   result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] getChatroomMuteListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomRemoveMembersValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            chatRoomRemoveMembers:ps
-                           result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomRemoveMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomBlockMembersValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            chatRoomBlockMembers:ps
-                          result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomBlockMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyChatRoomUnblockMembersValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            chatRoomUnblockMembers:ps
-                            result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] chatRoomUnblockMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchChatroomBlockListFromServerValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            fetchChatroomBlockListFromServer:ps
-                                      result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] fetchChatroomBlockListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateChatRoomAnnouncementValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            updateChatRoomAnnouncement:ps
-                                result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] updateChatRoomAnnouncement:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchChatroomAnnouncementValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            fetchChatroomAnnouncement:ps
-                               result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] fetchChatroomAnnouncement:ps withMethodType:methodType result:callback];
         break;
 
     case ExtSdkMethodKeyAddMembersToChatRoomWhiteListValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            addMembersToChatRoomWhiteList:ps
-                                   result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] addMembersToChatRoomWhiteList:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyRemoveMembersFromChatRoomWhiteListValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            removeMembersFromChatRoomWhiteList:ps
-                                        result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] removeMembersFromChatRoomWhiteList:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchChatRoomWhiteListFromServerValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            fetchChatRoomWhiteListFromServer:ps
-                                      result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] fetchChatRoomWhiteListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServerValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            isMemberInChatRoomWhiteListFromServer:ps
-                                           result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] isMemberInChatRoomWhiteListFromServer:ps withMethodType:methodType result:callback];
         break;
 
     case ExtSdkMethodKeyMuteAllChatRoomMembersValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            muteAllChatRoomMembers:ps
-                            result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] muteAllChatRoomMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUnMuteAllChatRoomMembersValue:
-        [[ExtSdkChatroomManagerWrapper getInstance]
-            unMuteAllChatRoomMembers:ps
-                              result:callback];
+        [[ExtSdkChatroomManagerWrapper getInstance] unMuteAllChatRoomMembers:ps withMethodType:methodType result:callback];
         break;
 
     /// #pragma mark - EMChatroomManagerDelegate value
     case ExtSdkMethodKeyChatroomChangedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
 
         /// #pragma mark - EMGroupManagerWrapper value
 
     case ExtSdkMethodKeyGetGroupWithIdValue:
-        [[ExtSdkGroupManagerWrapper getInstance] getGroupWithId:ps
-                                                         result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupWithId:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetJoinedGroupsValue:
-        [[ExtSdkGroupManagerWrapper getInstance] getJoinedGroups:ps
-                                                          result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getJoinedGroups:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupsWithoutPushNotificationValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getGroupsWithoutPushNotification:ps
-                                      result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupsWithoutPushNotification:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetJoinedGroupsFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getJoinedGroupsFromServer:ps
-                               result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getJoinedGroupsFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetPublicGroupsFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getPublicGroupsFromServer:ps
-                               result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getPublicGroupsFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyCreateGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance] createGroup:ps
-                                                      result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] createGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupSpecificationFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getGroupSpecificationFromServer:ps
-                                     result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupSpecificationFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupMemberListFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getGroupMemberListFromServer:ps
-                                  result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupMemberListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupBlockListFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getGroupBlockListFromServer:ps
-                                 result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupBlockListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupMuteListFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getGroupMuteListFromServer:ps
-                                result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupMuteListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupWhiteListFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getGroupWhiteListFromServer:ps
-                                 result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupWhiteListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyIsMemberInWhiteListFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            isMemberInWhiteListFromServer:ps
-                                   result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] isMemberInWhiteListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupFileListFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getGroupFileListFromServer:ps
-                                result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupFileListFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupAnnouncementFromServerValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            getGroupAnnouncementFromServer:ps
-                                    result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] getGroupAnnouncementFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAddMembersValue:
-        [[ExtSdkGroupManagerWrapper getInstance] addMembers:ps result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] addMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyInviterUserValue:
-        [[ExtSdkGroupManagerWrapper getInstance] inviterUser:ps
-                                                      result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] inviterUser:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyRemoveMembersValue:
-        [[ExtSdkGroupManagerWrapper getInstance] removeMembers:ps
-                                                        result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] removeMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyBlockMembersValue:
-        [[ExtSdkGroupManagerWrapper getInstance] blockMembers:ps
-                                                       result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] blockMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUnblockMembersValue:
-        [[ExtSdkGroupManagerWrapper getInstance] unblockMembers:ps
-                                                         result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] unblockMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateGroupSubjectValue:
-        [[ExtSdkGroupManagerWrapper getInstance] updateGroupSubject:ps
-                                                             result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] updateGroupSubject:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateDescriptionValue:
-        [[ExtSdkGroupManagerWrapper getInstance] updateDescription:ps
-                                                            result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] updateDescription:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyLeaveGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance] leaveGroup:ps result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] leaveGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDestroyGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance] destroyGroup:ps
-                                                       result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] destroyGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyBlockGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance] blockGroup:ps result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] blockGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUnblockGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance] unblockGroup:ps
-                                                       result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] unblockGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateGroupOwnerValue:
-        [[ExtSdkGroupManagerWrapper getInstance] updateGroupOwner:ps
-                                                           result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] updateGroupOwner:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAddAdminValue:
-        [[ExtSdkGroupManagerWrapper getInstance] addAdmin:ps result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] addAdmin:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyRemoveAdminValue:
-        [[ExtSdkGroupManagerWrapper getInstance] removeAdmin:ps
-                                                      result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] removeAdmin:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyMuteMembersValue:
-        [[ExtSdkGroupManagerWrapper getInstance] muteMembers:ps
-                                                      result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] muteMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUnMuteMembersValue:
-        [[ExtSdkGroupManagerWrapper getInstance] unMuteMembers:ps
-                                                        result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] unMuteMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyMuteAllMembersValue:
-        [[ExtSdkGroupManagerWrapper getInstance] muteAllMembers:ps
-                                                         result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] muteAllMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUnMuteAllMembersValue:
-        [[ExtSdkGroupManagerWrapper getInstance] unMuteAllMembers:ps
-                                                           result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] unMuteAllMembers:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAddWhiteListValue:
-        [[ExtSdkGroupManagerWrapper getInstance] addWhiteList:ps
-                                                       result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] addWhiteList:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyRemoveWhiteListValue:
-        [[ExtSdkGroupManagerWrapper getInstance] removeWhiteList:ps
-                                                          result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] removeWhiteList:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUploadGroupSharedFileValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            uploadGroupSharedFile:ps
-                           result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] uploadGroupSharedFile:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDownloadGroupSharedFileValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            downloadGroupSharedFile:ps
-                             result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] downloadGroupSharedFile:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyRemoveGroupSharedFileValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            removeGroupSharedFile:ps
-                           result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] removeGroupSharedFile:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateGroupAnnouncementValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            updateGroupAnnouncement:ps
-                             result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] updateGroupAnnouncement:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateGroupExtValue:
-        [[ExtSdkGroupManagerWrapper getInstance] updateGroupExt:ps
-                                                         result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] updateGroupExt:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyJoinPublicGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance] joinPublicGroup:ps
-                                                          result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] joinPublicGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyRequestToJoinPublicGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            requestToJoinPublicGroup:ps
-                              result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] requestToJoinPublicGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAcceptJoinApplicationValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            acceptJoinApplication:ps
-                           result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] acceptJoinApplication:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDeclineJoinApplicationValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            declineJoinApplication:ps
-                            result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] declineJoinApplication:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyAcceptInvitationFromGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            acceptInvitationFromGroup:ps
-                               result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] acceptInvitationFromGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDeclineInvitationFromGroupValue:
-        [[ExtSdkGroupManagerWrapper getInstance]
-            declineInvitationFromGroup:ps
-                                result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] declineInvitationFromGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyIgnoreGroupPushValue:
-        [[ExtSdkGroupManagerWrapper getInstance] ignoreGroupPush:ps
-                                                          result:callback];
+        [[ExtSdkGroupManagerWrapper getInstance] ignoreGroupPush:ps withMethodType:methodType result:callback];
         break;
 
     /// #pragma mark - ExtSdkGroupManagerDelegate
     case ExtSdkMethodKeyOnGroupChangedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
 
     /// #pragma mark - EMPushManagerWrapper value
     case ExtSdkMethodKeyGetImPushConfigValue:
-        [[ExtSdkPushManagerWrapper getInstance] getImPushConfig:ps
-                                                 withMethodType:methodType
-                                                         result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] getImPushConfig:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetImPushConfigFromServerValue:
-        [[ExtSdkPushManagerWrapper getInstance]
-            getImPushConfigFromServer:ps
-                       withMethodType:methodType
-                               result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] getImPushConfigFromServer:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdatePushNicknameValue:
-        [[ExtSdkPushManagerWrapper getInstance] updatePushNickname:ps
-                                                    withMethodType:methodType
-                                                            result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] updatePushNickname:ps withMethodType:methodType result:callback];
         break;
 
     case ExtSdkMethodKeyImPushNoDisturbValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyUpdateImPushStyleValue:
-        [[ExtSdkPushManagerWrapper getInstance] updateImPushStyle:ps
-                                                   withMethodType:methodType
-                                                           result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] updateImPushStyle:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateGroupPushServiceValue:
-        [[ExtSdkPushManagerWrapper getInstance]
-            updateGroupPushService:ps
-                    withMethodType:methodType
-                            result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] updateGroupPushService:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetNoDisturbGroupsValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyBindDeviceTokenValue:
-        [[ExtSdkPushManagerWrapper getInstance] bindDeviceToken:ps
-                                                 withMethodType:methodType
-                                                         result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] bindDeviceToken:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyEnablePushValue:
-        [[ExtSdkPushManagerWrapper getInstance] enablePush:ps
-                                            withMethodType:methodType
-                                                    result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] enablePush:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyDisablePushValue:
-        [[ExtSdkPushManagerWrapper getInstance] disablePush:ps
-                                             withMethodType:methodType
-                                                     result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] disablePush:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetNoPushGroupsValue:
-        [[ExtSdkPushManagerWrapper getInstance] getNoPushGroups:ps
-                                                 withMethodType:methodType
-                                                         result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] getNoPushGroups:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeySetNoDisturbUsersValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyGetNoDisturbUsersFromServerValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyUpdateUserPushServiceValue:
-        [[ExtSdkPushManagerWrapper getInstance] updateUserPushService:ps
-                                                       withMethodType:methodType
-                                                               result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] updateUserPushService:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetNoPushUsersValue:
-        [[ExtSdkPushManagerWrapper getInstance] getNoPushUsers:ps
-                                                withMethodType:methodType
-                                                        result:callback];
+        [[ExtSdkPushManagerWrapper getInstance] getNoPushUsers:ps withMethodType:methodType result:callback];
         break;
 
     /// #pragma mark - EMUserInfoManagerWrapper value
     case ExtSdkMethodKeyUpdateOwnUserInfoValue:
-        [[ExtSdkUserInfoManagerWrapper getInstance] updateOwnUserInfo:ps
-                                                               result:callback];
+        [[ExtSdkUserInfoManagerWrapper getInstance] updateOwnUserInfo:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue:
-        [[ExtSdkUserInfoManagerWrapper getInstance]
-            updateOwnUserInfoWithType:ps
-                               result:callback];
+        [[ExtSdkUserInfoManagerWrapper getInstance] updateOwnUserInfoWithType:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchUserInfoByIdValue:
-        [[ExtSdkUserInfoManagerWrapper getInstance] fetchUserInfoById:ps
-                                                               result:callback];
+        [[ExtSdkUserInfoManagerWrapper getInstance] fetchUserInfoById:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue:
-        [[ExtSdkUserInfoManagerWrapper getInstance]
-            fetchUserInfoByIdWithType:ps
-                               result:callback];
+        [[ExtSdkUserInfoManagerWrapper getInstance] fetchUserInfoByIdWithType:ps withMethodType:methodType result:callback];
         break;
 
     case ExtSdkMethodKeyTranslateMessageValue:
-        [[ExtSdkChatManagerWrapper getInstance] translateMessage:ps
-                                                     channelName:methodType
-                                                          result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] translateMessage:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchSupportedLanguagesValue:
-        [[ExtSdkChatManagerWrapper getInstance] fetchSupportLanguages:ps
-                                                          channelName:methodType
-                                                               result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] fetchSupportLanguages:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyOnPresenceStatusChangedValue:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyPublishPresenceWithDescriptionValue:
-        [[ExtSdkPresenceManagerWrapper getInstance]
-            fetchPresenceStatus:ps
-                    channelName:methodType
-                         result:callback];
+        [[ExtSdkPresenceManagerWrapper getInstance] fetchPresenceStatus:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyPresenceSubscribeValue:
-        [[ExtSdkPresenceManagerWrapper getInstance] subscribe:ps
-                                                  channelName:methodType
-                                                       result:callback];
+        [[ExtSdkPresenceManagerWrapper getInstance] subscribe:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyPresenceUnsubscribeValue:
-        [[ExtSdkPresenceManagerWrapper getInstance] unsubscribe:ps
-                                                    channelName:methodType
-                                                         result:callback];
+        [[ExtSdkPresenceManagerWrapper getInstance] unsubscribe:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchSubscribedMembersWithPageNumValue:
-        [[ExtSdkPresenceManagerWrapper getInstance]
-            fetchSubscribedMembersWithPageNum:ps
-                                  channelName:methodType
-                                       result:callback];
+        [[ExtSdkPresenceManagerWrapper getInstance] fetchSubscribedMembersWithPageNum:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyFetchPresenceStatusValue:
-        [[ExtSdkPresenceManagerWrapper getInstance]
-            fetchPresenceStatus:ps
-                    channelName:methodType
-                         result:callback];
+        [[ExtSdkPresenceManagerWrapper getInstance] fetchPresenceStatus:ps withMethodType:methodType result:callback];
         break;
 
     default:
-        [callback onFail:1
-            withExtension:[NSString stringWithFormat:@"not implement: %@",
-                                                     methodType]];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     }
 }
@@ -1041,10 +706,8 @@ static NSString *const TAG = @"ExtSdkDispatch";
     NSLog(@"%@: unInit:", TAG);
 }
 
-- (void)onReceive:(nonnull NSString *)methodType
-       withParams:(nullable NSObject *)params {
-    NSLog(@"%@: onReceive: %@: %@", TAG, methodType,
-          nil != params ? params : @"");
+- (void)onReceive:(nonnull NSString *)methodType withParams:(nullable NSObject *)params {
+    NSLog(@"%@: onReceive: %@: %@", TAG, methodType, nil != params ? params : @"");
     [_listener onReceive:methodType withParams:params];
 }
 

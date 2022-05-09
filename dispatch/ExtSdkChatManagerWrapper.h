@@ -95,15 +95,15 @@ NS_ASSUME_NONNULL_BEGIN
                      result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)deleteRemoteConversation:(NSDictionary *)param
-                     channelName:(NSString *)aChannelName
+                  withMethodType:(NSString *)aChannelName
                           result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)translateMessage:(NSDictionary *)param
-             channelName:(NSString *)aChannelName
+          withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)fetchSupportLanguages:(NSDictionary *)param
-                  channelName:(NSString *)aChannelName
+               withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 @end
