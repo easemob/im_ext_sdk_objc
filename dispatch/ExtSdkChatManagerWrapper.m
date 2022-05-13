@@ -178,7 +178,7 @@
         [weakSelf onResult:result
             withMethodType:aChannelName
                  withError:error
-                withParams:@(!error)];
+                withParams:nil];
         return;
     }
     [EMClient.sharedClient.chatManager
@@ -239,7 +239,7 @@
     [weakSelf onResult:result
         withMethodType:aChannelName
              withError:error
-            withParams:@(!error)];
+            withParams:nil];
 }
 
 - (void)getUnreadMessageCount:(NSDictionary *)param
@@ -405,6 +405,7 @@
 - (void)getConversationsFromServer:(NSDictionary *)param
                     withMethodType:(NSString *)aChannelName
                             result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.chatManager
         getConversationsFromServer:^(NSArray *aCoversations, EMError *aError) {
           NSArray *sortedList = [aCoversations
@@ -422,7 +423,7 @@
               [conList addObject:[conversation toJsonObject]];
           }
 
-          [self onResult:result
+          [weakSelf onResult:result
               withMethodType:aChannelName
                    withError:nil
                   withParams:conList];
@@ -633,10 +634,11 @@
     [self onReceive:ExtSdkMethodKeyOnMessagesDelivered withParams:list];
 }
 
-- (void)messagesDidRecall:(NSArray *)aMessages {
+- (void)messagesInfoDidRecall:
+    (NSArray<EMRecallMessageInfo *> *)aRecallMessagesInfo {
     NSMutableArray *list = [NSMutableArray array];
-    for (EMChatMessage *msg in aMessages) {
-        [list addObject:[msg toJsonObject]];
+    for (EMRecallMessageInfo *info in aRecallMessagesInfo) {
+        [list addObject:[info.recallMessage toJsonObject]];
     }
 
     [self onReceive:ExtSdkMethodKeyOnMessagesRecalled withParams:list];

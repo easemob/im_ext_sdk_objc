@@ -35,15 +35,6 @@
 
 #pragma mark - Actions
 
-- (void)getToken:(NSDictionary *)param
-    withMethodType:(NSString *)aChannelName
-            result:(nonnull id<ExtSdkCallbackObjc>)result {
-    [self onResult:result
-        withMethodType:ExtSdkMethodKeyGetToken
-             withError:nil
-            withParams:EMClient.sharedClient.accessUserToken];
-}
-
 - (void)initSDKWithDict:(NSDictionary *)param
          withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
@@ -75,6 +66,15 @@
         withMethodType:ExtSdkMethodKeyInit
              withError:nil
             withParams:nil];
+}
+
+- (void)getToken:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
+    [self onResult:result
+        withMethodType:ExtSdkMethodKeyGetToken
+             withError:nil
+            withParams:EMClient.sharedClient.accessUserToken];
 }
 
 - (void)createAccount:(NSDictionary *)param
@@ -238,11 +238,6 @@
         withMethodType:ExtSdkMethodKeyIsLoggedInBefore
              withError:nil
             withParams:@(EMClient.sharedClient.isLoggedIn)];
-}
-
-- (void)onMultiDeviceEvent:(NSDictionary *)param
-            withMethodType:(NSString *)aChannelName
-                    result:(nonnull id<ExtSdkCallbackObjc>)result {
 }
 
 - (void)getLoggedInDevicesFromServer:(NSDictionary *)param

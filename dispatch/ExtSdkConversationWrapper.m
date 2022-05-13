@@ -98,8 +98,8 @@
 
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeyMarkMsgAsRead
-                                   withError:nil
-                                  withParams:@(YES)];
+                                   withError:error
+                                  withParams:nil];
                         }];
 }
 
@@ -114,7 +114,7 @@
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeySyncConversationExt
                                    withError:nil
-                                  withParams:@(YES)];
+                                  withParams:nil];
                         }];
 }
 
@@ -129,7 +129,7 @@
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeyMarkAllMsgsAsRead
                                    withError:error
-                                  withParams:@(!error)];
+                                  withParams:nil];
                         }];
 }
 
@@ -148,7 +148,7 @@
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeyInsertMsg
                                    withError:error
-                                  withParams:@(!error)];
+                                  withParams:nil];
                         }];
 }
 
@@ -167,7 +167,7 @@
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeyAppendMsg
                                    withError:error
-                                  withParams:@(!error)];
+                                  withParams:nil];
                         }];
 }
 
@@ -187,7 +187,7 @@
                         [weakSelf onResult:result
                             withMethodType:ExtSdkMethodKeyUpdateConversationMsg
                                  withError:error
-                                withParams:@(!error)];
+                                withParams:nil];
                       }];
 }
 
@@ -204,7 +204,7 @@
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeyRemoveMsg
                                    withError:error
-                                  withParams:@(!error)];
+                                  withParams:nil];
                         }];
 }
 
@@ -219,7 +219,7 @@
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeyClearAllMsg
                                    withError:error
-                                  withParams:@(!error)];
+                                  withParams:nil];
                         }];
 }
 

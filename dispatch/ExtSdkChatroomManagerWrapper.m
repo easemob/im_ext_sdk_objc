@@ -152,17 +152,10 @@
 
     __weak typeof(self) weakSelf = self;
     EMChatroom *chatroom = [EMChatroom chatroomWithId:param[@"roomId"]];
-    if (chatroom != nil) {
-        [weakSelf onResult:result
-            withMethodType:ExtSdkMethodKeyGetChatRoom
-                 withError:nil
-                withParams:[chatroom toJsonObject]];
-    } else {
-        [weakSelf onResult:result
-            withMethodType:ExtSdkMethodKeyGetChatRoom
-                 withError:[[EMError alloc] initWithDescription:@"This room is not exist." code:1]
-                withParams:nil];
-    }
+    [weakSelf onResult:result
+        withMethodType:ExtSdkMethodKeyGetChatRoom
+             withError:nil
+            withParams:[chatroom toJsonObject]];
 }
 
 - (void)getAllChatRooms:(NSDictionary *)param

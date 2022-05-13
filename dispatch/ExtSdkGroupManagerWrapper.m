@@ -604,7 +604,7 @@
     [self onResult:result
         withMethodType:ExtSdkMethodKeyUploadGroupSharedFile
              withError:nil
-            withParams:@(YES)];
+            withParams:nil];
 }
 
 - (void)downloadGroupSharedFile:(NSDictionary *)param
@@ -647,7 +647,7 @@
     [self onResult:result
         withMethodType:ExtSdkMethodKeyDownloadGroupSharedFile
              withError:nil
-            withParams:@(YES)];
+            withParams:nil];
 }
 
 - (void)removeGroupSharedFile:(NSDictionary *)param
