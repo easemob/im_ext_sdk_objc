@@ -673,7 +673,7 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyPublishPresenceWithDescriptionValue:
-        [[ExtSdkPresenceManagerWrapper getInstance] fetchPresenceStatus:ps withMethodType:methodType result:callback];
+        [[ExtSdkPresenceManagerWrapper getInstance] publishPresenceWithDescription:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyPresenceSubscribeValue:
         [[ExtSdkPresenceManagerWrapper getInstance] subscribe:ps withMethodType:methodType result:callback];
