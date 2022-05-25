@@ -194,6 +194,12 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyTranslateMessage,
         ExtSdkMethodKeyFetchSupportedLanguages,
 
+        ExtSdkMethodKeyChatAddReaction,
+        ExtSdkMethodKeyChatRemoveReaction,
+        ExtSdkMethodKeyChatFetchReactionList,
+        ExtSdkMethodKeyChatFetchReactionDetail,
+        ExtSdkMethodKeyChatReportMessage,
+
         /// EMChatManagerDelegate
         ExtSdkMethodKeyOnMessagesReceived,
         ExtSdkMethodKeyOnCmdMessagesReceived,
@@ -204,6 +210,9 @@ RCT_EXPORT_METHOD(callMethod
 
         ExtSdkMethodKeyOnConversationUpdate,
         ExtSdkMethodKeyOnConversationHasRead,
+
+        ExtSdkMethodKeyChatOnReadAckForGroupMessageUpdated,
+        ExtSdkMethodKeyChatOnMessageReactionDidChange,
 
         /// EMMessageListener
         ExtSdkMethodKeyOnMessageProgressUpdate,
@@ -236,6 +245,9 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyLoadMsgWithKeywords,
         ExtSdkMethodKeyLoadMsgWithMsgType,
         ExtSdkMethodKeyLoadMsgWithTime,
+
+        ExtSdkMethodKeyChatGetReactionList,
+        ExtSdkMethodKeyChatGroupAckCount,
 
         /// EMChatroomManagerWrapper
 
@@ -353,7 +365,22 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyPresenceSubscribe,
         ExtSdkMethodKeyPresenceUnsubscribe,
         ExtSdkMethodKeyFetchSubscribedMembersWithPageNum,
-        ExtSdkMethodKeyFetchPresenceStatus
+        ExtSdkMethodKeyFetchPresenceStatus,
+
+        ExtSdkMethodKeyOnPresenceStatusChanged,
+
+        ExtSdkMethodKeyChatFetchChatThread,
+        ExtSdkMethodKeyChatFetchChatThreadDetail,
+        ExtSdkMethodKeyChatFetchJoinedChatThreads,
+        ExtSdkMethodKeyChatFetchChatThreadsWithParentId,
+        ExtSdkMethodKeyChatFetchChatThreadMember,
+        ExtSdkMethodKeyChatFetchLastMessageWithChatThreads,
+        ExtSdkMethodKeyChatRemoveMemberFromChatThread,
+        ExtSdkMethodKeyChatUpdateChatThreadSubject,
+        ExtSdkMethodKeyChatCreateChatThread,
+        ExtSdkMethodKeyChatJoinChatThread,
+        ExtSdkMethodKeyChatLeaveChatThread,
+        ExtSdkMethodKeyChatDestroyChatThread
     ];
 }
 

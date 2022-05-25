@@ -791,24 +791,6 @@
                     }];
 }
 
-- (void)ignoreGroupPush:(NSDictionary *)param
-         withMethodType:(NSString *)aChannelName
-                 result:(nonnull id<ExtSdkCallbackObjc>)result {
-    __weak typeof(self) weakSelf = self;
-
-    __block NSString *groupId = param[@"groupId"];
-    [EMClient.sharedClient.pushManager
-        updatePushServiceForGroups:@[ groupId ]
-                       disablePush:[param[@"ignore"] boolValue]
-                        completion:^(EMError *_Nonnull aError) {
-                          EMGroup *aGroup = [EMGroup groupWithId:groupId];
-                          [weakSelf onResult:result
-                              withMethodType:ExtSdkMethodKeyIgnoreGroupPush
-                                   withError:aError
-                                  withParams:[aGroup toJsonObject]];
-                        }];
-}
-
 #pragma mark - ExtSdkGroupManagerDelegate
 
 - (void)groupInvitationDidReceive:(NSString *)aGroupId

@@ -7,8 +7,8 @@
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
     ret[@"roomId"] = self.chatroomId;
-    ret[@"name"] = self.subject;
-    ret[@"desc"] = self.description;
+    ret[@"roomName"] = self.subject;
+    ret[@"description"] = self.description;
     ret[@"owner"] = self.owner;
     ret[@"maxUsers"] = @(self.maxOccupantsCount);
     ret[@"memberCount"] = @(self.occupantsCount);
@@ -50,10 +50,7 @@
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
     ret[@"con_id"] = self.conversationId;
     ret[@"type"] = @([self.class typeToInt:self.type]);
-    ret[@"unreadCount"] = @(self.unreadMessagesCount);
     ret[@"ext"] = self.ext;
-    ret[@"latestMessage"] = [self.latestMessage toJsonObject];
-    ret[@"lastReceivedMessage"] = [self.lastReceivedMessage toJsonObject];
     return ret;
 }
 
@@ -140,7 +137,7 @@
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
     ret[@"groupId"] = self.groupId;
     ret[@"groupName"] = self.groupName;
-    ret[@"desc"] = self.description;
+    ret[@"description"] = self.description;
     ret[@"owner"] = self.owner;
     ret[@"announcement"] = self.announcement;
     ret[@"memberCount"] = @(self.occupantsCount);
@@ -151,11 +148,32 @@
     ret[@"noticeEnable"] = @(self.isPushNotificationEnabled);
     ret[@"messageBlocked"] = @(self.isBlocked);
     ret[@"isAllMemberMuted"] = @(self.isMuteAllMembers);
-    ret[@"options"] = [self.settings toJsonObject];
     ret[@"permissionType"] =
         @([EMGroup premissionTypeToInt:self.permissionType]);
 
+    if (self.settings != nil) {
+        ret[@"maxUserCount"] = @(self.settings.maxUsers);
+        ret[@"isMemberOnly"] = @([self isMemberOnly]);
+        ret[@"isMemberAllowToInvite"] = @([self isMemberAllowToInvite]);
+        ret[@"ext"] = self.settings.ext;
+    }
+
     return ret;
+}
+
+- (BOOL)isMemberOnly {
+
+    if (self.settings.style == EMGroupStylePrivateOnlyOwnerInvite ||
+        self.settings.style == EMGroupStylePrivateMemberCanInvite ||
+        self.settings.style == EMGroupStylePublicJoinNeedApproval) {
+        return true;
+    }
+
+    return NO;
+}
+
+- (BOOL)isMemberAllowToInvite {
+    return self.settings.style == EMGroupStylePrivateMemberCanInvite;
 }
 
 + (int)premissionTypeToInt:(EMGroupPermissionType)type {
@@ -562,10 +580,12 @@
     double latitude = [aJson[@"latitude"] doubleValue];
     double longitude = [aJson[@"longitude"] doubleValue];
     NSString *address = aJson[@"address"];
+    NSString *buildingName = aJson[@"buildingName"];
     EMLocationMessageBody *ret =
         [[EMLocationMessageBody alloc] initWithLatitude:latitude
                                               longitude:longitude
-                                                address:address];
+                                                address:address
+                                           buildingName:buildingName];
     return ret;
 }
 
@@ -574,6 +594,7 @@
     ret[@"address"] = self.address;
     ret[@"latitude"] = @(self.latitude);
     ret[@"longitude"] = @(self.longitude);
+    ret[@"buildingName"] = self.buildingName;
     return ret;
 }
 
@@ -988,19 +1009,15 @@
 
 + (EMUserInfo *)fromJsonObject:(NSDictionary *)aJson {
     EMUserInfo *userInfo = EMUserInfo.new;
-    userInfo.userId = aJson[@"userId"] ?: @"";
-    userInfo.nickname = aJson[@"nickName"] ?: @"";
-    userInfo.avatarUrl = aJson[@"avatarUrl"] ?: @"";
-    userInfo.mail = aJson[@"mail"] ?: @"";
-    userInfo.phone = aJson[@"phone"] ?: @"";
+    userInfo.userId = aJson[@"userId"];
+    userInfo.nickname = aJson[@"nickName"];
+    userInfo.avatarUrl = aJson[@"avatarUrl"];
+    userInfo.mail = aJson[@"mail"];
+    userInfo.phone = aJson[@"phone"];
     userInfo.gender = [aJson[@"gender"] integerValue] ?: 0;
-    userInfo.sign = aJson[@"sign"] ?: @"";
-    userInfo.birth = aJson[@"birth"] ?: @"";
-    if ([aJson[@"ext"] isKindOfClass:[NSNull class]]) {
-        userInfo.ext = @"";
-    } else {
-        userInfo.ext = aJson[@"ext"] ?: @"";
-    }
+    userInfo.sign = aJson[@"sign"];
+    userInfo.birth = aJson[@"birth"];
+    userInfo.ext = aJson[@"ext"];
     return [userInfo copy];
 }
 
@@ -1029,4 +1046,34 @@
     }
     return ary;
 }
+@end
+
+@implementation EMMessageReaction (Json)
+
+- (nonnull NSDictionary *)toJsonObject {
+    return @{
+        @"reaction" : self.reaction,
+        @"count" : @(self.count),
+        @"isAddedBySelf" : @(self.isAddedBySelf),
+        @"userList" : self.userList,
+    };
+}
+
+@end
+
+@implementation EMMessageReactionChange (Json)
+
+- (nonnull NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+    ret[@"conversationId"] = self.conversationId;
+    ret[@"messageId"] = self.messageId;
+    NSMutableArray *reactions = [NSMutableArray array];
+    for (EMMessageReaction *reaction in self.reactions) {
+        [reactions addObject:[reaction toJsonObject]];
+    }
+
+    ret[@"reactions"] = reactions;
+    return ret;
+}
+
 @end

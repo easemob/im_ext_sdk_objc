@@ -583,6 +583,118 @@
         }];
 }
 
+- (void)addReaction:(NSDictionary *)param
+        channelName:(NSString *)aChannelName
+             result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *reaction = param[@"reaction"];
+    NSString *msgId = param[@"msgId"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager addReaction:reaction
+                                         toMessage:msgId
+                                        completion:^(EMError *error) {
+                                          [weakSelf onResult:result
+                                              withMethodType:aChannelName
+                                                   withError:error
+                                                  withParams:nil];
+                                        }];
+}
+
+- (void)removeReaction:(NSDictionary *)param
+           channelName:(NSString *)aChannelName
+                result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *reaction = param[@"reaction"];
+    NSString *msgId = param[@"msgId"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager removeReaction:reaction
+                                          fromMessage:msgId
+                                           completion:^(EMError *error) {
+                                             [weakSelf onResult:result
+                                                 withMethodType:aChannelName
+                                                      withError:error
+                                                     withParams:nil];
+                                           }];
+}
+
+- (void)fetchReactionList:(NSDictionary *)param
+              channelName:(NSString *)aChannelName
+                   result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSArray *msgIds = param[@"msgIds"];
+    NSString *groupId = param[@"groupId"];
+    EMChatType type =
+        [EMChatMessage chatTypeFromInt:[param[@"chatType"] intValue]];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager
+        getReactionList:msgIds
+                groupId:groupId
+               chatType:type
+             completion:^(NSDictionary<NSString *, NSArray *> *dic,
+                          EMError *error) {
+               NSMutableDictionary *dictionary =
+                   [NSMutableDictionary dictionary];
+               for (NSString *key in dic.allKeys) {
+                   NSArray *ary = dic[key];
+                   NSMutableArray *list = [NSMutableArray array];
+                   for (EMMessageReaction *reaction in ary) {
+                       [list addObject:[reaction toJsonObject]];
+                   }
+                   dictionary[key] = list;
+               }
+
+               [weakSelf onResult:result
+                   withMethodType:aChannelName
+                        withError:error
+                       withParams:dictionary];
+             }];
+}
+
+- (void)fetchReactionDetail:(NSDictionary *)param
+                channelName:(NSString *)aChannelName
+                     result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *msgId = param[@"msgId"];
+    NSString *reaction = param[@"reaction"];
+    NSString *cursor = param[@"cursor"];
+    int pageSize = [param[@"pageSize"] intValue];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager
+        getReactionDetail:msgId
+                 reaction:reaction
+                   cursor:cursor
+                 pageSize:pageSize
+               completion:^(EMMessageReaction *reaction,
+                            NSString *_Nullable cursor, EMError *error) {
+                 EMCursorResult *cursorResult = nil;
+                 if (error == nil) {
+                     cursorResult =
+                         [EMCursorResult cursorResultWithList:@[ reaction ]
+                                                    andCursor:cursor];
+                 }
+
+                 [weakSelf onResult:result
+                     withMethodType:aChannelName
+                          withError:error
+                         withParams:[cursorResult toJsonObject]];
+               }];
+}
+
+- (void)reportMessage:(NSDictionary *)param
+          channelName:(NSString *)aChannelName
+               result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *msgId = param[@"msgId"];
+    NSString *tag = param[@"tag"];
+    NSString *reason = param[@"reason"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager
+        reportMessageWithId:msgId
+                        tag:tag
+                     reason:reason
+                 completion:^(EMError *error) {
+                   [weakSelf onResult:result
+                       withMethodType:aChannelName
+                            withError:error
+                           withParams:nil];
+                 }];
+}
+
 #pragma mark - EMChatManagerDelegate
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {
@@ -667,6 +779,21 @@
 - (EMMessageSearchDirection)searchDirectionFromString:(NSString *)aDirection {
     return [aDirection isEqualToString:@"up"] ? EMMessageSearchDirectionUp
                                               : EMMessageSearchDirectionDown;
+}
+
+- (void)groupMessageAckHasChanged {
+    [self onReceive:ExtSdkMethodKeyChatOnReadAckForGroupMessageUpdated
+         withParams:nil];
+}
+
+- (void)messageReactionDidChange:(NSArray<EMMessageReactionChange *> *)changes {
+    NSMutableArray *list = [NSMutableArray array];
+    for (EMMessageReactionChange *change in changes) {
+        [list addObject:[change toJsonObject]];
+    }
+
+    [self onReceive:ExtSdkMethodKeyChatOnMessageReactionDidChange
+         withParams:list];
 }
 
 @end
