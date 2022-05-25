@@ -593,7 +593,7 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkGroupManagerWrapper getInstance] declineInvitationFromGroup:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyIgnoreGroupPushValue:
-        [[ExtSdkGroupManagerWrapper getInstance] ignoreGroupPush:ps withMethodType:methodType result:callback];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
 
     /// #pragma mark - ExtSdkGroupManagerDelegate

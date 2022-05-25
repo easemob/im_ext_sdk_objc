@@ -1,255 +1,279 @@
 #import <Foundation/Foundation.h>
 
 #pragma mark - EMClientWrapper
-static NSString * _Nonnull const ExtSdkMethodKeyInit = @"init";
-static NSString * _Nonnull const ExtSdkMethodKeyCreateAccount = @"createAccount";
-static NSString * _Nonnull const ExtSdkMethodKeyLogin = @"login";
-static NSString * _Nonnull const ExtSdkMethodKeyLogout = @"logout";
-static NSString * _Nonnull const ExtSdkMethodKeyChangeAppKey = @"changeAppKey";
-static NSString * _Nonnull const ExtSdkMethodKeyIsLoggedInBefore = @"isLoggedInBefore";
-static NSString * _Nonnull const ExtSdkMethodKeyUploadLog = @"uploadLog";
-static NSString * _Nonnull const ExtSdkMethodKeyCompressLogs = @"compressLogs";
-static NSString * _Nonnull const ExtSdkMethodKeyKickDevice = @"kickDevice";
-static NSString * _Nonnull const ExtSdkMethodKeyKickAllDevices = @"kickAllDevices";
-static NSString * _Nonnull const ExtSdkMethodKeyCurrentUser = @"currentUser"; // deprecated 2022.04.06
-static NSString * _Nonnull const ExtSdkMethodKeyGetLoggedInDevicesFromServer = @"getLoggedInDevicesFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetToken = @"getToken";
-static NSString * _Nonnull const ExtSdkMethodKeyLoginWithAgoraToken = @"loginWithAgoraToken";
-static NSString * _Nonnull const ExtSdkMethodKeyGetCurrentUser = @"getCurrentUser";
-static NSString * _Nonnull const ExtSdkMethodKeyIsConnected = @"isConnected";
-static NSString * _Nonnull const ExtSdkMethodKeyRenewToken = @"renewToken";
+static NSString *_Nonnull const ExtSdkMethodKeyInit = @"init";
+static NSString *_Nonnull const ExtSdkMethodKeyCreateAccount = @"createAccount";
+static NSString *_Nonnull const ExtSdkMethodKeyLogin = @"login";
+static NSString *_Nonnull const ExtSdkMethodKeyLogout = @"logout";
+static NSString *_Nonnull const ExtSdkMethodKeyChangeAppKey = @"changeAppKey";
+static NSString *_Nonnull const ExtSdkMethodKeyIsLoggedInBefore = @"isLoggedInBefore";
+static NSString *_Nonnull const ExtSdkMethodKeyUploadLog = @"uploadLog";
+static NSString *_Nonnull const ExtSdkMethodKeyCompressLogs = @"compressLogs";
+static NSString *_Nonnull const ExtSdkMethodKeyKickDevice = @"kickDevice";
+static NSString *_Nonnull const ExtSdkMethodKeyKickAllDevices = @"kickAllDevices";
+static NSString *_Nonnull const ExtSdkMethodKeyCurrentUser = @"currentUser"; // deprecated 2022.04.06
+static NSString *_Nonnull const ExtSdkMethodKeyGetLoggedInDevicesFromServer = @"getLoggedInDevicesFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetToken = @"getToken";
+static NSString *_Nonnull const ExtSdkMethodKeyLoginWithAgoraToken = @"loginWithAgoraToken";
+static NSString *_Nonnull const ExtSdkMethodKeyGetCurrentUser = @"getCurrentUser";
+static NSString *_Nonnull const ExtSdkMethodKeyIsConnected = @"isConnected";
+static NSString *_Nonnull const ExtSdkMethodKeyRenewToken = @"renewToken";
 
 #pragma mark - EMClientDelegate
-static NSString * _Nonnull const ExtSdkMethodKeyOnConnected = @"onConnected";
-static NSString * _Nonnull const ExtSdkMethodKeyOnDisconnected = @"onDisconnected";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMultiDeviceEvent = @"onMultiDeviceEvent";
-static NSString * _Nonnull const ExtSdkMethodKeySendDataToFlutter = @"onSendDataToFlutter";
-static NSString * _Nonnull const ExtSdkMethodKeyOnTokenWillExpire = @"onTokenWillExpire";
-static NSString * _Nonnull const ExtSdkMethodKeyOnTokenDidExpire = @"onTokenDidExpire";
+static NSString *_Nonnull const ExtSdkMethodKeyOnConnected = @"onConnected";
+static NSString *_Nonnull const ExtSdkMethodKeyOnDisconnected = @"onDisconnected";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMultiDeviceEvent = @"onMultiDeviceEvent";
+static NSString *_Nonnull const ExtSdkMethodKeySendDataToFlutter = @"onSendDataToFlutter";
+static NSString *_Nonnull const ExtSdkMethodKeyOnTokenWillExpire = @"onTokenWillExpire";
+static NSString *_Nonnull const ExtSdkMethodKeyOnTokenDidExpire = @"onTokenDidExpire";
 
-static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidLoginFromOtherDevice = @"onUserDidLoginFromOtherDevice";
-static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidRemoveFromServer = @"onUserDidRemoveFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidForbidByServer = @"onUserDidForbidByServer";
-static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidChangePassword = @"onUserDidChangePassword";
-static NSString * _Nonnull const ExtSdkMethodKeyOnUserDidLoginTooManyDevice = @"onUserDidLoginTooManyDevice";
-static NSString * _Nonnull const ExtSdkMethodKeyOnUserKickedByOtherDevice = @"onUserKickedByOtherDevice";
-static NSString * _Nonnull const ExtSdkMethodKeyOnUserAuthenticationFailed = @"onUserAuthenticationFailed";
+static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidLoginFromOtherDevice = @"onUserDidLoginFromOtherDevice";
+static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidRemoveFromServer = @"onUserDidRemoveFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidForbidByServer = @"onUserDidForbidByServer";
+static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidChangePassword = @"onUserDidChangePassword";
+static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidLoginTooManyDevice = @"onUserDidLoginTooManyDevice";
+static NSString *_Nonnull const ExtSdkMethodKeyOnUserKickedByOtherDevice = @"onUserKickedByOtherDevice";
+static NSString *_Nonnull const ExtSdkMethodKeyOnUserAuthenticationFailed = @"onUserAuthenticationFailed";
 
 #pragma mark - EMContactManagerWrapper
-static NSString * _Nonnull const ExtSdkMethodKeyAddContact = @"addContact";
-static NSString * _Nonnull const ExtSdkMethodKeyDeleteContact = @"deleteContact";
-static NSString * _Nonnull const ExtSdkMethodKeyGetAllContactsFromServer = @"getAllContactsFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetAllContactsFromDB = @"getAllContactsFromDB";
-static NSString * _Nonnull const ExtSdkMethodKeyAddUserToBlockList = @"addUserToBlockList";
-static NSString * _Nonnull const ExtSdkMethodKeyRemoveUserFromBlockList = @"removeUserFromBlockList";
-static NSString * _Nonnull const ExtSdkMethodKeyGetBlockListFromServer = @"getBlockListFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetBlockListFromDB = @"getBlockListFromDB";
-static NSString * _Nonnull const ExtSdkMethodKeyAcceptInvitation = @"acceptInvitation";
-static NSString * _Nonnull const ExtSdkMethodKeyDeclineInvitation = @"declineInvitation";
-static NSString * _Nonnull const ExtSdkMethodKeyGetSelfIdsOnOtherPlatform = @"getSelfIdsOnOtherPlatform";
+static NSString *_Nonnull const ExtSdkMethodKeyAddContact = @"addContact";
+static NSString *_Nonnull const ExtSdkMethodKeyDeleteContact = @"deleteContact";
+static NSString *_Nonnull const ExtSdkMethodKeyGetAllContactsFromServer = @"getAllContactsFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetAllContactsFromDB = @"getAllContactsFromDB";
+static NSString *_Nonnull const ExtSdkMethodKeyAddUserToBlockList = @"addUserToBlockList";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveUserFromBlockList = @"removeUserFromBlockList";
+static NSString *_Nonnull const ExtSdkMethodKeyGetBlockListFromServer = @"getBlockListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetBlockListFromDB = @"getBlockListFromDB";
+static NSString *_Nonnull const ExtSdkMethodKeyAcceptInvitation = @"acceptInvitation";
+static NSString *_Nonnull const ExtSdkMethodKeyDeclineInvitation = @"declineInvitation";
+static NSString *_Nonnull const ExtSdkMethodKeyGetSelfIdsOnOtherPlatform = @"getSelfIdsOnOtherPlatform";
 
 #pragma mark - EMContactDelegate
-static NSString * _Nonnull const ExtSdkMethodKeyOnContactChanged = @"onContactChanged";
+static NSString *_Nonnull const ExtSdkMethodKeyOnContactChanged = @"onContactChanged";
 
 #pragma mark - EMChatManagerWrapper
-static NSString * _Nonnull const ExtSdkMethodKeySendMessage = @"sendMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyResendMessage = @"resendMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyAckMessageRead = @"ackMessageRead";
-static NSString * _Nonnull const ExtSdkMethodKeyAckGroupMessageRead = @"ackGroupMessageRead";
-static NSString * _Nonnull const ExtSdkMethodKeyAckConversationRead = @"ackConversationRead";
-static NSString * _Nonnull const ExtSdkMethodKeyRecallMessage = @"recallMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyGetConversation = @"getConversation";
-static NSString * _Nonnull const ExtSdkMethodKeyMarkAllChatMsgAsRead = @"markAllChatMsgAsRead";
-static NSString * _Nonnull const ExtSdkMethodKeyGetUnreadMessageCount = @"getUnreadMessageCount";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateChatMessage = @"updateChatMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyDownloadAttachment = @"downloadAttachment";
-static NSString * _Nonnull const ExtSdkMethodKeyDownloadThumbnail = @"downloadThumbnail";
-static NSString * _Nonnull const ExtSdkMethodKeyImportMessages = @"importMessages";
-static NSString * _Nonnull const ExtSdkMethodKeyLoadAllConversations = @"loadAllConversations";
-static NSString * _Nonnull const ExtSdkMethodKeyGetConversationsFromServer = @"getConversationsFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeySendMessage = @"sendMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyResendMessage = @"resendMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyAckMessageRead = @"ackMessageRead";
+static NSString *_Nonnull const ExtSdkMethodKeyAckGroupMessageRead = @"ackGroupMessageRead";
+static NSString *_Nonnull const ExtSdkMethodKeyAckConversationRead = @"ackConversationRead";
+static NSString *_Nonnull const ExtSdkMethodKeyRecallMessage = @"recallMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyGetConversation = @"getConversation";
+static NSString *_Nonnull const ExtSdkMethodKeyMarkAllChatMsgAsRead = @"markAllChatMsgAsRead";
+static NSString *_Nonnull const ExtSdkMethodKeyGetUnreadMessageCount = @"getUnreadMessageCount";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateChatMessage = @"updateChatMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyDownloadAttachment = @"downloadAttachment";
+static NSString *_Nonnull const ExtSdkMethodKeyDownloadThumbnail = @"downloadThumbnail";
+static NSString *_Nonnull const ExtSdkMethodKeyImportMessages = @"importMessages";
+static NSString *_Nonnull const ExtSdkMethodKeyLoadAllConversations = @"loadAllConversations";
+static NSString *_Nonnull const ExtSdkMethodKeyGetConversationsFromServer = @"getConversationsFromServer";
 
-static NSString * _Nonnull const ExtSdkMethodKeyDeleteConversation = @"deleteConversation";
-//static NSString * _Nonnull const ExtSdkMethodKeySetVoiceMessageListened = @"setVoiceMessageListened";
-//static NSString * _Nonnull const ExtSdkMethodKeyUpdateParticipant = @"updateParticipant";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateConversationsName = @"updateConversationsName";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchHistoryMessages = @"fetchHistoryMessages";
-static NSString * _Nonnull const ExtSdkMethodKeySearchChatMsgFromDB = @"searchChatMsgFromDB";
-static NSString * _Nonnull const ExtSdkMethodKeyGetMessage = @"getMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyAsyncFetchGroupAcks = @"asyncFetchGroupAcks";
-static NSString * _Nonnull const ExtSdkMethodKeydeleteRemoteConversation = @"deleteRemoteConversation";
+static NSString *_Nonnull const ExtSdkMethodKeyDeleteConversation = @"deleteConversation";
+// static NSString * _Nonnull const ExtSdkMethodKeySetVoiceMessageListened = @"setVoiceMessageListened";
+// static NSString * _Nonnull const ExtSdkMethodKeyUpdateParticipant = @"updateParticipant";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateConversationsName = @"updateConversationsName";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchHistoryMessages = @"fetchHistoryMessages";
+static NSString *_Nonnull const ExtSdkMethodKeySearchChatMsgFromDB = @"searchChatMsgFromDB";
+static NSString *_Nonnull const ExtSdkMethodKeyGetMessage = @"getMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyAsyncFetchGroupAcks = @"asyncFetchGroupAcks";
+static NSString *_Nonnull const ExtSdkMethodKeydeleteRemoteConversation = @"deleteRemoteConversation";
 
-static NSString * _Nonnull const ExtSdkMethodKeyTranslateMessage = @"translateMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchSupportedLanguages = @"fetchSupportLanguages";
+static NSString *_Nonnull const ExtSdkMethodKeyTranslateMessage = @"translateMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchSupportedLanguages = @"fetchSupportLanguages";
+
+static NSString *_Nonnull const ExtSdkMethodKeyChatAddReaction = @"addReaction";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRemoveReaction = @"removeReaction";
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchReactionList = @"fetchReactionList";
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchReactionDetail = @"fetchReactionDetail";
+static NSString *_Nonnull const ExtSdkMethodKeyChatReportMessage = @"reportMessage";
 
 #pragma mark - EMChatManagerDelegate
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessagesReceived = @"onMessagesReceived";
-static NSString * _Nonnull const ExtSdkMethodKeyOnCmdMessagesReceived = @"onCmdMessagesReceived";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessagesRead = @"onMessagesRead";
-static NSString * _Nonnull const ExtSdkMethodKeyOnGroupMessageRead = @"onGroupMessageRead";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessagesDelivered = @"onMessagesDelivered";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessagesRecalled = @"onMessagesRecalled";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessagesReceived = @"onMessagesReceived";
+static NSString *_Nonnull const ExtSdkMethodKeyOnCmdMessagesReceived = @"onCmdMessagesReceived";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessagesRead = @"onMessagesRead";
+static NSString *_Nonnull const ExtSdkMethodKeyOnGroupMessageRead = @"onGroupMessageRead";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessagesDelivered = @"onMessagesDelivered";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessagesRecalled = @"onMessagesRecalled";
 
-static NSString * _Nonnull const ExtSdkMethodKeyOnConversationUpdate = @"onConversationUpdate";
-static NSString * _Nonnull const ExtSdkMethodKeyOnConversationHasRead = @"onConversationHasRead";
+static NSString *_Nonnull const ExtSdkMethodKeyOnConversationUpdate = @"onConversationUpdate";
+static NSString *_Nonnull const ExtSdkMethodKeyOnConversationHasRead = @"onConversationHasRead";
+
+static NSString *_Nonnull const ExtSdkMethodKeyChatOnReadAckForGroupMessageUpdated = @"onReadAckForGroupMessageUpdated";
+static NSString *_Nonnull const ExtSdkMethodKeyChatOnMessageReactionDidChange = @"messageReactionDidChange";
 
 #pragma mark - EMMessageListener
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessageProgressUpdate = @"onMessageProgressUpdate";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessageSuccess = @"onMessageSuccess";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessageError = @"onMessageError";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessageReadAck = @"onMessageReadAck";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessageDeliveryAck = @"onMessageDeliveryAck";
-static NSString * _Nonnull const ExtSdkMethodKeyOnMessageStatusChanged = @"onMessageStatusChanged"; // deprecated 2022.05.04
-
-#pragma mark - EMPresenceManagerDelegate
-static NSString * _Nonnull const ExtSdkMethodKeyOnPresenceStatusChanged = @"onPresenceStatusChanged";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessageProgressUpdate = @"onMessageProgressUpdate";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessageSuccess = @"onMessageSuccess";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessageError = @"onMessageError";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessageReadAck = @"onMessageReadAck";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessageDeliveryAck = @"onMessageDeliveryAck";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessageStatusChanged = @"onMessageStatusChanged"; // deprecated 2022.05.04
 
 #pragma mark - EMConversationWrapper
 
-static NSString * _Nonnull const ExtSdkMethodKeyGetUnreadMsgCount = @"getUnreadMsgCount";
-static NSString * _Nonnull const ExtSdkMethodKeyMarkAllMsgsAsRead = @"markAllMessagesAsRead";
-static NSString * _Nonnull const ExtSdkMethodKeyMarkMsgAsRead = @"markMessageAsRead";
-static NSString * _Nonnull const ExtSdkMethodKeySyncConversationExt = @"syncConversationExt";
-static NSString * _Nonnull const ExtSdkMethodKeySyncConversationName = @"syncConversationName"; // deprecated 2022.05.04
-static NSString * _Nonnull const ExtSdkMethodKeyRemoveMsg = @"removeMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyGetLatestMsg = @"getLatestMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyGetLatestMsgFromOthers = @"getLatestMessageFromOthers";
-static NSString * _Nonnull const ExtSdkMethodKeyClearAllMsg = @"clearAllMessages";
-static NSString * _Nonnull const ExtSdkMethodKeyInsertMsg = @"insertMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyAppendMsg = @"appendMessage";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateConversationMsg = @"updateConversationMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyGetUnreadMsgCount = @"getUnreadMsgCount";
+static NSString *_Nonnull const ExtSdkMethodKeyMarkAllMsgsAsRead = @"markAllMessagesAsRead";
+static NSString *_Nonnull const ExtSdkMethodKeyMarkMsgAsRead = @"markMessageAsRead";
+static NSString *_Nonnull const ExtSdkMethodKeySyncConversationExt = @"syncConversationExt";
+static NSString *_Nonnull const ExtSdkMethodKeySyncConversationName = @"syncConversationName"; // deprecated 2022.05.04
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveMsg = @"removeMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyGetLatestMsg = @"getLatestMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyGetLatestMsgFromOthers = @"getLatestMessageFromOthers";
+static NSString *_Nonnull const ExtSdkMethodKeyClearAllMsg = @"clearAllMessages";
+static NSString *_Nonnull const ExtSdkMethodKeyInsertMsg = @"insertMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyAppendMsg = @"appendMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateConversationMsg = @"updateConversationMessage";
 
-static NSString * _Nonnull const ExtSdkMethodKeyLoadMsgWithId = @"loadMsgWithId";
-static NSString * _Nonnull const ExtSdkMethodKeyLoadMsgWithStartId = @"loadMsgWithStartId";
-static NSString * _Nonnull const ExtSdkMethodKeyLoadMsgWithKeywords = @"loadMsgWithKeywords";
-static NSString * _Nonnull const ExtSdkMethodKeyLoadMsgWithMsgType = @"loadMsgWithMsgType";
-static NSString * _Nonnull const ExtSdkMethodKeyLoadMsgWithTime = @"loadMsgWithTime";
+static NSString *_Nonnull const ExtSdkMethodKeyLoadMsgWithId = @"loadMsgWithId";
+static NSString *_Nonnull const ExtSdkMethodKeyLoadMsgWithStartId = @"loadMsgWithStartId";
+static NSString *_Nonnull const ExtSdkMethodKeyLoadMsgWithKeywords = @"loadMsgWithKeywords";
+static NSString *_Nonnull const ExtSdkMethodKeyLoadMsgWithMsgType = @"loadMsgWithMsgType";
+static NSString *_Nonnull const ExtSdkMethodKeyLoadMsgWithTime = @"loadMsgWithTime";
+
+#pragma mark - EMChatMessageWrapper
+static NSString *_Nonnull const ExtSdkMethodKeyChatGetReactionList = @"getReactionList";
+static NSString *_Nonnull const ExtSdkMethodKeyChatGroupAckCount = @"groupAckCount";
 
 #pragma mark - EMChatroomManagerWrapper
 
-static NSString * _Nonnull const ExtSdkMethodKeyJoinChatRoom = @"joinChatRoom";
-static NSString * _Nonnull const ExtSdkMethodKeyLeaveChatRoom = @"leaveChatRoom";
-static NSString * _Nonnull const ExtSdkMethodKeyGetChatroomsFromServer = @"fetchPublicChatRoomsFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchChatRoomFromServer = @"fetchChatRoomInfoFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetChatRoom = @"getChatRoom";
-static NSString * _Nonnull const ExtSdkMethodKeyGetAllChatRooms = @"getAllChatRooms";
-static NSString * _Nonnull const ExtSdkMethodKeyCreateChatRoom = @"createChatRoom";
-static NSString * _Nonnull const ExtSdkMethodKeyDestroyChatRoom = @"destroyChatRoom";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomUpdateSubject = @"changeChatRoomSubject";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomUpdateDescription = @"changeChatRoomDescription";
-static NSString * _Nonnull const ExtSdkMethodKeyGetChatroomMemberListFromServer = @"fetchChatRoomMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomMuteMembers = @"muteChatRoomMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomUnmuteMembers = @"unMuteChatRoomMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyChangeChatRoomOwner = @"changeChatRoomOwner";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomAddAdmin = @"addChatRoomAdmin";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomRemoveAdmin = @"removeChatRoomAdmin";
-static NSString * _Nonnull const ExtSdkMethodKeyGetChatroomMuteListFromServer = @"fetchChatRoomMuteList";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomRemoveMembers = @"removeChatRoomMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomBlockMembers = @"blockChatRoomMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyChatRoomUnblockMembers = @"unBlockChatRoomMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchChatroomBlockListFromServer = @"fetchChatRoomBlockList";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateChatRoomAnnouncement = @"updateChatRoomAnnouncement";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchChatroomAnnouncement = @"fetchChatRoomAnnouncement";
+static NSString *_Nonnull const ExtSdkMethodKeyJoinChatRoom = @"joinChatRoom";
+static NSString *_Nonnull const ExtSdkMethodKeyLeaveChatRoom = @"leaveChatRoom";
+static NSString *_Nonnull const ExtSdkMethodKeyGetChatroomsFromServer = @"fetchPublicChatRoomsFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchChatRoomFromServer = @"fetchChatRoomInfoFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetChatRoom = @"getChatRoom";
+static NSString *_Nonnull const ExtSdkMethodKeyGetAllChatRooms = @"getAllChatRooms";
+static NSString *_Nonnull const ExtSdkMethodKeyCreateChatRoom = @"createChatRoom";
+static NSString *_Nonnull const ExtSdkMethodKeyDestroyChatRoom = @"destroyChatRoom";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomUpdateSubject = @"changeChatRoomSubject";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomUpdateDescription = @"changeChatRoomDescription";
+static NSString *_Nonnull const ExtSdkMethodKeyGetChatroomMemberListFromServer = @"fetchChatRoomMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomMuteMembers = @"muteChatRoomMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomUnmuteMembers = @"unMuteChatRoomMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyChangeChatRoomOwner = @"changeChatRoomOwner";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomAddAdmin = @"addChatRoomAdmin";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomRemoveAdmin = @"removeChatRoomAdmin";
+static NSString *_Nonnull const ExtSdkMethodKeyGetChatroomMuteListFromServer = @"fetchChatRoomMuteList";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomRemoveMembers = @"removeChatRoomMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomBlockMembers = @"blockChatRoomMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRoomUnblockMembers = @"unBlockChatRoomMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchChatroomBlockListFromServer = @"fetchChatRoomBlockList";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateChatRoomAnnouncement = @"updateChatRoomAnnouncement";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchChatroomAnnouncement = @"fetchChatRoomAnnouncement";
 
-static NSString * _Nonnull const ExtSdkMethodKeyAddMembersToChatRoomWhiteList = @"addMembersToChatRoomWhiteList";
-static NSString * _Nonnull const ExtSdkMethodKeyRemoveMembersFromChatRoomWhiteList = @"removeMembersFromChatRoomWhiteList";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchChatRoomWhiteListFromServer = @"fetchChatRoomWhiteListFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServer = @"isMemberInChatRoomWhiteListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyAddMembersToChatRoomWhiteList = @"addMembersToChatRoomWhiteList";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveMembersFromChatRoomWhiteList = @"removeMembersFromChatRoomWhiteList";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchChatRoomWhiteListFromServer = @"fetchChatRoomWhiteListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServer = @"isMemberInChatRoomWhiteListFromServer";
 
-static NSString * _Nonnull const ExtSdkMethodKeyMuteAllChatRoomMembers = @"muteAllChatRoomMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyUnMuteAllChatRoomMembers = @"unMuteAllChatRoomMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyMuteAllChatRoomMembers = @"muteAllChatRoomMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyUnMuteAllChatRoomMembers = @"unMuteAllChatRoomMembers";
 
-
-static NSString * _Nonnull const ExtSdkMethodKeyChatroomChanged = @"onChatRoomChanged";
+static NSString *_Nonnull const ExtSdkMethodKeyChatroomChanged = @"onChatRoomChanged";
 
 #pragma mark - EMGroupManagerWrapper
 
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupWithId = @"getGroupWithId";
-static NSString * _Nonnull const ExtSdkMethodKeyGetJoinedGroups = @"getJoinedGroups";
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupsWithoutPushNotification = @"getGroupsWithoutPushNotification";
-static NSString * _Nonnull const ExtSdkMethodKeyGetJoinedGroupsFromServer = @"getJoinedGroupsFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetPublicGroupsFromServer = @"getPublicGroupsFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyCreateGroup = @"createGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupSpecificationFromServer = @"getGroupSpecificationFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupMemberListFromServer = @"getGroupMemberListFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupBlockListFromServer = @"getGroupBlockListFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupMuteListFromServer = @"getGroupMuteListFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupWhiteListFromServer = @"getGroupWhiteListFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyIsMemberInWhiteListFromServer = @"isMemberInWhiteListFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupFileListFromServer = @"getGroupFileListFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyGetGroupAnnouncementFromServer = @"getGroupAnnouncementFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyAddMembers = @"addMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyInviterUser = @"inviterUser";
-static NSString * _Nonnull const ExtSdkMethodKeyRemoveMembers = @"removeMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyBlockMembers = @"blockMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyUnblockMembers = @"unblockMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateGroupSubject = @"updateGroupSubject";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateDescription = @"updateDescription";
-static NSString * _Nonnull const ExtSdkMethodKeyLeaveGroup = @"leaveGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyDestroyGroup = @"destroyGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyBlockGroup = @"blockGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyUnblockGroup = @"unblockGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateGroupOwner = @"updateGroupOwner";
-static NSString * _Nonnull const ExtSdkMethodKeyAddAdmin = @"addAdmin";
-static NSString * _Nonnull const ExtSdkMethodKeyRemoveAdmin = @"removeAdmin";
-static NSString * _Nonnull const ExtSdkMethodKeyMuteMembers = @"muteMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyUnMuteMembers = @"unMuteMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyMuteAllMembers = @"muteAllMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyUnMuteAllMembers = @"unMuteAllMembers";
-static NSString * _Nonnull const ExtSdkMethodKeyAddWhiteList = @"addWhiteList";
-static NSString * _Nonnull const ExtSdkMethodKeyRemoveWhiteList = @"removeWhiteList";
-static NSString * _Nonnull const ExtSdkMethodKeyUploadGroupSharedFile = @"uploadGroupSharedFile";
-static NSString * _Nonnull const ExtSdkMethodKeyDownloadGroupSharedFile = @"downloadGroupSharedFile";
-static NSString * _Nonnull const ExtSdkMethodKeyRemoveGroupSharedFile = @"removeGroupSharedFile";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateGroupAnnouncement = @"updateGroupAnnouncement";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateGroupExt = @"updateGroupExt";
-static NSString * _Nonnull const ExtSdkMethodKeyJoinPublicGroup = @"joinPublicGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyRequestToJoinPublicGroup = @"requestToJoinPublicGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyAcceptJoinApplication = @"acceptJoinApplication";
-static NSString * _Nonnull const ExtSdkMethodKeyDeclineJoinApplication = @"declineJoinApplication";
-static NSString * _Nonnull const ExtSdkMethodKeyAcceptInvitationFromGroup = @"acceptInvitationFromGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyDeclineInvitationFromGroup = @"declineInvitationFromGroup";
-static NSString * _Nonnull const ExtSdkMethodKeyIgnoreGroupPush = @"ignoreGroupPush";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupWithId = @"getGroupWithId";
+static NSString *_Nonnull const ExtSdkMethodKeyGetJoinedGroups = @"getJoinedGroups";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupsWithoutPushNotification = @"getGroupsWithoutPushNotification";
+static NSString *_Nonnull const ExtSdkMethodKeyGetJoinedGroupsFromServer = @"getJoinedGroupsFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetPublicGroupsFromServer = @"getPublicGroupsFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyCreateGroup = @"createGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupSpecificationFromServer = @"getGroupSpecificationFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupMemberListFromServer = @"getGroupMemberListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupBlockListFromServer = @"getGroupBlockListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupMuteListFromServer = @"getGroupMuteListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupWhiteListFromServer = @"getGroupWhiteListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyIsMemberInWhiteListFromServer = @"isMemberInWhiteListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupFileListFromServer = @"getGroupFileListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupAnnouncementFromServer = @"getGroupAnnouncementFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyAddMembers = @"addMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyInviterUser = @"inviterUser";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveMembers = @"removeMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyBlockMembers = @"blockMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyUnblockMembers = @"unblockMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateGroupSubject = @"updateGroupSubject";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateDescription = @"updateDescription";
+static NSString *_Nonnull const ExtSdkMethodKeyLeaveGroup = @"leaveGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyDestroyGroup = @"destroyGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyBlockGroup = @"blockGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyUnblockGroup = @"unblockGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateGroupOwner = @"updateGroupOwner";
+static NSString *_Nonnull const ExtSdkMethodKeyAddAdmin = @"addAdmin";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveAdmin = @"removeAdmin";
+static NSString *_Nonnull const ExtSdkMethodKeyMuteMembers = @"muteMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyUnMuteMembers = @"unMuteMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyMuteAllMembers = @"muteAllMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyUnMuteAllMembers = @"unMuteAllMembers";
+static NSString *_Nonnull const ExtSdkMethodKeyAddWhiteList = @"addWhiteList";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveWhiteList = @"removeWhiteList";
+static NSString *_Nonnull const ExtSdkMethodKeyUploadGroupSharedFile = @"uploadGroupSharedFile";
+static NSString *_Nonnull const ExtSdkMethodKeyDownloadGroupSharedFile = @"downloadGroupSharedFile";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveGroupSharedFile = @"removeGroupSharedFile";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateGroupAnnouncement = @"updateGroupAnnouncement";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateGroupExt = @"updateGroupExt";
+static NSString *_Nonnull const ExtSdkMethodKeyJoinPublicGroup = @"joinPublicGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyRequestToJoinPublicGroup = @"requestToJoinPublicGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyAcceptJoinApplication = @"acceptJoinApplication";
+static NSString *_Nonnull const ExtSdkMethodKeyDeclineJoinApplication = @"declineJoinApplication";
+static NSString *_Nonnull const ExtSdkMethodKeyAcceptInvitationFromGroup = @"acceptInvitationFromGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyDeclineInvitationFromGroup = @"declineInvitationFromGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyIgnoreGroupPush = @"ignoreGroupPush"; // deprecated 2022.05.25
 
-static NSString * _Nonnull const ExtSdkMethodKeyOnGroupChanged = @"onGroupChanged";
+static NSString *_Nonnull const ExtSdkMethodKeyOnGroupChanged = @"onGroupChanged";
 
 #pragma mark - EMPushManagerWrapper
-static NSString * _Nonnull const ExtSdkMethodKeyGetImPushConfig = @"getImPushConfig";
-static NSString * _Nonnull const ExtSdkMethodKeyGetImPushConfigFromServer = @"getImPushConfigFromServer";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdatePushNickname = @"updatePushNickname";
+static NSString *_Nonnull const ExtSdkMethodKeyGetImPushConfig = @"getImPushConfig";
+static NSString *_Nonnull const ExtSdkMethodKeyGetImPushConfigFromServer = @"getImPushConfigFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdatePushNickname = @"updatePushNickname";
 
-static NSString * _Nonnull const ExtSdkMethodKeyImPushNoDisturb = @"imPushNoDisturb"; // deprecated 2022.05.04
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateImPushStyle = @"updateImPushStyle";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateGroupPushService = @"updateGroupPushService";
-static NSString * _Nonnull const ExtSdkMethodKeyGetNoDisturbGroups = @"getNoDisturbGroups"; // deprecated 2022.05.04
-static NSString * _Nonnull const ExtSdkMethodKeyBindDeviceToken = @"updateAPNsPushToken";
-static NSString * _Nonnull const ExtSdkMethodKeyEnablePush = @"enableOfflinePush";
-static NSString * _Nonnull const ExtSdkMethodKeyDisablePush = @"disableOfflinePush";
-static NSString * _Nonnull const ExtSdkMethodKeyGetNoPushGroups = @"getNoPushGroups";
-static NSString * _Nonnull const ExtSdkMethodKeySetNoDisturbUsers = @"setNoDisturbUsers"; // deprecated 2022.05.04
-static NSString * _Nonnull const ExtSdkMethodKeyGetNoDisturbUsersFromServer = @"getNoDisturbUsersFromServer"; // deprecated 2022.05.04
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateUserPushService = @"updateUserPushService";
-static NSString * _Nonnull const ExtSdkMethodKeyGetNoPushUsers = @"getNoPushUsers";
-
+static NSString *_Nonnull const ExtSdkMethodKeyImPushNoDisturb = @"imPushNoDisturb"; // deprecated 2022.05.04
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateImPushStyle = @"updateImPushStyle";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateGroupPushService = @"updateGroupPushService";
+static NSString *_Nonnull const ExtSdkMethodKeyGetNoDisturbGroups = @"getNoDisturbGroups"; // deprecated 2022.05.04
+static NSString *_Nonnull const ExtSdkMethodKeyBindDeviceToken = @"updateAPNsPushToken";
+static NSString *_Nonnull const ExtSdkMethodKeyEnablePush = @"enableOfflinePush";
+static NSString *_Nonnull const ExtSdkMethodKeyDisablePush = @"disableOfflinePush";
+static NSString *_Nonnull const ExtSdkMethodKeyGetNoPushGroups = @"getNoPushGroups";
+static NSString *_Nonnull const ExtSdkMethodKeySetNoDisturbUsers = @"setNoDisturbUsers";                     // deprecated 2022.05.04
+static NSString *_Nonnull const ExtSdkMethodKeyGetNoDisturbUsersFromServer = @"getNoDisturbUsersFromServer"; // deprecated 2022.05.04
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateUserPushService = @"updateUserPushService";
+static NSString *_Nonnull const ExtSdkMethodKeyGetNoPushUsers = @"getNoPushUsers";
 
 #pragma mark - EMUserInfoManagerWrapper
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateOwnUserInfo = @"updateOwnUserInfo";
-static NSString * _Nonnull const ExtSdkMethodKeyUpdateOwnUserInfoWithType = @"updateOwnUserInfoWithType";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchUserInfoById = @"fetchUserInfoById";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchUserInfoByIdWithType = @"fetchUserInfoByIdWithType";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateOwnUserInfo = @"updateOwnUserInfo";
+static NSString *_Nonnull const ExtSdkMethodKeyUpdateOwnUserInfoWithType = @"updateOwnUserInfoWithType";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchUserInfoById = @"fetchUserInfoById";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchUserInfoByIdWithType = @"fetchUserInfoByIdWithType";
 
 #pragma make - EMPresenceManagerWrapper
-static NSString * _Nonnull const ExtSdkMethodKeyPublishPresenceWithDescription = @"publishPresenceWithDescription";
-static NSString * _Nonnull const ExtSdkMethodKeyPresenceSubscribe = @"presenceSubscribe";
-static NSString * _Nonnull const ExtSdkMethodKeyPresenceUnsubscribe = @"presenceUnsubscribe";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchSubscribedMembersWithPageNum = @"fetchSubscribedMembersWithPageNum";
-static NSString * _Nonnull const ExtSdkMethodKeyFetchPresenceStatus = @"fetchPresenceStatus";
+static NSString *_Nonnull const ExtSdkMethodKeyPublishPresenceWithDescription = @"publishPresenceWithDescription";
+static NSString *_Nonnull const ExtSdkMethodKeyPresenceSubscribe = @"presenceSubscribe";
+static NSString *_Nonnull const ExtSdkMethodKeyPresenceUnsubscribe = @"presenceUnsubscribe";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchSubscribedMembersWithPageNum = @"fetchSubscribedMembersWithPageNum";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchPresenceStatus = @"fetchPresenceStatus";
 
+#pragma mark - EMPresenceManagerDelegate
+static NSString *_Nonnull const ExtSdkMethodKeyOnPresenceStatusChanged = @"onPresenceStatusChanged";
 
+#pragma mark - EMChatThreadManager methods
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchChatThread = @"fetchChatThread";
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchChatThreadDetail = @"fetchChatThreadDetail";
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchJoinedChatThreads = @"fetchJoinedChatThreads";
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchChatThreadsWithParentId = @"fetchChatThreadsWithParentId";
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchChatThreadMember = @"fetchChatThreadMember";
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchLastMessageWithChatThreads = @"fetchLastMessageWithChatThreads";
+static NSString *_Nonnull const ExtSdkMethodKeyChatRemoveMemberFromChatThread = @"removeMemberFromChatThread";
+static NSString *_Nonnull const ExtSdkMethodKeyChatUpdateChatThreadSubject = @"updateChatThreadSubject";
+static NSString *_Nonnull const ExtSdkMethodKeyChatCreateChatThread = @"createChatThread";
+static NSString *_Nonnull const ExtSdkMethodKeyChatJoinChatThread = @"joinChatThread";
+static NSString *_Nonnull const ExtSdkMethodKeyChatLeaveChatThread = @"leaveChatThread";
+static NSString *_Nonnull const ExtSdkMethodKeyChatDestroyChatThread = @"destroyChatThread";
+
+// TODO: EMChatThreadManagerListener
 
 // ############################################################################
 // value start
 // ############################################################################
-
 
 #pragma mark - EMClientWrapper value
 static const int ExtSdkMethodKeyInitValue = 100;
@@ -319,8 +343,8 @@ static const int ExtSdkMethodKeyLoadAllConversationsValue = 513;
 static const int ExtSdkMethodKeyGetConversationsFromServerValue = 514;
 
 static const int ExtSdkMethodKeyDeleteConversationValue = 515;
-//static const int ExtSdkMethodKeySetVoiceMessageListenedValue = 516;
-//static const int ExtSdkMethodKeyUpdateParticipantValue = 517;
+// static const int ExtSdkMethodKeySetVoiceMessageListenedValue = 516;
+// static const int ExtSdkMethodKeyUpdateParticipantValue = 517;
 static const int ExtSdkMethodKeyUpdateConversationsNameValue = 518;
 static const int ExtSdkMethodKeyFetchHistoryMessagesValue = 519;
 static const int ExtSdkMethodKeySearchChatMsgFromDBValue = 520;
@@ -330,6 +354,12 @@ static const int ExtSdkMethodKeydeleteRemoteConversationValue = 523;
 
 static const int ExtSdkMethodKeyTranslateMessageValue = 524;
 static const int ExtSdkMethodKeyFetchSupportedLanguagesValue = 525;
+
+static const int ExtSdkMethodKeyChatAddReactionValue = 526;
+static const int ExtSdkMethodKeyChatRemoveReactionValue = 527;
+static const int ExtSdkMethodKeyChatFetchReactionListValue = 528;
+static const int ExtSdkMethodKeyChatFetchReactionDetailValue = 529;
+static const int ExtSdkMethodKeyChatReportMessageValue = 530;
 
 #pragma mark - EMChatManagerDelegate value
 static const int ExtSdkMethodKeyOnMessagesReceivedValue = 600;
@@ -342,6 +372,9 @@ static const int ExtSdkMethodKeyOnMessagesRecalledValue = 605;
 static const int ExtSdkMethodKeyOnConversationUpdateValue = 606;
 static const int ExtSdkMethodKeyOnConversationHasReadValue = 607;
 
+static const int ExtSdkMethodKeyChatOnReadAckForGroupMessageUpdatedValue = 608;
+static const int ExtSdkMethodKeyChatOnMessageReactionDidChangeValue = 609;
+
 #pragma mark - EMMessageListener value
 static const int ExtSdkMethodKeyOnMessageProgressUpdateValue = 1200;
 static const int ExtSdkMethodKeyOnMessageSuccessValue = 1201;
@@ -349,9 +382,6 @@ static const int ExtSdkMethodKeyOnMessageErrorValue = 1202;
 static const int ExtSdkMethodKeyOnMessageReadAckValue = 1203;
 static const int ExtSdkMethodKeyOnMessageDeliveryAckValue = 1204;
 static const int ExtSdkMethodKeyOnMessageStatusChangedValue = 1205;
-
-#pragma mark - EMPresenceManagerDelegate
-static const int ExtSdkMethodKeyOnPresenceStatusChangedValue = 1300;
 
 #pragma mark - EMConversationWrapper value
 
@@ -373,6 +403,10 @@ static const int ExtSdkMethodKeyLoadMsgWithStartIdValue = 713;
 static const int ExtSdkMethodKeyLoadMsgWithKeywordsValue = 714;
 static const int ExtSdkMethodKeyLoadMsgWithMsgTypeValue = 715;
 static const int ExtSdkMethodKeyLoadMsgWithTimeValue = 716;
+
+#pragma mark - EMChatMessageWrapper value
+static const int ExtSdkMethodKeyChatGetReactionListValue = 717;
+static const int ExtSdkMethodKeyChatGroupAckCountValue = 718;
 
 #pragma mark - EMChatroomManagerWrapper value
 
@@ -407,7 +441,6 @@ static const int ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServerValue = 826
 
 static const int ExtSdkMethodKeyMuteAllChatRoomMembersValue = 827;
 static const int ExtSdkMethodKeyUnMuteAllChatRoomMembersValue = 828;
-
 
 static const int ExtSdkMethodKeyChatroomChangedValue = 829;
 
@@ -486,16 +519,34 @@ static const int ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue = 1101;
 static const int ExtSdkMethodKeyFetchUserInfoByIdValue = 1102;
 static const int ExtSdkMethodKeyFetchUserInfoByIdWithTypeValue = 1103;
 
-#pragma make - EMPresenceManagerWrapper
+#pragma mark - EMPresenceManagerWrapper value
 static const int ExtSdkMethodKeyPublishPresenceWithDescriptionValue = 1400;
 static const int ExtSdkMethodKeyPresenceSubscribeValue = 1401;
 static const int ExtSdkMethodKeyPresenceUnsubscribeValue = 1402;
 static const int ExtSdkMethodKeyFetchSubscribedMembersWithPageNumValue = 1403;
 static const int ExtSdkMethodKeyFetchPresenceStatusValue = 1404;
 
+#pragma mark - EMPresenceManagerDelegate
+static const int ExtSdkMethodKeyOnPresenceStatusChangedValue = 1405;
+
+#pragma mark - EMChatThreadManager value
+static const int ExtSdkMethodKeyChatFetchChatThreadValue = 1500;
+static const int ExtSdkMethodKeyChatFetchChatThreadDetailValue = 1501;
+static const int ExtSdkMethodKeyChatFetchJoinedChatThreadsValue = 1502;
+static const int ExtSdkMethodKeyChatFetchChatThreadsWithParentIdValue = 1503;
+static const int ExtSdkMethodKeyChatFetchChatThreadMemberValue = 1504;
+static const int ExtSdkMethodKeyChatFetchLastMessageWithChatThreadsValue = 1505;
+static const int ExtSdkMethodKeyChatRemoveMemberFromChatThreadValue = 1506;
+static const int ExtSdkMethodKeyChatUpdateChatThreadSubjectValue = 1507;
+static const int ExtSdkMethodKeyChatCreateChatThreadValue = 1508;
+static const int ExtSdkMethodKeyChatJoinChatThreadValue = 1509;
+static const int ExtSdkMethodKeyChatLeaveChatThreadValue = 1510;
+static const int ExtSdkMethodKeyChatDestroyChatThreadValue = 1511;
+
+// TODO: EMChatThreadManagerListener
 
 @interface ExtSdkMethodTypeObjc : NSObject
 
-+ (int)getEnumValue:(nonnull NSString*)key;
++ (int)getEnumValue:(nonnull NSString *)key;
 
 @end
