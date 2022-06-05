@@ -267,10 +267,10 @@
 
           ExtSdkMethodKeyOnPresenceStatusChanged : @(ExtSdkMethodKeyOnPresenceStatusChangedValue),
 
-          ExtSdkMethodKeyChatFetchChatThread : @(ExtSdkMethodKeyChatFetchChatThreadValue),
           ExtSdkMethodKeyChatFetchChatThreadDetail : @(ExtSdkMethodKeyChatFetchChatThreadDetailValue),
           ExtSdkMethodKeyChatFetchJoinedChatThreads : @(ExtSdkMethodKeyChatFetchJoinedChatThreadsValue),
           ExtSdkMethodKeyChatFetchChatThreadsWithParentId : @(ExtSdkMethodKeyChatFetchChatThreadsWithParentIdValue),
+          ExtSdkMethodKeyChatFetchJoinedChatThreadsWithParentId : @(ExtSdkMethodKeyChatFetchJoinedChatThreadsWithParentIdValue),
           ExtSdkMethodKeyChatFetchChatThreadMember : @(ExtSdkMethodKeyChatFetchChatThreadMemberValue),
           ExtSdkMethodKeyChatFetchLastMessageWithChatThreads : @(ExtSdkMethodKeyChatFetchLastMessageWithChatThreadsValue),
           ExtSdkMethodKeyChatRemoveMemberFromChatThread : @(ExtSdkMethodKeyChatRemoveMemberFromChatThreadValue),
@@ -279,6 +279,13 @@
           ExtSdkMethodKeyChatJoinChatThread : @(ExtSdkMethodKeyChatJoinChatThreadValue),
           ExtSdkMethodKeyChatLeaveChatThread : @(ExtSdkMethodKeyChatLeaveChatThreadValue),
           ExtSdkMethodKeyChatDestroyChatThread : @(ExtSdkMethodKeyChatDestroyChatThreadValue),
+          ExtSdkMethodKeyChatGetMessageThread : @(ExtSdkMethodKeyChatGetMessageThreadValue),
+
+          /// EMThreadManagerDelegate
+          ExtSdkMethodKeyChatOnChatThreadCreated : @(ExtSdkMethodKeyChatOnChatThreadCreatedValue),
+          ExtSdkMethodKeyChatOnChatThreadUpdated : @(ExtSdkMethodKeyChatOnChatThreadUpdatedValue),
+          ExtSdkMethodKeyChatOnChatThreadDestroyed : @(ExtSdkMethodKeyChatOnChatThreadDestroyedValue),
+          ExtSdkMethodKeyChatOnChatThreadUserRemoved : @(ExtSdkMethodKeyChatOnChatThreadUserRemovedValue),
       };
     });
     if (nil != key) {

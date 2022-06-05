@@ -39,6 +39,12 @@
     __weak typeof(self) weakSelf = self;
     __block EMChatMessage *msg = [EMChatMessage fromJsonObject:param];
 
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
+
     [EMClient.sharedClient.chatManager sendMessage:msg
         progress:^(int progress) {
           [weakSelf onReceive:aChannelName
@@ -79,6 +85,12 @@
 
     __weak typeof(self) weakSelf = self;
     __block EMChatMessage *msg = [EMChatMessage fromJsonObject:param];
+
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
 
     [EMClient.sharedClient.chatManager resendMessage:msg
         progress:^(int progress) {
@@ -153,7 +165,7 @@
              withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    NSString *conversationId = param[@"con_id"];
+    NSString *conversationId = param[@"convId"];
     [EMClient.sharedClient.chatManager
         ackConversationRead:conversationId
                  completion:^(EMError *aError) {
@@ -208,9 +220,9 @@
          withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    NSString *conId = param[@"con_id"];
+    NSString *conId = param[@"convId"];
     EMConversationType type =
-        [EMConversation typeFromInt:[param[@"type"] intValue]];
+        [EMConversation typeFromInt:[param[@"convType"] intValue]];
     BOOL needCreate = [param[@"createIfNeed"] boolValue];
     EMConversation *con =
         [EMClient.sharedClient.chatManager getConversation:conId
@@ -264,6 +276,13 @@
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
+
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
+
     [EMClient.sharedClient.chatManager
         updateMessage:msg
            completion:^(EMChatMessage *aMessage, EMError *aError) {
@@ -298,6 +317,13 @@
     __weak typeof(self) weakSelf = self;
     __block EMChatMessage *msg =
         [EMChatMessage fromJsonObject:param[@"message"]];
+
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
+
     EMChatMessage *needDownMSg = [EMClient.sharedClient.chatManager
         getMessageWithMessageId:msg.messageId];
     [EMClient.sharedClient.chatManager downloadMessageAttachment:needDownMSg
@@ -340,6 +366,13 @@
     __weak typeof(self) weakSelf = self;
     __block EMChatMessage *msg =
         [EMChatMessage fromJsonObject:param[@"message"]];
+
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
+
     EMChatMessage *needDownMSg = [EMClient.sharedClient.chatManager
         getMessageWithMessageId:msg.messageId];
     [EMClient.sharedClient.chatManager downloadMessageThumbnail:needDownMSg
@@ -434,7 +467,7 @@
             withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    NSString *conversationId = param[@"con_id"];
+    NSString *conversationId = param[@"convId"];
     BOOL isDeleteMsgs = [param[@"deleteMessages"] boolValue];
     [EMClient.sharedClient.chatManager
         deleteConversation:conversationId
@@ -451,8 +484,8 @@
               withMethodType:(NSString *)aChannelName
                       result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    NSString *conversationId = param[@"con_id"];
-    EMConversationType type = (EMConversationType)[param[@"type"] intValue];
+    NSString *conversationId = param[@"convId"];
+    EMConversationType type = (EMConversationType)[param[@"convType"] intValue];
     int pageSize = [param[@"pageSize"] intValue];
     NSString *startMsgId = param[@"startMsgId"];
     [EMClient.sharedClient.chatManager
@@ -556,6 +589,12 @@
     EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
     NSArray *languages = param[@"languages"];
 
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
+
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.chatManager
         translateMessage:msg
@@ -584,7 +623,7 @@
 }
 
 - (void)addReaction:(NSDictionary *)param
-        channelName:(NSString *)aChannelName
+     withMethodType:(NSString *)aChannelName
              result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *reaction = param[@"reaction"];
     NSString *msgId = param[@"msgId"];
@@ -600,7 +639,7 @@
 }
 
 - (void)removeReaction:(NSDictionary *)param
-           channelName:(NSString *)aChannelName
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *reaction = param[@"reaction"];
     NSString *msgId = param[@"msgId"];
@@ -616,7 +655,7 @@
 }
 
 - (void)fetchReactionList:(NSDictionary *)param
-              channelName:(NSString *)aChannelName
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSArray *msgIds = param[@"msgIds"];
     NSString *groupId = param[@"groupId"];
@@ -648,12 +687,15 @@
 }
 
 - (void)fetchReactionDetail:(NSDictionary *)param
-                channelName:(NSString *)aChannelName
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *msgId = param[@"msgId"];
     NSString *reaction = param[@"reaction"];
     NSString *cursor = param[@"cursor"];
-    int pageSize = [param[@"pageSize"] intValue];
+    int pageSize = 50;
+    if (param[@"pageSize"] != nil) {
+        pageSize = [param[@"pageSize"] intValue];
+    }
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.chatManager
         getReactionDetail:msgId
@@ -677,7 +719,7 @@
 }
 
 - (void)reportMessage:(NSDictionary *)param
-          channelName:(NSString *)aChannelName
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *msgId = param[@"msgId"];
     NSString *tag = param[@"tag"];

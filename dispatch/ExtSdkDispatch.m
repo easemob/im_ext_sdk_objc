@@ -12,6 +12,8 @@
 #import "ExtSdkPresenceManagerWrapper.h"
 #import "ExtSdkPushManagerWrapper.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
+#import "ExtSdkChatMessageWrapper.h"
+#import "ExtSdkChatThreadManagerWrapper.h"
 
 static NSString *const TAG = @"ExtSdkDispatch";
 @interface ExtSdkDispatch () {
@@ -234,12 +236,12 @@ static NSString *const TAG = @"ExtSdkDispatch";
     case ExtSdkMethodKeyDeleteConversationValue:
         [[ExtSdkChatManagerWrapper getInstance] deleteConversation:ps withMethodType:methodType result:callback];
         break;
-//    case ExtSdkMethodKeySetVoiceMessageListenedValue:
-//        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
-//        break;
-//    case ExtSdkMethodKeyUpdateParticipantValue:
-//        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
-//        break;
+        //    case ExtSdkMethodKeySetVoiceMessageListenedValue:
+        //        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+        //        break;
+        //    case ExtSdkMethodKeyUpdateParticipantValue:
+        //        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+        //        break;
     case ExtSdkMethodKeyUpdateConversationsNameValue:
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
@@ -686,6 +688,89 @@ static NSString *const TAG = @"ExtSdkDispatch";
         break;
     case ExtSdkMethodKeyFetchPresenceStatusValue:
         [[ExtSdkPresenceManagerWrapper getInstance] fetchPresenceStatus:ps withMethodType:methodType result:callback];
+        break;
+
+    case ExtSdkMethodKeyChatAddReactionValue:
+        [[ExtSdkChatManagerWrapper getInstance] addReaction:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatRemoveReactionValue:
+        [[ExtSdkChatManagerWrapper getInstance] removeReaction:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatFetchReactionListValue:
+        [[ExtSdkChatManagerWrapper getInstance] fetchReactionList:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatFetchReactionDetailValue:
+        [[ExtSdkChatManagerWrapper getInstance] fetchReactionDetail:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatReportMessageValue:
+        [[ExtSdkChatManagerWrapper getInstance] reportMessage:ps withMethodType:methodType result:callback];
+        break;
+
+    case ExtSdkMethodKeyChatOnReadAckForGroupMessageUpdatedValue:
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+        break;
+    case ExtSdkMethodKeyChatOnMessageReactionDidChangeValue:
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+        break;
+
+    case ExtSdkMethodKeyChatOnChatThreadCreatedValue:
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+        break;
+    case ExtSdkMethodKeyChatOnChatThreadUpdatedValue:
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+        break;
+    case ExtSdkMethodKeyChatOnChatThreadDestroyedValue:
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+        break;
+    case ExtSdkMethodKeyChatOnChatThreadUserRemovedValue:
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
+        break;
+
+    case ExtSdkMethodKeyChatGetReactionListValue:
+        [[ExtSdkChatMessageWrapper getInstance] getReactionList:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatGroupAckCountValue:
+        [[ExtSdkChatMessageWrapper getInstance] getGroupAckCount:ps withMethodType:methodType result:callback];
+        break;
+
+    case ExtSdkMethodKeyChatFetchChatThreadDetailValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] fetchChatThreadDetail:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatFetchJoinedChatThreadsValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] fetchJoinedChatThreads:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatFetchChatThreadsWithParentIdValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] fetchChatThreadsWithParentId:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatFetchJoinedChatThreadsWithParentIdValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] fetchJoinedChatThreadsWithParentId:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatFetchChatThreadMemberValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] fetchChatThreadMember:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatFetchLastMessageWithChatThreadsValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] fetchLastMessageWithChatThreads:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatRemoveMemberFromChatThreadValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] removeMemberFromChatThread:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatUpdateChatThreadSubjectValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] updateChatThreadSubject:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatCreateChatThreadValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] createChatThread:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatJoinChatThreadValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] joinChatThread:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatLeaveChatThreadValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] leaveChatThread:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatDestroyChatThreadValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] destroyChatThread:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyChatGetMessageThreadValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] getChatThread:ps withMethodType:methodType result:callback];
         break;
 
     default:

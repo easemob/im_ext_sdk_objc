@@ -375,7 +375,17 @@
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     data[@"event"] = @(aEvent);
     data[@"target"] = aGroupId;
-    data[@"userNames"] = aExt;
+    data[@"ext"] = aExt;
+    [self onReceive:ExtSdkMethodKeyOnMultiDeviceEvent withParams:data];
+}
+
+- (void)multiDevicesThreadEventDidReceive:(EMMultiDevicesEvent)aEvent
+                                 threadId:(NSString *)aThreadId
+                                      ext:(id)aExt {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    data[@"event"] = @(aEvent);
+    data[@"target"] = aThreadId;
+    data[@"ext"] = aExt;
     [self onReceive:ExtSdkMethodKeyOnMultiDeviceEvent withParams:data];
 }
 

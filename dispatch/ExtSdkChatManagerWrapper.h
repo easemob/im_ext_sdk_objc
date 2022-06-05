@@ -107,23 +107,23 @@ NS_ASSUME_NONNULL_BEGIN
                        result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)addReaction:(NSDictionary *)param
-        channelName:(NSString *)aChannelName
+     withMethodType:(NSString *)aChannelNameP
              result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)removeReaction:(NSDictionary *)param
-           channelName:(NSString *)aChannelName
+        withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)fetchReactionList:(NSDictionary *)param
-              channelName:(NSString *)aChannelName
+           withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)fetchReactionDetail:(NSDictionary *)param
-                channelName:(NSString *)aChannelName
+             withMethodType:(NSString *)aChannelName
                      result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)reportMessage:(NSDictionary *)param
-          channelName:(NSString *)aChannelName
+       withMethodType:(NSString *)aChannelName
                result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 @end

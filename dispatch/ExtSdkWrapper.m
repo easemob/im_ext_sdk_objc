@@ -43,4 +43,19 @@ static NSString *const TAG = @"ExtSdkWrapper";
     [[ExtSdkDispatch getInstance] onReceive:methodType withParams:params];
 }
 
+- (BOOL)checkMessageParams:(nonnull id<ExtSdkCallbackObjc>)result
+            withMethodType:(nonnull NSString *)methodType
+               withMessage:(nullable EMChatMessage *)message {
+    if (message == nil) {
+        [self onResult:result
+            withMethodType:methodType
+                 withError:[EMError errorWithDescription:
+                                        @"The message does not exist."
+                                                    code:1]
+                withParams:nil];
+        return YES;
+    }
+    return NO;
+}
+
 @end

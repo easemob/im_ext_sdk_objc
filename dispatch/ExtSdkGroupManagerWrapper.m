@@ -40,7 +40,7 @@
     __weak typeof(self) weakSelf = self;
     EMGroup *group = [EMGroup groupWithId:param[@"groupId"]];
     [weakSelf onResult:result
-        withMethodType:ExtSdkMethodKeyGetGroupWithId
+        withMethodType:aChannelName
              withError:nil
             withParams:[group toJsonObject]];
 }
@@ -56,7 +56,7 @@
         [list addObject:[group toJsonObject]];
     }
     [weakSelf onResult:result
-        withMethodType:ExtSdkMethodKeyGetJoinedGroups
+        withMethodType:aChannelName
              withError:nil
             withParams:list];
 }
@@ -74,7 +74,7 @@
         [list addObject:[group toJsonObject]];
     }
     [weakSelf onResult:result
-        withMethodType:ExtSdkMethodKeyGetJoinedGroups
+        withMethodType:aChannelName
              withError:error
             withParams:list];
 }
@@ -92,8 +92,7 @@
                                      [list addObject:[group toJsonObject]];
                                  }
                                  [weakSelf onResult:result
-                                     withMethodType:
-                                         ExtSdkMethodKeyGetJoinedGroupsFromServer
+                                     withMethodType:aChannelName
                                           withError:aError
                                          withParams:list];
                                }];
@@ -109,8 +108,7 @@
                                  completion:^(EMCursorResult *aResult,
                                               EMError *aError) {
                                    [weakSelf onResult:result
-                                       withMethodType:
-                                           ExtSdkMethodKeyGetPublicGroupsFromServer
+                                       withMethodType:aChannelName
                                             withError:aError
                                            withParams:[aResult toJsonObject]];
                                  }];
@@ -128,7 +126,7 @@
                        setting:[EMGroupOptions formJson:param[@"options"]]
                     completion:^(EMGroup *aGroup, EMError *aError) {
                       [weakSelf onResult:result
-                          withMethodType:ExtSdkMethodKeyCreateGroup
+                          withMethodType:aChannelName
                                withError:aError
                               withParams:[aGroup toJsonObject]];
                     }];
@@ -138,13 +136,15 @@
                          withMethodType:(NSString *)aChannelName
                                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
+    NSString *groupId = param[@"groupId"];
+    BOOL isFetchMembers = param[@"fetchMembers"] ?: NO;
     [EMClient.sharedClient.groupManager
-        getGroupSpecificationFromServerWithId:param[@"groupId"]
+        getGroupSpecificationFromServerWithId:groupId
+                                 fetchMembers:isFetchMembers
                                    completion:^(EMGroup *aGroup,
                                                 EMError *aError) {
                                      [weakSelf onResult:result
-                                         withMethodType:
-                                             ExtSdkMethodKeyGetGroupSpecificationFromServer
+                                         withMethodType:aChannelName
                                               withError:aError
                                              withParams:[aGroup toJsonObject]];
                                    }];
@@ -161,8 +161,7 @@
                                 completion:^(EMCursorResult *aResult,
                                              EMError *aError) {
                                   [weakSelf onResult:result
-                                      withMethodType:
-                                          ExtSdkMethodKeyGetGroupMemberListFromServer
+                                      withMethodType:aChannelName
                                            withError:aError
                                           withParams:[aResult toJsonObject]];
                                 }];
@@ -178,8 +177,7 @@
                                  pageSize:[param[@"pageSize"] intValue]
                                completion:^(NSArray *aList, EMError *aError) {
                                  [weakSelf onResult:result
-                                     withMethodType:
-                                         ExtSdkMethodKeyGetGroupBlockListFromServer
+                                     withMethodType:aChannelName
                                           withError:aError
                                          withParams:aList];
                                }];
@@ -195,8 +193,7 @@
                                 pageSize:[param[@"pageSize"] intValue]
                               completion:^(NSArray *aList, EMError *aError) {
                                 [weakSelf onResult:result
-                                    withMethodType:
-                                        ExtSdkMethodKeyGetGroupMuteListFromServer
+                                    withMethodType:aChannelName
                                          withError:aError
                                         withParams:aList];
                               }];
@@ -210,8 +207,7 @@
         getGroupWhiteListFromServerWithId:param[@"groupId"]
                                completion:^(NSArray *aList, EMError *aError) {
                                  [weakSelf onResult:result
-                                     withMethodType:
-                                         ExtSdkMethodKeyGetGroupWhiteListFromServer
+                                     withMethodType:aChannelName
                                           withError:aError
                                          withParams:aList];
                                }];
@@ -226,8 +222,7 @@
                                       completion:^(BOOL inWhiteList,
                                                    EMError *aError) {
                                         [weakSelf onResult:result
-                                            withMethodType:
-                                                ExtSdkMethodKeyIsMemberInWhiteListFromServer
+                                            withMethodType:aChannelName
                                                  withError:aError
                                                 withParams:@(inWhiteList)];
                                       }];
@@ -247,8 +242,7 @@
                           [array addObject:[file toJsonObject]];
                       }
                       [weakSelf onResult:result
-                          withMethodType:
-                              ExtSdkMethodKeyGetGroupFileListFromServer
+                          withMethodType:aChannelName
                                withError:aError
                               withParams:array];
                     }];
@@ -262,8 +256,7 @@
         getGroupAnnouncementWithId:param[@"groupId"]
                         completion:^(NSString *aAnnouncement, EMError *aError) {
                           [weakSelf onResult:result
-                              withMethodType:
-                                  ExtSdkMethodKeyGetGroupAnnouncementFromServer
+                              withMethodType:aChannelName
                                    withError:aError
                                   withParams:aAnnouncement];
                         }];
@@ -279,7 +272,7 @@
            message:param[@"welcome"]
         completion:^(EMGroup *aGroup, EMError *aError) {
           [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyAddMembers
+              withMethodType:aChannelName
                    withError:aError
                   withParams:[aGroup toJsonObject]];
         }];
@@ -295,7 +288,7 @@
            message:param[@"reason"]
         completion:^(EMGroup *aGroup, EMError *aError) {
           [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyInviterUser
+              withMethodType:aChannelName
                    withError:aError
                   withParams:[aGroup toJsonObject]];
         }];
@@ -310,7 +303,7 @@
             fromGroup:param[@"groupId"]
            completion:^(EMGroup *aGroup, EMError *aError) {
              [weakSelf onResult:result
-                 withMethodType:ExtSdkMethodKeyRemoveMembers
+                 withMethodType:aChannelName
                       withError:aError
                      withParams:[aGroup toJsonObject]];
            }];
@@ -325,7 +318,7 @@
            fromGroup:param[@"groupId"]
           completion:^(EMGroup *aGroup, EMError *aError) {
             [weakSelf onResult:result
-                withMethodType:ExtSdkMethodKeyBlockMembers
+                withMethodType:aChannelName
                      withError:aError
                     withParams:[aGroup toJsonObject]];
           }];
@@ -340,7 +333,7 @@
              fromGroup:param[@"groupId"]
             completion:^(EMGroup *aGroup, EMError *aError) {
               [weakSelf onResult:result
-                  withMethodType:ExtSdkMethodKeyUnblockMembers
+                  withMethodType:aChannelName
                        withError:aError
                       withParams:[aGroup toJsonObject]];
             }];
@@ -355,7 +348,7 @@
                   forGroup:param[@"groupId"]
                 completion:^(EMGroup *aGroup, EMError *aError) {
                   [weakSelf onResult:result
-                      withMethodType:ExtSdkMethodKeyUpdateGroupSubject
+                      withMethodType:aChannelName
                            withError:aError
                           withParams:[aGroup toJsonObject]];
                 }];
@@ -370,7 +363,7 @@
                  forGroup:param[@"groupId"]
                completion:^(EMGroup *aGroup, EMError *aError) {
                  [weakSelf onResult:result
-                     withMethodType:ExtSdkMethodKeyUpdateDescription
+                     withMethodType:aChannelName
                           withError:aError
                          withParams:[aGroup toJsonObject]];
                }];
@@ -380,28 +373,26 @@
     withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    [EMClient.sharedClient.groupManager
-        leaveGroup:param[@"groupId"]
-        completion:^(EMError *aError) {
-          [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyLeaveGroup
-                   withError:aError
-                  withParams:nil];
-        }];
+    [EMClient.sharedClient.groupManager leaveGroup:param[@"groupId"]
+                                        completion:^(EMError *aError) {
+                                          [weakSelf onResult:result
+                                              withMethodType:aChannelName
+                                                   withError:aError
+                                                  withParams:nil];
+                                        }];
 }
 
 - (void)destroyGroup:(NSDictionary *)param
       withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    [EMClient.sharedClient.groupManager
-            destroyGroup:param[@"groupId"]
-        finishCompletion:^(EMError *aError) {
-          [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyDestroyGroup
-                   withError:aError
-                  withParams:nil];
-        }];
+    [EMClient.sharedClient.groupManager destroyGroup:param[@"groupId"]
+                                    finishCompletion:^(EMError *aError) {
+                                      [weakSelf onResult:result
+                                          withMethodType:aChannelName
+                                               withError:aError
+                                              withParams:nil];
+                                    }];
 }
 
 - (void)blockGroup:(NSDictionary *)param
@@ -412,7 +403,7 @@
         blockGroup:param[@"groupId"]
         completion:^(EMGroup *aGroup, EMError *aError) {
           [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyBlockGroup
+              withMethodType:aChannelName
                    withError:aError
                   withParams:[aGroup toJsonObject]];
         }];
@@ -426,7 +417,7 @@
         unblockGroup:param[@"groupId"]
           completion:^(EMGroup *aGroup, EMError *aError) {
             [weakSelf onResult:result
-                withMethodType:ExtSdkMethodKeyUnblockGroup
+                withMethodType:aChannelName
                      withError:aError
                     withParams:[aGroup toJsonObject]];
           }];
@@ -441,7 +432,7 @@
                 newOwner:param[@"owner"]
               completion:^(EMGroup *aGroup, EMError *aError) {
                 [weakSelf onResult:result
-                    withMethodType:ExtSdkMethodKeyUpdateGroupOwner
+                    withMethodType:aChannelName
                          withError:aError
                         withParams:[aGroup toJsonObject]];
               }];
@@ -456,7 +447,7 @@
            toGroup:param[@"groupId"]
         completion:^(EMGroup *aGroup, EMError *aError) {
           [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyAddAdmin
+              withMethodType:aChannelName
                    withError:aError
                   withParams:[aGroup toJsonObject]];
         }];
@@ -471,7 +462,7 @@
           fromGroup:param[@"groupId"]
          completion:^(EMGroup *aGroup, EMError *aError) {
            [weakSelf onResult:result
-               withMethodType:ExtSdkMethodKeyRemoveAdmin
+               withMethodType:aChannelName
                     withError:aError
                    withParams:[aGroup toJsonObject]];
          }];
@@ -487,7 +478,7 @@
                fromGroup:param[@"groupId"]
               completion:^(EMGroup *aGroup, EMError *aError) {
                 [weakSelf onResult:result
-                    withMethodType:ExtSdkMethodKeyMuteMembers
+                    withMethodType:aChannelName
                          withError:aError
                         withParams:[aGroup toJsonObject]];
               }];
@@ -502,7 +493,7 @@
             fromGroup:param[@"groupId"]
            completion:^(EMGroup *aGroup, EMError *aError) {
              [weakSelf onResult:result
-                 withMethodType:ExtSdkMethodKeyUnMuteMembers
+                 withMethodType:aChannelName
                       withError:aError
                      withParams:[aGroup toJsonObject]];
            }];
@@ -516,7 +507,7 @@
         muteAllMembersFromGroup:param[@"groupId"]
                      completion:^(EMGroup *aGroup, EMError *aError) {
                        [weakSelf onResult:result
-                           withMethodType:ExtSdkMethodKeyMuteAllMembers
+                           withMethodType:aChannelName
                                 withError:aError
                                withParams:[aGroup toJsonObject]];
                      }];
@@ -530,7 +521,7 @@
         unmuteAllMembersFromGroup:param[@"groupId"]
                        completion:^(EMGroup *aGroup, EMError *aError) {
                          [weakSelf onResult:result
-                             withMethodType:ExtSdkMethodKeyUnMuteAllMembers
+                             withMethodType:aChannelName
                                   withError:aError
                                  withParams:[aGroup toJsonObject]];
                        }];
@@ -545,7 +536,7 @@
                   fromGroup:param[@"groupId"]
                  completion:^(EMGroup *aGroup, EMError *aError) {
                    [weakSelf onResult:result
-                       withMethodType:ExtSdkMethodKeyAddWhiteList
+                       withMethodType:aChannelName
                             withError:aError
                            withParams:[aGroup toJsonObject]];
                  }];
@@ -560,7 +551,7 @@
                      fromGroup:param[@"groupId"]
                     completion:^(EMGroup *aGroup, EMError *aError) {
                       [weakSelf onResult:result
-                          withMethodType:ExtSdkMethodKeyRemoveWhiteList
+                          withMethodType:aChannelName
                                withError:aError
                               withParams:[aGroup toJsonObject]];
                     }];
@@ -602,7 +593,7 @@
           }
         }];
     [self onResult:result
-        withMethodType:ExtSdkMethodKeyUploadGroupSharedFile
+        withMethodType:aChannelName
              withError:nil
             withParams:nil];
 }
@@ -645,7 +636,7 @@
           }
         }];
     [self onResult:result
-        withMethodType:ExtSdkMethodKeyDownloadGroupSharedFile
+        withMethodType:aChannelName
              withError:nil
             withParams:nil];
 }
@@ -659,8 +650,7 @@
                        sharedFileId:param[@"fileId"]
                          completion:^(EMGroup *aGroup, EMError *aError) {
                            [weakSelf onResult:result
-                               withMethodType:
-                                   ExtSdkMethodKeyRemoveGroupSharedFile
+                               withMethodType:aChannelName
                                     withError:aError
                                    withParams:@(!aError)];
                          }];
@@ -675,8 +665,7 @@
                          announcement:param[@"announcement"]
                            completion:^(EMGroup *aGroup, EMError *aError) {
                              [weakSelf onResult:result
-                                 withMethodType:
-                                     ExtSdkMethodKeyUpdateGroupAnnouncement
+                                 withMethodType:aChannelName
                                       withError:aError
                                      withParams:[aGroup toJsonObject]];
                            }];
@@ -691,7 +680,7 @@
                          ext:param[@"ext"]
                   completion:^(EMGroup *aGroup, EMError *aError) {
                     [weakSelf onResult:result
-                        withMethodType:ExtSdkMethodKeyUpdateGroupExt
+                        withMethodType:aChannelName
                              withError:aError
                             withParams:[aGroup toJsonObject]];
                   }];
@@ -705,7 +694,7 @@
         joinPublicGroup:param[@"groupId"]
              completion:^(EMGroup *aGroup, EMError *aError) {
                [weakSelf onResult:result
-                   withMethodType:ExtSdkMethodKeyJoinPublicGroup
+                   withMethodType:aChannelName
                         withError:aError
                        withParams:[aGroup toJsonObject]];
              }];
@@ -720,8 +709,7 @@
                          message:param[@"reason"]
                       completion:^(EMGroup *aGroup, EMError *aError) {
                         [weakSelf onResult:result
-                            withMethodType:
-                                ExtSdkMethodKeyRequestToJoinPublicGroup
+                            withMethodType:aChannelName
                                  withError:aError
                                 withParams:[aGroup toJsonObject]];
                       }];
@@ -736,7 +724,7 @@
                          sender:param[@"username"]
                      completion:^(EMGroup *aGroup, EMError *aError) {
                        [weakSelf onResult:result
-                           withMethodType:ExtSdkMethodKeyAcceptJoinApplication
+                           withMethodType:aChannelName
                                 withError:aError
                                withParams:[aGroup toJsonObject]];
                      }];
@@ -752,7 +740,7 @@
                          reason:param[@"reason"]
                      completion:^(EMGroup *aGroup, EMError *aError) {
                        [weakSelf onResult:result
-                           withMethodType:ExtSdkMethodKeyDeclineJoinApplication
+                           withMethodType:aChannelName
                                 withError:aError
                                withParams:[aGroup toJsonObject]];
                      }];
@@ -767,8 +755,7 @@
                           inviter:param[@"inviter"]
                        completion:^(EMGroup *aGroup, EMError *aError) {
                          [weakSelf onResult:result
-                             withMethodType:
-                                 ExtSdkMethodKeyAcceptInvitationFromGroup
+                             withMethodType:aChannelName
                                   withError:aError
                                  withParams:[aGroup toJsonObject]];
                        }];
@@ -784,14 +771,13 @@
                         reason:param[@"reason"]
                     completion:^(EMError *aError) {
                       [weakSelf onResult:result
-                          withMethodType:
-                              ExtSdkMethodKeyDeclineInvitationFromGroup
+                          withMethodType:aChannelName
                                withError:aError
                               withParams:nil];
                     }];
 }
 
-#pragma mark - ExtSdkGroupManagerDelegate
+#pragma mark - EMGroupManagerDelegate
 
 - (void)groupInvitationDidReceive:(NSString *)aGroupId
                           inviter:(NSString *)aInviter

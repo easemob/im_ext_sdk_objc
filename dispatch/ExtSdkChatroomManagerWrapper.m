@@ -46,8 +46,7 @@
                             completion:^(EMPageResult *aResult,
                                          EMError *aError) {
                               [weakSelf onResult:result
-                                  withMethodType:
-                                      ExtSdkMethodKeyGetChatroomsFromServer
+                                  withMethodType:aChannelName
                                        withError:aError
                                       withParams:[aResult toJsonObject]];
                             }];
@@ -72,7 +71,7 @@
                   maxMembersCount:maxMembersCount
                        completion:^(EMChatroom *aChatroom, EMError *aError) {
                          [weakSelf onResult:result
-                             withMethodType:ExtSdkMethodKeyCreateChatRoom
+                             withMethodType:aChannelName
                                   withError:aError
                                  withParams:[aChatroom toJsonObject]];
                        }];
@@ -88,7 +87,7 @@
         joinChatroom:chatroomId
           completion:^(EMChatroom *aChatroom, EMError *aError) {
             [weakSelf onResult:result
-                withMethodType:ExtSdkMethodKeyJoinChatRoom
+                withMethodType:aChannelName
                      withError:aError
                     withParams:@(!!aChatroom)];
           }];
@@ -101,14 +100,13 @@
     __weak typeof(self) weakSelf = self;
 
     NSString *chatroomId = param[@"roomId"];
-    [EMClient.sharedClient.roomManager
-        leaveChatroom:chatroomId
-           completion:^(EMError *aError) {
-             [weakSelf onResult:result
-                 withMethodType:ExtSdkMethodKeyLeaveChatRoom
-                      withError:aError
-                     withParams:nil];
-           }];
+    [EMClient.sharedClient.roomManager leaveChatroom:chatroomId
+                                          completion:^(EMError *aError) {
+                                            [weakSelf onResult:result
+                                                withMethodType:aChannelName
+                                                     withError:aError
+                                                    withParams:nil];
+                                          }];
 }
 
 - (void)destroyChatRoom:(NSDictionary *)param
@@ -118,14 +116,13 @@
     __weak typeof(self) weakSelf = self;
 
     NSString *chatroomId = param[@"roomId"];
-    [EMClient.sharedClient.roomManager
-        destroyChatroom:chatroomId
-             completion:^(EMError *aError) {
-               [weakSelf onResult:result
-                   withMethodType:ExtSdkMethodKeyDestroyChatRoom
-                        withError:aError
-                       withParams:nil];
-             }];
+    [EMClient.sharedClient.roomManager destroyChatroom:chatroomId
+                                            completion:^(EMError *aError) {
+                                              [weakSelf onResult:result
+                                                  withMethodType:aChannelName
+                                                       withError:aError
+                                                      withParams:nil];
+                                            }];
 }
 
 - (void)fetchChatroomFromServer:(NSDictionary *)param
@@ -133,13 +130,14 @@
                          result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *chatroomId = param[@"roomId"];
+    BOOL isFetchMembers = param[@"fetchMembers"] ?: NO;
     [EMClient.sharedClient.roomManager
         getChatroomSpecificationFromServerWithId:chatroomId
+                                    fetchMembers:isFetchMembers
                                       completion:^(EMChatroom *aChatroom,
                                                    EMError *aError) {
                                         [weakSelf onResult:result
-                                            withMethodType:
-                                                ExtSdkMethodKeyFetchChatRoomFromServer
+                                            withMethodType:aChannelName
                                                  withError:aError
                                                 withParams:[aChatroom
                                                                toJsonObject]];
@@ -153,7 +151,7 @@
     __weak typeof(self) weakSelf = self;
     EMChatroom *chatroom = [EMChatroom chatroomWithId:param[@"roomId"]];
     [weakSelf onResult:result
-        withMethodType:ExtSdkMethodKeyGetChatRoom
+        withMethodType:aChannelName
              withError:nil
             withParams:[chatroom toJsonObject]];
 }
@@ -174,7 +172,7 @@
                               }
 
                               [weakSelf onResult:result
-                                  withMethodType:ExtSdkMethodKeyGetAllChatRooms
+                                  withMethodType:aChannelName
                                        withError:aError
                                       withParams:list];
                             }];
@@ -196,8 +194,7 @@
                                    completion:^(EMCursorResult *aResult,
                                                 EMError *aError) {
                                      [weakSelf onResult:result
-                                         withMethodType:
-                                             ExtSdkMethodKeyGetChatroomMemberListFromServer
+                                         withMethodType:aChannelName
                                               withError:aError
                                              withParams:[aResult toJsonObject]];
                                    }];
@@ -221,8 +218,7 @@
                                   completion:^(NSArray *aList,
                                                EMError *aError) {
                                     [weakSelf onResult:result
-                                        withMethodType:
-                                            ExtSdkMethodKeyFetchChatroomBlockListFromServer
+                                        withMethodType:aChannelName
                                              withError:aError
                                             withParams:aList];
                                   }];
@@ -243,8 +239,7 @@
                                    pageSize:pageSize
                                  completion:^(NSArray *aList, EMError *aError) {
                                    [weakSelf onResult:result
-                                       withMethodType:
-                                           ExtSdkMethodKeyGetChatroomMuteListFromServer
+                                       withMethodType:aChannelName
                                             withError:aError
                                            withParams:aList];
                                  }];
@@ -262,8 +257,7 @@
                            completion:^(NSString *aAnnouncement,
                                         EMError *aError) {
                              [weakSelf onResult:result
-                                 withMethodType:
-                                     ExtSdkMethodKeyFetchChatroomAnnouncement
+                                 withMethodType:aChannelName
                                       withError:aError
                                      withParams:aAnnouncement];
                            }];
@@ -280,7 +274,7 @@
           forChatroom:chatroomId
            completion:^(EMChatroom *aChatroom, EMError *aError) {
              [weakSelf onResult:result
-                 withMethodType:ExtSdkMethodKeyChatRoomUpdateSubject
+                 withMethodType:aChannelName
                       withError:aError
                      withParams:nil];
            }];
@@ -297,7 +291,7 @@
               forChatroom:chatroomId
                completion:^(EMChatroom *aChatroom, EMError *aError) {
                  [weakSelf onResult:result
-                     withMethodType:ExtSdkMethodKeyChatRoomUpdateDescription
+                     withMethodType:aChannelName
                           withError:aError
                          withParams:nil];
                }];
@@ -316,7 +310,7 @@
          fromChatroom:chatroomId
            completion:^(EMChatroom *aChatroom, EMError *aError) {
              [weakSelf onResult:result
-                 withMethodType:ExtSdkMethodKeyChatRoomRemoveMembers
+                 withMethodType:aChannelName
                       withError:aError
                      withParams:nil];
            }];
@@ -335,7 +329,7 @@
         fromChatroom:chatroomId
           completion:^(EMChatroom *aChatroom, EMError *aError) {
             [weakSelf onResult:result
-                withMethodType:ExtSdkMethodKeyChatRoomBlockMembers
+                withMethodType:aChannelName
                      withError:aError
                     withParams:nil];
           }];
@@ -354,7 +348,7 @@
           fromChatroom:chatroomId
             completion:^(EMChatroom *aChatroom, EMError *aError) {
               [weakSelf onResult:result
-                  withMethodType:ExtSdkMethodKeyChatRoomUnblockMembers
+                  withMethodType:aChannelName
                        withError:aError
                       withParams:nil];
             }];
@@ -373,7 +367,7 @@
                    newOwner:newOwner
                  completion:^(EMChatroom *aChatroom, EMError *aError) {
                    [weakSelf onResult:result
-                       withMethodType:ExtSdkMethodKeyChangeChatRoomOwner
+                       withMethodType:aChannelName
                             withError:aError
                            withParams:nil];
                  }];
@@ -392,7 +386,7 @@
         toChatroom:chatroomId
         completion:^(EMChatroom *aChatroomp, EMError *aError) {
           [weakSelf onResult:result
-              withMethodType:ExtSdkMethodKeyChatRoomAddAdmin
+              withMethodType:aChannelName
                    withError:aError
                   withParams:nil];
         }];
@@ -411,7 +405,7 @@
         fromChatroom:chatroomId
           completion:^(EMChatroom *aChatroom, EMError *aError) {
             [weakSelf onResult:result
-                withMethodType:ExtSdkMethodKeyChatRoomRemoveAdmin
+                withMethodType:aChannelName
                      withError:aError
                     withParams:nil];
           }];
@@ -432,7 +426,7 @@
             fromChatroom:chatroomId
               completion:^(EMChatroom *aChatroom, EMError *aError) {
                 [weakSelf onResult:result
-                    withMethodType:ExtSdkMethodKeyChatRoomMuteMembers
+                    withMethodType:aChannelName
                          withError:aError
                         withParams:nil];
               }];
@@ -451,7 +445,7 @@
          fromChatroom:chatroomId
            completion:^(EMChatroom *aChatroom, EMError *aError) {
              [weakSelf onResult:result
-                 withMethodType:ExtSdkMethodKeyChatRoomUnmuteMembers
+                 withMethodType:aChannelName
                       withError:aError
                      withParams:nil];
            }];
@@ -471,8 +465,7 @@
                               completion:^(EMChatroom *aChatroom,
                                            EMError *aError) {
                                 [weakSelf onResult:result
-                                    withMethodType:
-                                        ExtSdkMethodKeyUpdateChatRoomAnnouncement
+                                    withMethodType:aChannelName
                                          withError:aError
                                         withParams:@(!aError)];
                               }];
@@ -489,8 +482,7 @@
                fromChatroom:roomId
                  completion:^(EMChatroom *aChatroom, EMError *aError) {
                    [weakSelf onResult:result
-                       withMethodType:
-                           ExtSdkMethodKeyAddMembersToChatRoomWhiteList
+                       withMethodType:aChannelName
                             withError:aError
                            withParams:nil];
                  }];
@@ -508,8 +500,7 @@
                   fromChatroom:roomId
                     completion:^(EMChatroom *aChatroom, EMError *aError) {
                       [weakSelf onResult:result
-                          withMethodType:
-                              ExtSdkMethodKeyRemoveMembersFromChatRoomWhiteList
+                          withMethodType:aChannelName
                                withError:aError
                               withParams:nil];
                     }];
@@ -526,8 +517,7 @@
                                          completion:^(BOOL inWhiteList,
                                                       EMError *aError) {
                                            [weakSelf onResult:result
-                                               withMethodType:
-                                                   ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServer
+                                               withMethodType:aChannelName
                                                     withError:aError
                                                    withParams:@(inWhiteList)];
                                          }];
@@ -544,8 +534,7 @@
                                   completion:^(NSArray *aList,
                                                EMError *aError) {
                                     [weakSelf onResult:result
-                                        withMethodType:
-                                            ExtSdkMethodKeyFetchChatRoomWhiteListFromServer
+                                        withMethodType:aChannelName
                                              withError:aError
                                             withParams:aList];
                                   }];
@@ -560,8 +549,7 @@
         muteAllMembersFromChatroom:roomId
                         completion:^(EMChatroom *aChatroom, EMError *aError) {
                           [weakSelf onResult:result
-                              withMethodType:
-                                  ExtSdkMethodKeyMuteAllChatRoomMembers
+                              withMethodType:aChannelName
                                    withError:aError
                                   withParams:@(!aError)];
                         }];
@@ -576,8 +564,7 @@
         unmuteAllMembersFromChatroom:roomId
                           completion:^(EMChatroom *aChatroom, EMError *aError) {
                             [weakSelf onResult:result
-                                withMethodType:
-                                    ExtSdkMethodKeyUnMuteAllChatRoomMembers
+                                withMethodType:aChannelName
                                      withError:aError
                                     withParams:@(!aError)];
                           }];

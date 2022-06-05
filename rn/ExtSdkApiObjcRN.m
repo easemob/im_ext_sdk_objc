@@ -369,10 +369,10 @@ RCT_EXPORT_METHOD(callMethod
 
         ExtSdkMethodKeyOnPresenceStatusChanged,
 
-        ExtSdkMethodKeyChatFetchChatThread,
         ExtSdkMethodKeyChatFetchChatThreadDetail,
         ExtSdkMethodKeyChatFetchJoinedChatThreads,
         ExtSdkMethodKeyChatFetchChatThreadsWithParentId,
+        ExtSdkMethodKeyChatFetchJoinedChatThreadsWithParentId,
         ExtSdkMethodKeyChatFetchChatThreadMember,
         ExtSdkMethodKeyChatFetchLastMessageWithChatThreads,
         ExtSdkMethodKeyChatRemoveMemberFromChatThread,
@@ -380,7 +380,14 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyChatCreateChatThread,
         ExtSdkMethodKeyChatJoinChatThread,
         ExtSdkMethodKeyChatLeaveChatThread,
-        ExtSdkMethodKeyChatDestroyChatThread
+        ExtSdkMethodKeyChatDestroyChatThread,
+        ExtSdkMethodKeyChatGetMessageThread,
+
+        /// EMThreadManagerDelegate
+        ExtSdkMethodKeyChatOnChatThreadCreated,
+        ExtSdkMethodKeyChatOnChatThreadUpdated,
+        ExtSdkMethodKeyChatOnChatThreadDestroyed,
+        ExtSdkMethodKeyChatOnChatThreadUserRemoved,
     ];
 }
 

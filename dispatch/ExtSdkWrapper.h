@@ -19,6 +19,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onReceive:(NSString *)methodType withParams:(nullable NSObject *)params;
 
+- (BOOL)checkMessageParams:(nonnull id<ExtSdkCallbackObjc>)result
+            withMethodType:(nonnull NSString *)methodType
+               withMessage:(nullable EMChatMessage *)message;
+
 @end
 
 NS_ASSUME_NONNULL_END

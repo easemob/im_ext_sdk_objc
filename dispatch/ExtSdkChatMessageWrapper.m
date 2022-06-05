@@ -55,10 +55,19 @@
     NSString *msgId = param[@"msgId"];
     EMChatMessage *msg =
         [EMClient.sharedClient.chatManager getMessageWithMessageId:msgId];
-    [self onResult:result
-        withMethodType:aChannelName
-             withError:nil
-            withParams:@(msg.groupAckCount ?: 0)];
+    if (msg != nil) {
+        [self onResult:result
+            withMethodType:aChannelName
+                 withError:nil
+                withParams:@(msg.groupAckCount ?: 0)];
+    } else {
+        [self onResult:result
+            withMethodType:aChannelName
+                 withError:[EMError
+                               errorWithDescription:@"No message was found."
+                                               code:1]
+                withParams:nil];
+    }
 }
 
 @end

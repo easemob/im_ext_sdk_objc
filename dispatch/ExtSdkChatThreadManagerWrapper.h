@@ -13,10 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nonnull instancetype)getInstance;
 
-- (void)fetchChatThread:(NSDictionary *)param
-         withMethodType:(NSString *)aChannelName
-                 result:(nonnull id<ExtSdkCallbackObjc>)result;
-
 - (void)fetchChatThreadDetail:(NSDictionary *)param
                withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result;
@@ -28,6 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchChatThreadsWithParentId:(NSDictionary *)param
                       withMethodType:(NSString *)aChannelName
                               result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchJoinedChatThreadsWithParentId:(NSDictionary *)param
+                            withMethodType:(NSString *)aChannelName
+                                    result:
+                                        (nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)fetchChatThreadMember:(NSDictionary *)param
                withMethodType:(NSString *)aChannelName
@@ -60,6 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)destroyChatThread:(NSDictionary *)param
            withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)getChatThread:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
+               result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 @end
 

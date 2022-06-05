@@ -29,9 +29,9 @@
 - (void)getConversationWithParam:(NSDictionary *)param
                       completion:
                           (void (^)(EMConversation *conversation))aCompletion {
-    __weak NSString *conversationId = param[@"con_id"];
+    __weak NSString *conversationId = param[@"convId"];
     EMConversationType type =
-        [EMConversation typeFromInt:[param[@"type"] intValue]];
+        [EMConversation typeFromInt:[param[@"convType"] intValue]];
     EMConversation *conversation =
         [EMClient.sharedClient.chatManager getConversation:conversationId
                                                       type:type

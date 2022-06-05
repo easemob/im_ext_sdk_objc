@@ -48,8 +48,8 @@
 @implementation EMConversation (Json)
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-    ret[@"con_id"] = self.conversationId;
-    ret[@"type"] = @([self.class typeToInt:self.type]);
+    ret[@"convId"] = self.conversationId;
+    ret[@"convType"] = @([self.class typeToInt:self.type]);
     ret[@"ext"] = self.ext;
     return ret;
 }
@@ -343,7 +343,7 @@
             : EMMessageDirectionReceive;
     });
 
-    msg.chatType = [msg chatTypeFromInt:[aJson[@"chatType"] intValue]];
+    msg.chatType = [EMChatMessage chatTypeFromInt:[aJson[@"chatType"] intValue]];
     msg.status = [msg statusFromInt:[aJson[@"status"] intValue]];
     msg.localTime = [aJson[@"localTime"] longLongValue];
     msg.timestamp = [aJson[@"serverTime"] longLongValue];
@@ -353,6 +353,7 @@
     msg.isNeedGroupAck = [aJson[@"needGroupAck"] boolValue];
     // read only
     // msg.groupAckCount = [aJson[@"groupAckCount"] intValue]
+    msg.isChatThread = [aJson[@"isChatThread"] boolValue];
     msg.ext = aJson[@"attributes"];
     return msg;
 }
@@ -372,10 +373,11 @@
     ret[@"attributes"] = self.ext ?: @{};
     ret[@"localTime"] = @(self.localTime);
     ret[@"status"] = @([self statusToInt:self.status]);
-    ret[@"chatType"] = @([self chatTypeToInt:self.chatType]);
+    ret[@"chatType"] = @([EMChatMessage chatTypeToInt:self.chatType]);
     ret[@"direction"] =
         self.direction == EMMessageDirectionSend ? @"send" : @"rec";
     ret[@"body"] = [self.body toJsonObject];
+    ret[@"isChatThread"] = @(self.isChatThread);
 
     return ret;
 }
@@ -420,7 +422,7 @@
     return status;
 }
 
-- (EMChatType)chatTypeFromInt:(int)aType {
++ (EMChatType)chatTypeFromInt:(int)aType {
     EMChatType type = EMChatTypeChat;
     switch (aType) {
     case 0:
@@ -437,7 +439,7 @@
     return type;
 }
 
-- (int)chatTypeToInt:(EMChatType)aType {
++ (int)chatTypeToInt:(EMChatType)aType {
     int type;
     switch (aType) {
     case EMChatTypeChat:
@@ -555,6 +557,7 @@
     EMTextMessageBody *body =
         [[EMTextMessageBody alloc] initWithText:aJson[@"content"]];
     body.targetLanguages = aJson[@"targetLanguages"];
+    // 给底层的时候不需要设置
     return body;
 }
 
@@ -562,6 +565,13 @@
     NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
     ret[@"content"] = self.text;
     ret[@"targetLanguages"] = self.targetLanguages;
+    NSMutableDictionary* kv = [NSMutableDictionary dictionary];
+    for (NSString* key in self.translations.allKeys) {
+        [kv setValue:[self.translations valueForKey:key] forKey:key];
+    }
+    if (kv != nil) {
+        ret[@"translations"] = kv;
+    }
     return ret;
 }
 
@@ -1073,6 +1083,42 @@
     }
 
     ret[@"reactions"] = reactions;
+    return ret;
+}
+
+@end
+
+@implementation EMChatThread (Json)
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+    ret[@"threadId"] = self.threadId;
+    ret[@"threadName"] = self.threadName;
+    ret[@"owner"] = self.owner;
+    ret[@"msgId"] = self.messageId;
+    ret[@"parentId"] = self.channelId;
+    ret[@"memberCount"] = @(self.membersCount);
+    ret[@"timestamp"] = @(self.timeStamp);
+    return ret;
+}
+
+@end
+
+@implementation EMThreadEvent (Json)
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [NSMutableDictionary dictionary];
+    ret[@"threadId"] = self.threadId;
+    ret[@"threadName"] = self.threadName;
+    ret[@"operation"] = self.threadOperation;
+    ret[@"msgId"] = self.messageId;
+    ret[@"parentId"] = self.channelId;
+    ret[@"msgCount"] = @(self.messageCount);
+    ret[@"timestamp"] = @(self.timeStamp);
+    ret[@"fromId"] = self.from;
+    if (self.lastMessage != nil) {
+        ret[@"lastMsg"] = [self.lastMessage toJsonObject];
+    }
     return ret;
 }
 

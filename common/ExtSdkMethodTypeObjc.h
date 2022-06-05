@@ -260,6 +260,7 @@ static NSString *_Nonnull const ExtSdkMethodKeyChatFetchChatThread = @"fetchChat
 static NSString *_Nonnull const ExtSdkMethodKeyChatFetchChatThreadDetail = @"fetchChatThreadDetail";
 static NSString *_Nonnull const ExtSdkMethodKeyChatFetchJoinedChatThreads = @"fetchJoinedChatThreads";
 static NSString *_Nonnull const ExtSdkMethodKeyChatFetchChatThreadsWithParentId = @"fetchChatThreadsWithParentId";
+static NSString *_Nonnull const ExtSdkMethodKeyChatFetchJoinedChatThreadsWithParentId = @"fetchJoinedChatThreadsWithParentId";
 static NSString *_Nonnull const ExtSdkMethodKeyChatFetchChatThreadMember = @"fetchChatThreadMember";
 static NSString *_Nonnull const ExtSdkMethodKeyChatFetchLastMessageWithChatThreads = @"fetchLastMessageWithChatThreads";
 static NSString *_Nonnull const ExtSdkMethodKeyChatRemoveMemberFromChatThread = @"removeMemberFromChatThread";
@@ -268,6 +269,13 @@ static NSString *_Nonnull const ExtSdkMethodKeyChatCreateChatThread = @"createCh
 static NSString *_Nonnull const ExtSdkMethodKeyChatJoinChatThread = @"joinChatThread";
 static NSString *_Nonnull const ExtSdkMethodKeyChatLeaveChatThread = @"leaveChatThread";
 static NSString *_Nonnull const ExtSdkMethodKeyChatDestroyChatThread = @"destroyChatThread";
+static NSString *_Nonnull const ExtSdkMethodKeyChatGetMessageThread = @"getMessageThread";
+
+#pragma mark - EMThreadManagerDelegate
+static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadCreated = @"onChatThreadCreated";
+static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadUpdated = @"onChatThreadUpdated";
+static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadDestroyed = @"onChatThreadDestroyed";
+static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadUserRemoved = @"onChatThreadUserRemoved";
 
 // TODO: EMChatThreadManagerListener
 
@@ -534,6 +542,7 @@ static const int ExtSdkMethodKeyChatFetchChatThreadValue = 1500;
 static const int ExtSdkMethodKeyChatFetchChatThreadDetailValue = 1501;
 static const int ExtSdkMethodKeyChatFetchJoinedChatThreadsValue = 1502;
 static const int ExtSdkMethodKeyChatFetchChatThreadsWithParentIdValue = 1503;
+static const int ExtSdkMethodKeyChatFetchJoinedChatThreadsWithParentIdValue = 1512;
 static const int ExtSdkMethodKeyChatFetchChatThreadMemberValue = 1504;
 static const int ExtSdkMethodKeyChatFetchLastMessageWithChatThreadsValue = 1505;
 static const int ExtSdkMethodKeyChatRemoveMemberFromChatThreadValue = 1506;
@@ -542,6 +551,13 @@ static const int ExtSdkMethodKeyChatCreateChatThreadValue = 1508;
 static const int ExtSdkMethodKeyChatJoinChatThreadValue = 1509;
 static const int ExtSdkMethodKeyChatLeaveChatThreadValue = 1510;
 static const int ExtSdkMethodKeyChatDestroyChatThreadValue = 1511;
+static const int ExtSdkMethodKeyChatGetMessageThreadValue = 1513;
+
+#pragma mark - EMThreadManagerDelegate
+static const int ExtSdkMethodKeyChatOnChatThreadCreatedValue = 1514;
+static const int ExtSdkMethodKeyChatOnChatThreadUpdatedValue = 1515;
+static const int ExtSdkMethodKeyChatOnChatThreadDestroyedValue = 1516;
+static const int ExtSdkMethodKeyChatOnChatThreadUserRemovedValue = 1517;
 
 // TODO: EMChatThreadManagerListener
 

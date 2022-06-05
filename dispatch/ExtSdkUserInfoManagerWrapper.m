@@ -36,7 +36,7 @@
                  NSDictionary *objDic = [aUserInfo toJsonObject];
 
                  [weakSelf onResult:result
-                     withMethodType:ExtSdkMethodKeyUpdateOwnUserInfo
+                     withMethodType:aChannelName
                           withError:aError
                          withParams:objDic];
                }];
@@ -57,7 +57,7 @@
                completion:^(EMUserInfo *aUserInfo, EMError *aError) {
                  NSDictionary *objDic = [aUserInfo toJsonObject];
                  [weakSelf onResult:result
-                     withMethodType:ExtSdkMethodKeyUpdateOwnUserInfoWithType
+                     withMethodType:aChannelName
                           withError:aError
                          withParams:objDic];
                }];
@@ -80,7 +80,7 @@
                  }];
 
                  [weakSelf onResult:result
-                     withMethodType:ExtSdkMethodKeyFetchUserInfoById
+                     withMethodType:aChannelName
                           withError:aError
                          withParams:[dic copy]];
                }];
@@ -105,7 +105,7 @@
                  }];
 
                  [weakSelf onResult:result
-                     withMethodType:ExtSdkMethodKeyFetchUserInfoByIdWithType
+                     withMethodType:aChannelName
                           withError:aError
                          withParams:dic];
                }];
