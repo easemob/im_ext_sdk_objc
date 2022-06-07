@@ -29,15 +29,12 @@
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *threadId = param[@"threadId"];
-    [EMClient.sharedClient.threadManager
-        getChatThreadDetail:threadId
-                 completion:^(EMChatThread *_Nonnull thread,
-                              EMError *_Nonnull aError) {
-                   [weakSelf onResult:result
-                       withMethodType:aChannelName
-                            withError:aError
-                           withParams:[thread toJsonObject]];
-                 }];
+    [EMClient.sharedClient.threadManager getChatThreadFromSever:threadId completion:^(EMChatThread * _Nonnull thread, EMError * _Nonnull aError) {
+            [weakSelf onResult:result
+                withMethodType:aChannelName
+                     withError:aError
+                    withParams:[thread toJsonObject]];
+    }];
 }
 
 - (void)fetchJoinedChatThreads:(NSDictionary *)param
@@ -89,7 +86,7 @@
     NSString *cursor = param[@"cursor"];
     NSNumber *pageSize = param[@"pageSize"];
     [EMClient.sharedClient.threadManager
-        getMineChatThreadsFromServerWithParentId:parentId
+     getJoinedChatThreadsFromServerWithParentId:parentId
                                           cursor:cursor
                                         pageSize:pageSize.intValue
                                       completion:^(
@@ -107,11 +104,11 @@
                withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    NSString *chatThreadId = param[@"chatThreadId"];
+    NSString *threadId = param[@"threadId"];
     NSString *cursor = param[@"cursor"];
     NSNumber *pageSize = param[@"pageSize"];
     [EMClient.sharedClient.threadManager
-        getChatThreadMemberListFromServerWithId:chatThreadId
+        getChatThreadMemberListFromServerWithId:threadId
                                          cursor:cursor
                                        pageSize:pageSize.intValue
                                      completion:^(
@@ -129,7 +126,7 @@
                          withMethodType:(NSString *)aChannelName
                                  result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    NSArray *ids = param[@"threadId"];
+    NSArray *ids = param[@"threadIds"];
     [EMClient.sharedClient.threadManager
         getLastMesssageFromSeverWithChatThreads:ids
                                      completion:^(NSDictionary<NSString *,
@@ -176,7 +173,7 @@
     NSString *threadId = param[@"threadId"];
     NSString *name = param[@"name"];
     [EMClient.sharedClient.threadManager
-        updateChatThreadSubject:name
+     updateChatThreadName:name
                        threadId:threadId
                      completion:^(EMError *_Nonnull aError) {
                        [weakSelf onResult:result
@@ -262,7 +259,7 @@
         [self onResult:result
             withMethodType:aChannelName
                  withError:nil
-                withParams:[msg.threadOverView toJsonObject]];
+                withParams:[msg.chatThread toJsonObject]];
     } else {
         [self onResult:result
             withMethodType:aChannelName

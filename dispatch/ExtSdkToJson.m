@@ -1096,29 +1096,48 @@
     ret[@"threadName"] = self.threadName;
     ret[@"owner"] = self.owner;
     ret[@"msgId"] = self.messageId;
-    ret[@"parentId"] = self.channelId;
+    ret[@"parentId"] = self.parentId;
     ret[@"memberCount"] = @(self.membersCount);
-    ret[@"timestamp"] = @(self.timeStamp);
+    ret[@"messageCount"] = @(self.messageCount);
+    ret[@"createAt"] = @(self.createAt);
+    if (self.lastMessage) {
+        ret[@"lastMessage"] = [self.lastMessage toJsonObject];
+    }
     return ret;
 }
 
 @end
 
-@implementation EMThreadEvent (Json)
+@implementation EMChatThreadEvent (Json)
 
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-    ret[@"threadId"] = self.threadId;
-    ret[@"threadName"] = self.threadName;
-    ret[@"operation"] = self.threadOperation;
-    ret[@"msgId"] = self.messageId;
-    ret[@"parentId"] = self.channelId;
-    ret[@"msgCount"] = @(self.messageCount);
-    ret[@"timestamp"] = @(self.timeStamp);
-    ret[@"fromId"] = self.from;
-    if (self.lastMessage != nil) {
-        ret[@"lastMsg"] = [self.lastMessage toJsonObject];
+    ret[@"from"] = self.from;
+    ret[@"type"] = @([self getIntOperation]);
+    ret[@"thread"] = [self.chatThread toJsonObject];
+    return ret;
+}
+
+- (int)getIntOperation {
+    int ret = 0;
+    switch (self.type) {
+        case EMThreadOperationUnknown:
+            ret = 0;
+            break;
+        case EMThreadOperationCreate:
+            ret = 1;
+            break;
+        case EMThreadOperationUpdate:
+            ret = 2;
+            break;
+        case EMThreadOperationDelete:
+            ret = 3;
+            break;
+        case EMThreadOperationUpdate_msg:
+            ret = 4;
+            break;
     }
+    
     return ret;
 }
 
