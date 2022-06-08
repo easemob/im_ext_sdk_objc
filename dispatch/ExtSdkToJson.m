@@ -353,7 +353,7 @@
     msg.isNeedGroupAck = [aJson[@"needGroupAck"] boolValue];
     // read only
     // msg.groupAckCount = [aJson[@"groupAckCount"] intValue]
-    msg.isChatThread = [aJson[@"isChatThread"] boolValue];
+    msg.isChatThreadMessage = [aJson[@"isChatThread"] boolValue];
     msg.ext = aJson[@"attributes"];
     return msg;
 }
@@ -377,7 +377,7 @@
     ret[@"direction"] =
         self.direction == EMMessageDirectionSend ? @"send" : @"rec";
     ret[@"body"] = [self.body toJsonObject];
-    ret[@"isChatThread"] = @(self.isChatThread);
+    ret[@"isChatThread"] = @(self.isChatThreadMessage);
 
     return ret;
 }

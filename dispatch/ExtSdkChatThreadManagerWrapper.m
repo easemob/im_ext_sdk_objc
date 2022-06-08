@@ -29,12 +29,15 @@
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     NSString *threadId = param[@"threadId"];
-    [EMClient.sharedClient.threadManager getChatThreadFromSever:threadId completion:^(EMChatThread * _Nonnull thread, EMError * _Nonnull aError) {
-            [weakSelf onResult:result
-                withMethodType:aChannelName
-                     withError:aError
-                    withParams:[thread toJsonObject]];
-    }];
+    [EMClient.sharedClient.threadManager
+        getChatThreadFromSever:threadId
+                    completion:^(EMChatThread *_Nonnull thread,
+                                 EMError *_Nonnull aError) {
+                      [weakSelf onResult:result
+                          withMethodType:aChannelName
+                               withError:aError
+                              withParams:[thread toJsonObject]];
+                    }];
 }
 
 - (void)fetchJoinedChatThreads:(NSDictionary *)param
@@ -86,18 +89,18 @@
     NSString *cursor = param[@"cursor"];
     NSNumber *pageSize = param[@"pageSize"];
     [EMClient.sharedClient.threadManager
-     getJoinedChatThreadsFromServerWithParentId:parentId
-                                          cursor:cursor
-                                        pageSize:pageSize.intValue
-                                      completion:^(
-                                          EMCursorResult *_Nonnull aResult,
-                                          EMError *_Nonnull aError) {
-                                        [weakSelf onResult:result
-                                            withMethodType:aChannelName
-                                                 withError:aError
-                                                withParams:[aResult
-                                                               toJsonObject]];
-                                      }];
+        getJoinedChatThreadsFromServerWithParentId:parentId
+                                            cursor:cursor
+                                          pageSize:pageSize.intValue
+                                        completion:^(
+                                            EMCursorResult *_Nonnull aResult,
+                                            EMError *_Nonnull aError) {
+                                          [weakSelf onResult:result
+                                              withMethodType:aChannelName
+                                                   withError:aError
+                                                  withParams:[aResult
+                                                                 toJsonObject]];
+                                        }];
 }
 
 - (void)fetchChatThreadMember:(NSDictionary *)param
@@ -173,14 +176,14 @@
     NSString *threadId = param[@"threadId"];
     NSString *name = param[@"name"];
     [EMClient.sharedClient.threadManager
-     updateChatThreadName:name
-                       threadId:threadId
-                     completion:^(EMError *_Nonnull aError) {
-                       [weakSelf onResult:result
-                           withMethodType:aChannelName
-                                withError:aError
-                               withParams:nil];
-                     }];
+        updateChatThreadName:name
+                    threadId:threadId
+                  completion:^(EMError *_Nonnull aError) {
+                    [weakSelf onResult:result
+                        withMethodType:aChannelName
+                             withError:aError
+                            withParams:nil];
+                  }];
 }
 
 - (void)createChatThread:(NSDictionary *)param
@@ -272,22 +275,22 @@
 
 #pragma mark - EMThreadManagerDelegate
 
-- (void)onChatThreadCreate:(EMThreadEvent *)event {
+- (void)onChatThreadCreate:(EMChatThreadEvent *)event {
     [self onReceive:ExtSdkMethodKeyChatOnChatThreadCreated
          withParams:[event toJsonObject]];
 }
 
-- (void)onChatThreadUpdate:(EMThreadEvent *)event {
+- (void)onChatThreadUpdate:(EMChatThreadEvent *)event {
     [self onReceive:ExtSdkMethodKeyChatOnChatThreadUpdated
          withParams:[event toJsonObject]];
 }
 
-- (void)onChatThreadDestroy:(EMThreadEvent *)event {
+- (void)onChatThreadDestroy:(EMChatThreadEvent *)event {
     [self onReceive:ExtSdkMethodKeyChatOnChatThreadDestroyed
          withParams:[event toJsonObject]];
 }
 
-- (void)onUserKickOutOfChatThread:(EMThreadEvent *)event {
+- (void)onUserKickOutOfChatThread:(EMChatThreadEvent *)event {
     [self onReceive:ExtSdkMethodKeyChatOnChatThreadUserRemoved
          withParams:[event toJsonObject]];
 }

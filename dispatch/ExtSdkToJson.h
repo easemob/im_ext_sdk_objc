@@ -27,7 +27,7 @@
 #import <HyphenateChat/EMMessageReaction.h>
 #import <HyphenateChat/EMMessageReactionChange.h>
 #import <HyphenateChat/EMChatThread.h>
-#import <HyphenateChat/EMThreadEvent.h>
+#import <HyphenateChat/EMChatThreadEvent.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -133,7 +133,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)toJsonObject;
 @end
 
-@interface EMThreadEvent (Json) <ExtSdkToJson>
+@interface EMChatThreadEvent (Json) <ExtSdkToJson>
 - (NSDictionary *)toJsonObject;
 @end
 
