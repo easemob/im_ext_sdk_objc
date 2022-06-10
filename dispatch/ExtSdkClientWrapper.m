@@ -17,6 +17,7 @@
 #import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkToJson.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
+#import "ExtSdkChatThreadManagerWrapper.h"
 #import <UserNotifications/UserNotifications.h>
 
 @interface ExtSdkClientWrapper () <EMClientDelegate, EMMultiDevicesDelegate>
@@ -61,6 +62,7 @@
     [ExtSdkContactManagerWrapper.getInstance initSdk];
     [ExtSdkGroupManagerWrapper.getInstance initSdk];
     [ExtSdkPresenceManagerWrapper.getInstance initSdk];
+    [ExtSdkChatThreadManagerWrapper.getInstance initSdk];
 
     [self onResult:result
         withMethodType:ExtSdkMethodKeyInit

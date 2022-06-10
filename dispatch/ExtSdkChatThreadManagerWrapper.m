@@ -24,6 +24,11 @@
     return instance;
 }
 
+- (void)initSDK {
+    [EMClient.sharedClient.threadManager removeDelegate:self];
+    [EMClient.sharedClient.threadManager addDelegate:self delegateQueue:nil];
+}
+
 - (void)fetchChatThreadDetail:(NSDictionary *)param
                withMethodType:(NSString *)aChannelName
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
