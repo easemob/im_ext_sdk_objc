@@ -1098,7 +1098,7 @@
     ret[@"msgId"] = self.messageId;
     ret[@"parentId"] = self.parentId;
     ret[@"memberCount"] = @(self.membersCount);
-    ret[@"messageCount"] = @(self.messageCount);
+    ret[@"msgCount"] = @(self.messageCount);
     ret[@"createAt"] = @(self.createAt);
     if (self.lastMessage) {
         ret[@"lastMessage"] = [self.lastMessage toJsonObject];
