@@ -309,6 +309,27 @@
             withParams:nil];
 }
 
+- (void)updatePushConfig:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSDictionary *dict = param[@"config"];
+    NSString* deviceToken = dict[@"deviceToken"];
+    NSData* deviceTokenData = [deviceToken dataUsingEncoding:NSUTF8StringEncoding];
+//    EMError* error = [EMClient.sharedClient bindDeviceToken:[deviceToken dataUsingEncoding:NSUTF8StringEncoding]];
+//    [self onResult:result withMethodType:aChannelName withError:error withParams:nil];
+    
+//    [EMClient.sharedClient asyncBindDeviceToken:[deviceToken dataUsingEncoding:NSUTF8StringEncoding]] success:^{
+//        [self onResult:result withMethodType:aChannelName withError:nil withParams:nil];
+//    } failure:^(EMError *aError) {
+//        [self onResult:result withMethodType:aChannelName withError:aError withParams:nil];
+//    }];
+    
+    // must be NSString* type for deviceToken
+    [EMClient.sharedClient registerForRemoteNotificationsWithDeviceToken:deviceToken completion:^(EMError * _Nullable aError) {
+        [self onResult:result withMethodType:aChannelName withError:aError withParams:nil];
+    }];
+}
+
 #pragma - mark EMClientDelegate
 
 - (void)connectionStateDidChange:(EMConnectionState)aConnectionState {

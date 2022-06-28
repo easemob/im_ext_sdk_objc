@@ -1004,4 +1004,12 @@
     [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
 }
 
+- (void)groupSpecificationDidUpdate:(EMGroup *)aGroup {
+    NSDictionary *map = @{
+        @"type" : @"onSpecificationChanged",
+        @"group" : [aGroup toJsonObject],
+    };
+    [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
+}
+
 @end

@@ -104,6 +104,9 @@ static NSString *const TAG = @"ExtSdkDispatch";
     case ExtSdkMethodKeyGetCurrentUserValue:
         [[ExtSdkClientWrapper getInstance] getCurrentUser:ps withMethodType:methodType result:callback];
         break;
+    case ExtSdkMethodKeyUpdatePushConfigValue:
+        [[ExtSdkClientWrapper getInstance] updatePushConfig:ps withMethodType:methodType result:callback];
+        break;
 
     /// #pragma mark - EMClientDelegate value
     case ExtSdkMethodKeyOnConnectedValue:
