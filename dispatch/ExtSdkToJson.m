@@ -378,6 +378,7 @@
         self.direction == EMMessageDirectionSend ? @"send" : @"rec";
     ret[@"body"] = [self.body toJsonObject];
     ret[@"isChatThread"] = @(self.isChatThreadMessage);
+    ret[@"isOnline"] = @(self.onlineState);
 
     return ret;
 }
@@ -913,7 +914,7 @@
     data[@"serverTransfer"] = @(self.isAutoTransferMessageAttachments);
     data[@"usingHttpsOnly"] = @(self.usingHttpsOnly);
     data[@"pushConfig"] =
-        @{@"pushConfig" : @{@"apnsCertName" : self.apnsCertName}};
+        @{@"pushConfig" : @{@"deviceId" : self.apnsCertName}};
     data[@"enableDNSConfig"] = @(self.enableDnsConfig);
     data[@"imPort"] = @(self.chatPort);
     data[@"imServer"] = self.chatServer;
@@ -950,6 +951,11 @@
     options.chatServer = aJson[@"imServer"];
     options.restServer = aJson[@"restServer"];
     options.dnsURL = aJson[@"dnsURL"];
+    
+    NSDictionary* pushConfig = aJson[@"pushConfig"];
+    if (pushConfig != nil) {
+        options.apnsCertName = pushConfig[@"deviceId"];
+    }
 
     return options;
 }

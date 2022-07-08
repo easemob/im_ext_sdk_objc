@@ -136,7 +136,7 @@
     __weak typeof(self) weakSelf = self;
     NSArray *ids = param[@"threadIds"];
     [EMClient.sharedClient.threadManager
-        getLastMesssageFromSeverWithChatThreads:ids
+         getLastMessageFromSeverWithChatThreads:ids
                                      completion:^(NSDictionary<NSString *,
                                                                EMChatMessage *>
                                                       *_Nonnull messageMap,
@@ -248,7 +248,7 @@
     __weak typeof(self) weakSelf = self;
     NSString *threadId = param[@"threadId"];
     [EMClient.sharedClient.threadManager
-        destoryChatThread:threadId
+        destroyChatThread:threadId
                completion:^(EMError *_Nonnull aError) {
                  [weakSelf onResult:result
                      withMethodType:aChannelName

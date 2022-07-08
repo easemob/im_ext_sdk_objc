@@ -239,6 +239,8 @@ static NSString *_Nonnull const ExtSdkMethodKeyGetNoDisturbUsersFromServer = @"g
 static NSString *_Nonnull const ExtSdkMethodKeyUpdateUserPushService = @"updateUserPushService";
 static NSString *_Nonnull const ExtSdkMethodKeyGetNoPushUsers = @"getNoPushUsers";
 
+static NSString *_Nonnull const ExtSdkMethodKeyUpdatePushConfig = @"updatePushConfig";
+
 #pragma mark - EMUserInfoManagerWrapper
 static NSString *_Nonnull const ExtSdkMethodKeyUpdateOwnUserInfo = @"updateOwnUserInfo";
 static NSString *_Nonnull const ExtSdkMethodKeyUpdateOwnUserInfoWithType = @"updateOwnUserInfoWithType";
@@ -520,6 +522,7 @@ static const int ExtSdkMethodKeySetNoDisturbUsersValue = 1011;
 static const int ExtSdkMethodKeyGetNoDisturbUsersFromServerValue = 1012;
 static const int ExtSdkMethodKeyUpdateUserPushServiceValue = 1013;
 static const int ExtSdkMethodKeyGetNoPushUsersValue = 1014;
+static const int ExtSdkMethodKeyUpdatePushConfigValue = 1015;
 
 #pragma mark - EMUserInfoManagerWrapper value
 static const int ExtSdkMethodKeyUpdateOwnUserInfoValue = 1100;

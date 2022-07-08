@@ -113,7 +113,7 @@ RCT_EXPORT_METHOD(callMethod
 
 - (NSArray<NSString *> *)supportedEvents {
     NSLog(@"%@: supportedEvents:", TAG);
-    return @[
+    NSArray<NSString *> *ret = @[
         /// EMClientWrapper
         ExtSdkMethodKeyInit,
         ExtSdkMethodKeyCreateAccount,
@@ -353,6 +353,7 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyGetNoDisturbUsersFromServer,
         ExtSdkMethodKeyUpdateUserPushService,
         ExtSdkMethodKeyGetNoPushUsers,
+        ExtSdkMethodKeyUpdatePushConfig,
 
         /// EMUserInfoManagerWrapper
         ExtSdkMethodKeyUpdateOwnUserInfo,
@@ -389,6 +390,8 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyChatOnChatThreadDestroyed,
         ExtSdkMethodKeyChatOnChatThreadUserRemoved,
     ];
+    NSLog(@"%@: supportedEvents: %@", TAG, ret);
+    return ret;
 }
 
 - (void)invalidate NS_REQUIRES_SUPER {

@@ -251,6 +251,7 @@
           ExtSdkMethodKeyGetNoDisturbUsersFromServer : @(ExtSdkMethodKeyGetNoDisturbUsersFromServerValue),
           ExtSdkMethodKeyUpdateUserPushService : @(ExtSdkMethodKeyUpdateUserPushServiceValue),
           ExtSdkMethodKeyGetNoPushUsers : @(ExtSdkMethodKeyGetNoPushUsersValue),
+          ExtSdkMethodKeyUpdatePushConfig : @(ExtSdkMethodKeyUpdatePushConfigValue),
 
           /// EMUserInfoManagerWrapper
           ExtSdkMethodKeyUpdateOwnUserInfo : @(ExtSdkMethodKeyUpdateOwnUserInfoValue),
