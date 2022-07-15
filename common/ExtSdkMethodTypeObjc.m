@@ -253,6 +253,16 @@
           ExtSdkMethodKeyGetNoPushUsers : @(ExtSdkMethodKeyGetNoPushUsersValue),
           ExtSdkMethodKeyUpdatePushConfig : @(ExtSdkMethodKeyUpdatePushConfigValue),
 
+          ChatReportPushAction : @(ChatReportPushActionValue),
+          ChatSetConversationSilentMode : @(ChatSetConversationSilentModeValue),
+          ChatRemoveConversationSilentMode : @(ChatRemoveConversationSilentModeValue),
+          ChatFetchConversationSilentMode : @(ChatFetchConversationSilentModeValue),
+          ChatSetSilentModeForAll : @(ChatSetSilentModeForAllValue),
+          ChatFetchSilentModeForAll : @(ChatFetchSilentModeForAllValue),
+          ChatFetchSilentModeForConversations : @(ChatFetchSilentModeForConversationsValue),
+          ChatSetPreferredNotificationLanguage : @(ChatSetPreferredNotificationLanguageValue),
+          ChatFetchPreferredNotificationLanguage : @(ChatFetchPreferredNotificationLanguageValue),
+
           /// EMUserInfoManagerWrapper
           ExtSdkMethodKeyUpdateOwnUserInfo : @(ExtSdkMethodKeyUpdateOwnUserInfoValue),
           ExtSdkMethodKeyUpdateOwnUserInfoWithType : @(ExtSdkMethodKeyUpdateOwnUserInfoWithTypeValue),

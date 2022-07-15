@@ -63,6 +63,7 @@
     [ExtSdkGroupManagerWrapper.getInstance initSdk];
     [ExtSdkPresenceManagerWrapper.getInstance initSdk];
     [ExtSdkChatThreadManagerWrapper.getInstance initSDK];
+    [ExtSdkPushManagerWrapper.getInstance initSDK];
 
     [self onResult:result
         withMethodType:ExtSdkMethodKeyInit

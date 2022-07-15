@@ -20,6 +20,9 @@
     return instance;
 }
 
+- (void)initSDK {
+}
+
 - (void)getImPushConfig:(NSDictionary *)param
          withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result {
@@ -174,6 +177,169 @@
         withMethodType:aChannelName
              withError:nil
             withParams:userIds];
+}
+
+- (void)reportPushAction:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result {
+    // TODO:
+}
+
+- (void)setConversationSilentMode:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
+                           result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *conversaionId = param[@"conversationId"];
+    EMConversationType type =
+        [EMConversation typeFromInt:[param[@"conversationType"] intValue]];
+    EMSilentModeParam *silmentParam =
+        [EMSilentModeParam formJsonObject:param[@"param"]];
+    [EMClient.sharedClient.pushManager
+        setSilentModeForConversation:conversaionId
+                    conversationType:type
+                              params:silmentParam
+                          completion:^(EMSilentModeResult *_Nullable aResult,
+                                       EMError *_Nullable aError) {
+                            [weakSelf onResult:result
+                                withMethodType:aChannelName
+                                     withError:aError
+                                    withParams:nil];
+                          }];
+}
+
+- (void)removeConversationSilentMode:(NSDictionary *)param
+                      withMethodType:(NSString *)aChannelName
+                              result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *conversaionId = param[@"conversationId"];
+    EMConversationType type =
+        [EMConversation typeFromInt:[param[@"conversationType"] intValue]];
+    [EMClient.sharedClient.pushManager
+        clearRemindTypeForConversation:conversaionId
+                      conversationType:type
+                            completion:^(EMSilentModeResult *_Nullable aResult,
+                                         EMError *_Nullable aError) {
+                              [weakSelf onResult:result
+                                  withMethodType:aChannelName
+                                       withError:aError
+                                      withParams:nil];
+                            }];
+}
+
+- (void)fetchConversationSilentMode:(NSDictionary *)param
+                     withMethodType:(NSString *)aChannelName
+                             result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *conversaionId = param[@"conversationId"];
+    EMConversationType type =
+        [EMConversation typeFromInt:[param[@"conversationType"] intValue]];
+    [EMClient.sharedClient.pushManager
+        getSilentModeForConversation:conversaionId
+                    conversationType:type
+                          completion:^(EMSilentModeResult *_Nullable aResult,
+                                       EMError *_Nullable aError) {
+                            [weakSelf onResult:result
+                                withMethodType:aChannelName
+                                     withError:aError
+                                    withParams:[aResult toJsonObject]];
+                          }];
+}
+
+- (void)setSilentModeForAll:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
+                     result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    EMSilentModeParam *silmentParam =
+        [EMSilentModeParam formJsonObject:param[@"param"]];
+    [EMClient.sharedClient.pushManager
+        setSilentModeForAll:silmentParam
+                 completion:^(EMSilentModeResult *_Nullable aResult,
+                              EMError *_Nullable aError) {
+                   [weakSelf onResult:result
+                       withMethodType:aChannelName
+                            withError:aError
+                           withParams:nil];
+                 }];
+}
+
+- (void)fetchSilentModeForAll:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.pushManager
+        getSilentModeForAllWithCompletion:^(
+            EMSilentModeResult *_Nullable aResult, EMError *_Nullable aError) {
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:aError
+                  withParams:[aResult toJsonObject]];
+        }];
+}
+
+- (void)fetchSilentModeForConversations:(NSDictionary *)param
+                         withMethodType:(NSString *)aChannelName
+                                 result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSMutableArray *conversations = [NSMutableArray array];
+    NSArray *convs = param[@"convs"];
+    for (int i = 0; i < convs.count; ++i) {
+        EMConversationType convType = [EMConversation
+            typeFromInt:[[convs objectAtIndex:i][@"convType"] intValue]];
+        NSString *convId = [convs objectAtIndex:i][@"convId"];
+        EMConversation *conversation =
+            [EMClient.sharedClient.chatManager getConversation:convId
+                                                          type:convType
+                                              createIfNotExist:YES];
+        [conversations addObject:conversation];
+    }
+    [EMClient.sharedClient.pushManager
+        getSilentModeForConversations:conversations
+                           completion:^(
+                               NSDictionary<NSString *, EMSilentModeResult *>
+                                   *_Nullable aResult,
+                               EMError *_Nullable aError) {
+                             NSMutableDictionary *tmpDict =
+                                 [NSMutableDictionary dictionary];
+                             for (NSString *conversationId in aResult.allKeys) {
+                                 tmpDict[conversationId] =
+                                     [aResult[conversationId] toJsonObject];
+                             }
+                             [weakSelf onResult:result
+                                 withMethodType:aChannelName
+                                      withError:aError
+                                     withParams:tmpDict];
+                           }];
+}
+
+- (void)setPreferredNotificationLanguage:(NSDictionary *)param
+                          withMethodType:(NSString *)aChannelName
+                                  result:
+                                      (nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *code = param[@"code"];
+    [EMClient.sharedClient.pushManager
+        setPreferredNotificationLanguage:code
+                              completion:^(EMError *_Nullable aError) {
+                                [weakSelf onResult:result
+                                    withMethodType:aChannelName
+                                         withError:aError
+                                        withParams:nil];
+                              }];
+}
+
+- (void)fetchPreferredNotificationLanguage:(NSDictionary *)param
+                            withMethodType:(NSString *)aChannelName
+                                    result:
+                                        (nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.pushManager
+        getPreferredNotificationLanguageCompletion:^(
+            NSString *_Nullable aLaguangeCode, EMError *_Nullable aError) {
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:aError
+                  withParams:aLaguangeCode];
+        }];
 }
 
 @end

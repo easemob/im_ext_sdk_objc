@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nonnull instancetype)getInstance;
 
+- (void)initSDK;
+
 - (void)getImPushConfig:(NSDictionary *)param
          withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result;
@@ -56,6 +58,43 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getNoPushUsers:(NSDictionary *)param
         withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)reportPushAction:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)setConversationSilentMode:(NSDictionary *)param
+                   withMethodType:(NSString *)aChannelName
+                           result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)removeConversationSilentMode:(NSDictionary *)param
+                      withMethodType:(NSString *)aChannelName
+                              result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchConversationSilentMode:(NSDictionary *)param
+                     withMethodType:(NSString *)aChannelName
+                             result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)setSilentModeForAll:(NSDictionary *)param
+             withMethodType:(NSString *)aChannelName
+                     result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchSilentModeForAll:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchSilentModeForConversations:(NSDictionary *)param
+                         withMethodType:(NSString *)aChannelName
+                                 result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)setPreferredNotificationLanguage:(NSDictionary *)param
+                          withMethodType:(NSString *)aChannelName
+                                  result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchPreferredNotificationLanguage:(NSDictionary *)param
+                            withMethodType:(NSString *)aChannelName
+                                    result:
+                                        (nonnull id<ExtSdkCallbackObjc>)result;
 
 @end
 

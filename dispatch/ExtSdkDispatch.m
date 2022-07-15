@@ -4,6 +4,8 @@
 #import "ExtSdkTypeUtilObjc.h"
 
 #import "ExtSdkChatManagerWrapper.h"
+#import "ExtSdkChatMessageWrapper.h"
+#import "ExtSdkChatThreadManagerWrapper.h"
 #import "ExtSdkChatroomManagerWrapper.h"
 #import "ExtSdkClientWrapper.h"
 #import "ExtSdkContactManagerWrapper.h"
@@ -12,8 +14,6 @@
 #import "ExtSdkPresenceManagerWrapper.h"
 #import "ExtSdkPushManagerWrapper.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
-#import "ExtSdkChatMessageWrapper.h"
-#import "ExtSdkChatThreadManagerWrapper.h"
 
 static NSString *const TAG = @"ExtSdkDispatch";
 @interface ExtSdkDispatch () {
@@ -774,6 +774,34 @@ static NSString *const TAG = @"ExtSdkDispatch";
         break;
     case ExtSdkMethodKeyChatGetMessageThreadValue:
         [[ExtSdkChatThreadManagerWrapper getInstance] getChatThread:ps withMethodType:methodType result:callback];
+        break;
+
+    case ChatReportPushActionValue:
+        [[ExtSdkPushManagerWrapper getInstance] reportPushAction:ps withMethodType:methodType result:callback];
+        break;
+    case ChatSetConversationSilentModeValue:
+        [[ExtSdkPushManagerWrapper getInstance] setConversationSilentMode:ps withMethodType:methodType result:callback];
+        break;
+    case ChatRemoveConversationSilentModeValue:
+        [[ExtSdkPushManagerWrapper getInstance] removeConversationSilentMode:ps withMethodType:methodType result:callback];
+        break;
+    case ChatFetchConversationSilentModeValue:
+        [[ExtSdkPushManagerWrapper getInstance] fetchConversationSilentMode:ps withMethodType:methodType result:callback];
+        break;
+    case ChatSetSilentModeForAllValue:
+        [[ExtSdkPushManagerWrapper getInstance] setSilentModeForAll:ps withMethodType:methodType result:callback];
+        break;
+    case ChatFetchSilentModeForAllValue:
+        [[ExtSdkPushManagerWrapper getInstance] fetchSilentModeForAll:ps withMethodType:methodType result:callback];
+        break;
+    case ChatFetchSilentModeForConversationsValue:
+        [[ExtSdkPushManagerWrapper getInstance] fetchSilentModeForConversations:ps withMethodType:methodType result:callback];
+        break;
+    case ChatSetPreferredNotificationLanguageValue:
+        [[ExtSdkPushManagerWrapper getInstance] setPreferredNotificationLanguage:ps withMethodType:methodType result:callback];
+        break;
+    case ChatFetchPreferredNotificationLanguageValue:
+        [[ExtSdkPushManagerWrapper getInstance] fetchPreferredNotificationLanguage:ps withMethodType:methodType result:callback];
         break;
 
     default:

@@ -355,6 +355,16 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyGetNoPushUsers,
         ExtSdkMethodKeyUpdatePushConfig,
 
+        ChatReportPushAction,
+        ChatSetConversationSilentMode,
+        ChatRemoveConversationSilentMode,
+        ChatFetchConversationSilentMode,
+        ChatSetSilentModeForAll,
+        ChatFetchSilentModeForAll,
+        ChatFetchSilentModeForConversations,
+        ChatSetPreferredNotificationLanguage,
+        ChatFetchPreferredNotificationLanguage,
+
         /// EMUserInfoManagerWrapper
         ExtSdkMethodKeyUpdateOwnUserInfo,
         ExtSdkMethodKeyUpdateOwnUserInfoWithType,

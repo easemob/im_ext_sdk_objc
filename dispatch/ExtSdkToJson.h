@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 
 #import <HyphenateChat/EMChatMessage.h>
+#import <HyphenateChat/EMChatThread.h>
+#import <HyphenateChat/EMChatThreadEvent.h>
 #import <HyphenateChat/EMChatroom.h>
 #import <HyphenateChat/EMConversation.h>
 #import <HyphenateChat/EMCursorResult.h>
@@ -18,16 +20,17 @@
 #import <HyphenateChat/EMGroupOptions.h>
 #import <HyphenateChat/EMGroupSharedFile.h>
 #import <HyphenateChat/EMMessageBody.h>
+#import <HyphenateChat/EMMessageReaction.h>
+#import <HyphenateChat/EMMessageReactionChange.h>
 #import <HyphenateChat/EMOptions.h>
 #import <HyphenateChat/EMPageResult.h>
 #import <HyphenateChat/EMPresence.h>
 #import <HyphenateChat/EMPushOptions.h>
+#import <HyphenateChat/EMSilentModeParam.h>
+#import <HyphenateChat/EMSilentModeResult.h>
+#import <HyphenateChat/EMSilentModeTime.h>
 #import <HyphenateChat/EMTranslateLanguage.h>
 #import <HyphenateChat/EMUserInfo.h>
-#import <HyphenateChat/EMMessageReaction.h>
-#import <HyphenateChat/EMMessageReactionChange.h>
-#import <HyphenateChat/EMChatThread.h>
-#import <HyphenateChat/EMChatThreadEvent.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -134,6 +137,20 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface EMChatThreadEvent (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface EMSilentModeParam (Json)
++ (EMSilentModeParam *)formJsonObject:(NSDictionary *)dict;
++ (int)remindTypeToInt:(EMPushRemindType)type;
+@end
+
+@interface EMSilentModeResult (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface EMSilentModeTime (Helper) <ExtSdkToJson>
++ (EMSilentModeTime *)formJsonObject:(NSDictionary *)dict;
 - (NSDictionary *)toJsonObject;
 @end
 

@@ -343,7 +343,8 @@
             : EMMessageDirectionReceive;
     });
 
-    msg.chatType = [EMChatMessage chatTypeFromInt:[aJson[@"chatType"] intValue]];
+    msg.chatType =
+        [EMChatMessage chatTypeFromInt:[aJson[@"chatType"] intValue]];
     msg.status = [msg statusFromInt:[aJson[@"status"] intValue]];
     msg.localTime = [aJson[@"localTime"] longLongValue];
     msg.timestamp = [aJson[@"serverTime"] longLongValue];
@@ -566,8 +567,8 @@
     NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
     ret[@"content"] = self.text;
     ret[@"targetLanguages"] = self.targetLanguages;
-    NSMutableDictionary* kv = [NSMutableDictionary dictionary];
-    for (NSString* key in self.translations.allKeys) {
+    NSMutableDictionary *kv = [NSMutableDictionary dictionary];
+    for (NSString *key in self.translations.allKeys) {
         [kv setValue:[self.translations valueForKey:key] forKey:key];
     }
     if (kv != nil) {
@@ -913,8 +914,7 @@
     data[@"isChatRoomOwnerLeaveAllowed"] = @(self.canChatroomOwnerLeave);
     data[@"serverTransfer"] = @(self.isAutoTransferMessageAttachments);
     data[@"usingHttpsOnly"] = @(self.usingHttpsOnly);
-    data[@"pushConfig"] =
-        @{@"pushConfig" : @{@"deviceId" : self.apnsCertName}};
+    data[@"pushConfig"] = @{@"pushConfig" : @{@"deviceId" : self.apnsCertName}};
     data[@"enableDNSConfig"] = @(self.enableDnsConfig);
     data[@"imPort"] = @(self.chatPort);
     data[@"imServer"] = self.chatServer;
@@ -951,8 +951,8 @@
     options.chatServer = aJson[@"imServer"];
     options.restServer = aJson[@"restServer"];
     options.dnsURL = aJson[@"dnsURL"];
-    
-    NSDictionary* pushConfig = aJson[@"pushConfig"];
+
+    NSDictionary *pushConfig = aJson[@"pushConfig"];
     if (pushConfig != nil) {
         options.apnsCertName = pushConfig[@"deviceId"];
     }
@@ -1127,24 +1127,113 @@
 - (int)getIntOperation {
     int ret = 0;
     switch (self.type) {
-        case EMThreadOperationUnknown:
-            ret = 0;
-            break;
-        case EMThreadOperationCreate:
-            ret = 1;
-            break;
-        case EMThreadOperationUpdate:
-            ret = 2;
-            break;
-        case EMThreadOperationDelete:
-            ret = 3;
-            break;
-        case EMThreadOperationUpdate_msg:
-            ret = 4;
-            break;
+    case EMThreadOperationUnknown:
+        ret = 0;
+        break;
+    case EMThreadOperationCreate:
+        ret = 1;
+        break;
+    case EMThreadOperationUpdate:
+        ret = 2;
+        break;
+    case EMThreadOperationDelete:
+        ret = 3;
+        break;
+    case EMThreadOperationUpdate_msg:
+        ret = 4;
+        break;
     }
-    
+
     return ret;
+}
+
+@end
+
+@implementation EMSilentModeParam (Json)
+
++ (EMSilentModeParam *)formJsonObject:(NSDictionary *)dict {
+    EMSilentModeParamType paramType =
+        [self paramTypeFromInt:[dict[@"paramType"] intValue]];
+    EMSilentModeParam *param =
+        [[EMSilentModeParam alloc] initWithParamType:paramType];
+    NSDictionary *dictStartTime = dict[@"startTime"];
+    NSDictionary *dictEndTime = dict[@"endTime"];
+    int duration = [dict[@"duration"] intValue];
+
+    EMPushRemindType remindType =
+        [self remindTypeFromInt:[dict[@"remindType"] intValue]];
+
+    param.remindType = remindType;
+    param.silentModeStartTime = [EMSilentModeTime formJsonObject:dictStartTime];
+    param.silentModeEndTime = [EMSilentModeTime formJsonObject:dictEndTime];
+    param.silentModeDuration = duration;
+    return param;
+}
++ (EMSilentModeParamType)paramTypeFromInt:(int)iParamType {
+    EMSilentModeParamType ret = EMSilentModeParamTypeRemindType;
+    if (iParamType == 0) {
+        ret = EMSilentModeParamTypeRemindType;
+    } else if (iParamType == 1) {
+        ret = EMSilentModeParamTypeDuration;
+    } else if (iParamType == 2) {
+        ret = EMSilentModeParamTypeInterval;
+    }
+    return ret;
+}
++ (EMPushRemindType)remindTypeFromInt:(int)iRemindTime {
+    EMPushRemindType ret = EMPushRemindTypeAll;
+    if (iRemindTime == 0) {
+        ret = EMPushRemindTypeAll;
+    } else if (iRemindTime == 1) {
+        ret = EMPushRemindTypeMentionOnly;
+    } else if (iRemindTime == 2) {
+        ret = EMPushRemindTypeNone;
+    }
+    return ret;
+}
++ (int)remindTypeToInt:(EMPushRemindType)type {
+    int ret = 0;
+    switch (type) {
+    case EMPushRemindTypeAll:
+        ret = 0;
+        break;
+    case EMPushRemindTypeMentionOnly:
+        ret = 1;
+        break;
+    case EMPushRemindTypeNone:
+        ret = 2;
+        break;
+    }
+    return ret;
+}
+
+@end
+
+@implementation EMSilentModeResult (Json)
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+    ret[@"expireTimestamp"] = @(self.expireTimestamp);
+    ret[@"startTime"] = [self.silentModeStartTime toJsonObject];
+    ret[@"endTime"] = [self.silentModeEndTime toJsonObject];
+    ret[@"remindType"] = @([EMSilentModeParam remindTypeToInt:self.remindType]);
+    ret[@"conversationId"] = self.conversationID;
+    ret[@"conversationType"] =
+        @([EMConversation typeToInt:self.conversationType]);
+    return ret;
+}
+
+@end
+
+@implementation EMSilentModeTime (Json)
+
++ (EMSilentModeTime *)formJsonObject:(NSDictionary *)dict {
+    int hour = [dict[@"hour"] intValue];
+    int minute = [dict[@"minute"] intValue];
+    return [[EMSilentModeTime alloc] initWithHours:hour minutes:minute];
+}
+- (NSDictionary *)toJsonObject {
+    return @{@"hour" : @(self.hours), @"minute" : @(self.minutes)};
 }
 
 @end
