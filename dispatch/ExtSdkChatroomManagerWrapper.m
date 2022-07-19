@@ -683,9 +683,9 @@
 - (void)chatroomWhiteListDidUpdate:(EMChatroom *)aChatroom
              addedWhiteListMembers:(NSArray *)aMembers {
     NSDictionary *map = @{
-        @"type" : @"onWhiteListAdded",
+        @"type" : @"onAllowListAdded",
         @"roomId" : aChatroom.chatroomId,
-        @"whitelist" : aMembers
+        @"members" : aMembers
     };
     [self onReceive:ExtSdkMethodKeyChatroomChanged withParams:map];
 }
@@ -693,9 +693,9 @@
 - (void)chatroomWhiteListDidUpdate:(EMChatroom *)aChatroom
            removedWhiteListMembers:(NSArray *)aMembers {
     NSDictionary *map = @{
-        @"type" : @"onWhiteListRemoved",
+        @"type" : @"onAllowListRemoved",
         @"roomId" : aChatroom.chatroomId,
-        @"whitelist" : aMembers
+        @"members" : aMembers
     };
     [self onReceive:ExtSdkMethodKeyChatroomChanged withParams:map];
 }

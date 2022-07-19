@@ -897,9 +897,9 @@
 - (void)groupWhiteListDidUpdate:(EMGroup *)aGroup
           addedWhiteListMembers:(NSArray *)aMembers {
     NSDictionary *map = @{
-        @"type" : @"onWhiteListAdded",
+        @"type" : @"onAllowListAdded",
         @"groupId" : aGroup.groupId,
-        @"whitelist" : aMembers
+        @"members" : aMembers
     };
     [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
 }
@@ -907,9 +907,9 @@
 - (void)groupWhiteListDidUpdate:(EMGroup *)aGroup
         removedWhiteListMembers:(NSArray *)aMembers {
     NSDictionary *map = @{
-        @"type" : @"onWhiteListRemoved",
+        @"type" : @"onAllowListRemoved",
         @"groupId" : aGroup.groupId,
-        @"whitelist" : aMembers
+        @"members" : aMembers
     };
     [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
 }

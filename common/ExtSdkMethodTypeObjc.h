@@ -160,10 +160,10 @@ static NSString *_Nonnull const ExtSdkMethodKeyFetchChatroomBlockListFromServer 
 static NSString *_Nonnull const ExtSdkMethodKeyUpdateChatRoomAnnouncement = @"updateChatRoomAnnouncement";
 static NSString *_Nonnull const ExtSdkMethodKeyFetchChatroomAnnouncement = @"fetchChatRoomAnnouncement";
 
-static NSString *_Nonnull const ExtSdkMethodKeyAddMembersToChatRoomWhiteList = @"addMembersToChatRoomWhiteList";
-static NSString *_Nonnull const ExtSdkMethodKeyRemoveMembersFromChatRoomWhiteList = @"removeMembersFromChatRoomWhiteList";
-static NSString *_Nonnull const ExtSdkMethodKeyFetchChatRoomWhiteListFromServer = @"fetchChatRoomWhiteListFromServer";
-static NSString *_Nonnull const ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServer = @"isMemberInChatRoomWhiteListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyAddMembersToChatRoomWhiteList = @"addMembersToChatRoomAllowList";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveMembersFromChatRoomWhiteList = @"removeMembersFromChatRoomAllowList";
+static NSString *_Nonnull const ExtSdkMethodKeyFetchChatRoomWhiteListFromServer = @"fetchChatRoomAllowListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServer = @"isMemberInChatRoomAllowListFromServer";
 
 static NSString *_Nonnull const ExtSdkMethodKeyMuteAllChatRoomMembers = @"muteAllChatRoomMembers";
 static NSString *_Nonnull const ExtSdkMethodKeyUnMuteAllChatRoomMembers = @"unMuteAllChatRoomMembers";
@@ -182,8 +182,8 @@ static NSString *_Nonnull const ExtSdkMethodKeyGetGroupSpecificationFromServer =
 static NSString *_Nonnull const ExtSdkMethodKeyGetGroupMemberListFromServer = @"getGroupMemberListFromServer";
 static NSString *_Nonnull const ExtSdkMethodKeyGetGroupBlockListFromServer = @"getGroupBlockListFromServer";
 static NSString *_Nonnull const ExtSdkMethodKeyGetGroupMuteListFromServer = @"getGroupMuteListFromServer";
-static NSString *_Nonnull const ExtSdkMethodKeyGetGroupWhiteListFromServer = @"getGroupWhiteListFromServer";
-static NSString *_Nonnull const ExtSdkMethodKeyIsMemberInWhiteListFromServer = @"isMemberInWhiteListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyGetGroupWhiteListFromServer = @"getGroupAllowListFromServer";
+static NSString *_Nonnull const ExtSdkMethodKeyIsMemberInWhiteListFromServer = @"isMemberInAllowListFromServer";
 static NSString *_Nonnull const ExtSdkMethodKeyGetGroupFileListFromServer = @"getGroupFileListFromServer";
 static NSString *_Nonnull const ExtSdkMethodKeyGetGroupAnnouncementFromServer = @"getGroupAnnouncementFromServer";
 static NSString *_Nonnull const ExtSdkMethodKeyAddMembers = @"addMembers";
@@ -204,8 +204,8 @@ static NSString *_Nonnull const ExtSdkMethodKeyMuteMembers = @"muteMembers";
 static NSString *_Nonnull const ExtSdkMethodKeyUnMuteMembers = @"unMuteMembers";
 static NSString *_Nonnull const ExtSdkMethodKeyMuteAllMembers = @"muteAllMembers";
 static NSString *_Nonnull const ExtSdkMethodKeyUnMuteAllMembers = @"unMuteAllMembers";
-static NSString *_Nonnull const ExtSdkMethodKeyAddWhiteList = @"addWhiteList";
-static NSString *_Nonnull const ExtSdkMethodKeyRemoveWhiteList = @"removeWhiteList";
+static NSString *_Nonnull const ExtSdkMethodKeyAddWhiteList = @"addAllowList";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveWhiteList = @"removeAllowList";
 static NSString *_Nonnull const ExtSdkMethodKeyUploadGroupSharedFile = @"uploadGroupSharedFile";
 static NSString *_Nonnull const ExtSdkMethodKeyDownloadGroupSharedFile = @"downloadGroupSharedFile";
 static NSString *_Nonnull const ExtSdkMethodKeyRemoveGroupSharedFile = @"removeGroupSharedFile";
