@@ -141,6 +141,9 @@
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     BOOL unbindToken = [param[@"unbindToken"] boolValue];
+    if (YES == unbindToken && nil == EMClient.sharedClient.options.apnsCertName) {
+        unbindToken = NO;
+    }
     [EMClient.sharedClient logout:unbindToken
                        completion:^(EMError *aError) {
                          [weakSelf onResult:result
