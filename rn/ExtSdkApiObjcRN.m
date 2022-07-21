@@ -400,7 +400,7 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyChatOnChatThreadDestroyed,
         ExtSdkMethodKeyChatOnChatThreadUserRemoved,
     ];
-    NSLog(@"%@: supportedEvents: %@", TAG, ret);
+//    NSLog(@"%@: supportedEvents: %@", TAG, ret);
     return ret;
 }
 
