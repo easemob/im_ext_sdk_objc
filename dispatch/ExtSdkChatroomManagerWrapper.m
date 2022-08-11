@@ -594,19 +594,16 @@
 
 - (void)didDismissFromChatroom:(EMChatroom *)aChatroom
                         reason:(EMChatroomBeKickedReason)aReason {
-    NSString *type;
     NSDictionary *map;
     if (aReason == EMChatroomBeKickedReasonDestroyed) {
-        type = @"onChatRoomDestroyed";
         map = @{
-            @"type" : type,
+            @"type" : @"onChatRoomDestroyed",
             @"roomId" : aChatroom.chatroomId,
             @"roomName" : aChatroom.subject
         };
     } else if (aReason == EMChatroomBeKickedReasonBeRemoved) {
-        type = @"onRemovedFromChatRoom";
         map = @{
-            @"type" : type,
+            @"type" : @"onRemovedFromChatRoom",
             @"roomId" : aChatroom.chatroomId,
             @"roomName" : aChatroom.subject,
             @"participant" : [[EMClient sharedClient] currentUsername]
