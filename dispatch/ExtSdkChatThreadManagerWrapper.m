@@ -278,6 +278,23 @@
     }
 }
 
+- (void)getThreadConversation:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *conId = param[@"convId"];
+    BOOL needCreate = [param[@"createIfNeed"] boolValue];
+    EMConversation *con = [EMClient.sharedClient.chatManager
+         getConversation:conId
+                    type:EMConversationTypeGroupChat
+        createIfNotExist:needCreate
+                isThread:YES];
+    [weakSelf onResult:result
+        withMethodType:aChannelName
+             withError:nil
+            withParams:[con toJsonObject]];
+}
+
 #pragma mark - EMThreadManagerDelegate
 
 - (void)onChatThreadCreate:(EMChatThreadEvent *)event {

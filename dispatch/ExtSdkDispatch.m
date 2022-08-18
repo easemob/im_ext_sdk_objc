@@ -776,32 +776,44 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkChatThreadManagerWrapper getInstance] getChatThread:ps withMethodType:methodType result:callback];
         break;
 
-    case ChatReportPushActionValue:
+    case ExtSdkReportPushActionValue:
         [[ExtSdkPushManagerWrapper getInstance] reportPushAction:ps withMethodType:methodType result:callback];
         break;
-    case ChatSetConversationSilentModeValue:
+    case ExtSdkSetConversationSilentModeValue:
         [[ExtSdkPushManagerWrapper getInstance] setConversationSilentMode:ps withMethodType:methodType result:callback];
         break;
-    case ChatRemoveConversationSilentModeValue:
+    case ExtSdkRemoveConversationSilentModeValue:
         [[ExtSdkPushManagerWrapper getInstance] removeConversationSilentMode:ps withMethodType:methodType result:callback];
         break;
-    case ChatFetchConversationSilentModeValue:
+    case ExtSdkFetchConversationSilentModeValue:
         [[ExtSdkPushManagerWrapper getInstance] fetchConversationSilentMode:ps withMethodType:methodType result:callback];
         break;
-    case ChatSetSilentModeForAllValue:
+    case ExtSdkSetSilentModeForAllValue:
         [[ExtSdkPushManagerWrapper getInstance] setSilentModeForAll:ps withMethodType:methodType result:callback];
         break;
-    case ChatFetchSilentModeForAllValue:
+    case ExtSdkFetchSilentModeForAllValue:
         [[ExtSdkPushManagerWrapper getInstance] fetchSilentModeForAll:ps withMethodType:methodType result:callback];
         break;
-    case ChatFetchSilentModeForConversationsValue:
+    case ExtSdkFetchSilentModeForConversationsValue:
         [[ExtSdkPushManagerWrapper getInstance] fetchSilentModeForConversations:ps withMethodType:methodType result:callback];
         break;
-    case ChatSetPreferredNotificationLanguageValue:
+    case ExtSdkSetPreferredNotificationLanguageValue:
         [[ExtSdkPushManagerWrapper getInstance] setPreferredNotificationLanguage:ps withMethodType:methodType result:callback];
         break;
-    case ChatFetchPreferredNotificationLanguageValue:
+    case ExtSdkFetchPreferredNotificationLanguageValue:
         [[ExtSdkPushManagerWrapper getInstance] fetchPreferredNotificationLanguage:ps withMethodType:methodType result:callback];
+        break;
+
+    case ExtSdkMethodKeydeleteRemoteConversationValue:
+        [[ExtSdkChatManagerWrapper getInstance] deleteRemoteConversation:ps withMethodType:methodType result:callback];
+        break;
+
+    case ExtSdkMethodKeyDeleteMessagesBeforeTimestampValue:
+        [[ExtSdkChatManagerWrapper getInstance] deleteMessagesBeforeTimestamp:ps withMethodType:methodType result:callback];
+        break;
+
+    case ExtSdkMethodKeyChatGetThreadConversationValue:
+        [[ExtSdkChatThreadManagerWrapper getInstance] getThreadConversation:ps withMethodType:methodType result:callback];
         break;
 
     default:

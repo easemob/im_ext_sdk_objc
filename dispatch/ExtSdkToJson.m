@@ -50,6 +50,7 @@
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
     ret[@"convId"] = self.conversationId;
     ret[@"convType"] = @([self.class typeToInt:self.type]);
+    ret[@"isChatThread"] = @(self.isChatThread);
     ret[@"ext"] = self.ext;
     return ret;
 }

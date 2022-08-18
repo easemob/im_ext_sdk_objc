@@ -612,7 +612,7 @@
                        result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.chatManager
-        fetchSupportedLangurages:^(
+        fetchSupportedLanguages:^(
             NSArray<EMTranslateLanguage *> *_Nullable languages,
             EMError *_Nullable error) {
           [weakSelf onResult:result
@@ -735,6 +735,21 @@
                             withError:error
                            withParams:nil];
                  }];
+}
+
+- (void)deleteMessagesBeforeTimestamp:(NSDictionary *)param
+                       withMethodType:(NSString *)aChannelName
+                               result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSUInteger timestamp = [param[@"timestamp"] unsignedIntValue];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager
+        deleteMessagesBefore:timestamp
+                  completion:^(EMError *error) {
+                    [weakSelf onResult:result
+                        withMethodType:aChannelName
+                             withError:error
+                            withParams:nil];
+                  }];
 }
 
 #pragma mark - EMChatManagerDelegate

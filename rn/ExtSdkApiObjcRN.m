@@ -190,6 +190,8 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeySearchChatMsgFromDB,
         ExtSdkMethodKeyGetMessage,
         ExtSdkMethodKeyAsyncFetchGroupAcks,
+        ExtSdkMethodKeydeleteRemoteConversation,
+        ExtSdkMethodKeyDeleteMessagesBeforeTimestamp,
 
         ExtSdkMethodKeyTranslateMessage,
         ExtSdkMethodKeyFetchSupportedLanguages,
@@ -355,15 +357,15 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyGetNoPushUsers,
         ExtSdkMethodKeyUpdatePushConfig,
 
-        ChatReportPushAction,
-        ChatSetConversationSilentMode,
-        ChatRemoveConversationSilentMode,
-        ChatFetchConversationSilentMode,
-        ChatSetSilentModeForAll,
-        ChatFetchSilentModeForAll,
-        ChatFetchSilentModeForConversations,
-        ChatSetPreferredNotificationLanguage,
-        ChatFetchPreferredNotificationLanguage,
+        ExtSdkReportPushAction,
+        ExtSdkSetConversationSilentMode,
+        ExtSdkRemoveConversationSilentMode,
+        ExtSdkFetchConversationSilentMode,
+        ExtSdkSetSilentModeForAll,
+        ExtSdkFetchSilentModeForAll,
+        ExtSdkFetchSilentModeForConversations,
+        ExtSdkSetPreferredNotificationLanguage,
+        ExtSdkFetchPreferredNotificationLanguage,
 
         /// EMUserInfoManagerWrapper
         ExtSdkMethodKeyUpdateOwnUserInfo,
@@ -393,6 +395,7 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyChatLeaveChatThread,
         ExtSdkMethodKeyChatDestroyChatThread,
         ExtSdkMethodKeyChatGetMessageThread,
+        ExtSdkMethodKeyChatGetThreadConversation,
 
         /// EMThreadManagerDelegate
         ExtSdkMethodKeyChatOnChatThreadCreated,

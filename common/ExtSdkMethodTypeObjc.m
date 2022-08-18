@@ -91,6 +91,7 @@
           ExtSdkMethodKeyGetMessage : @(ExtSdkMethodKeyGetMessageValue),
           ExtSdkMethodKeyAsyncFetchGroupAcks : @(ExtSdkMethodKeyAsyncFetchGroupAcksValue),
           ExtSdkMethodKeydeleteRemoteConversation : @(ExtSdkMethodKeydeleteRemoteConversationValue),
+          ExtSdkMethodKeyDeleteMessagesBeforeTimestamp : @(ExtSdkMethodKeyDeleteMessagesBeforeTimestampValue),
 
           ExtSdkMethodKeyTranslateMessage : @(ExtSdkMethodKeyTranslateMessageValue),
           ExtSdkMethodKeyFetchSupportedLanguages : @(ExtSdkMethodKeyFetchSupportedLanguagesValue),
@@ -253,15 +254,15 @@
           ExtSdkMethodKeyGetNoPushUsers : @(ExtSdkMethodKeyGetNoPushUsersValue),
           ExtSdkMethodKeyUpdatePushConfig : @(ExtSdkMethodKeyUpdatePushConfigValue),
 
-          ChatReportPushAction : @(ChatReportPushActionValue),
-          ChatSetConversationSilentMode : @(ChatSetConversationSilentModeValue),
-          ChatRemoveConversationSilentMode : @(ChatRemoveConversationSilentModeValue),
-          ChatFetchConversationSilentMode : @(ChatFetchConversationSilentModeValue),
-          ChatSetSilentModeForAll : @(ChatSetSilentModeForAllValue),
-          ChatFetchSilentModeForAll : @(ChatFetchSilentModeForAllValue),
-          ChatFetchSilentModeForConversations : @(ChatFetchSilentModeForConversationsValue),
-          ChatSetPreferredNotificationLanguage : @(ChatSetPreferredNotificationLanguageValue),
-          ChatFetchPreferredNotificationLanguage : @(ChatFetchPreferredNotificationLanguageValue),
+          ExtSdkReportPushAction : @(ExtSdkReportPushActionValue),
+          ExtSdkSetConversationSilentMode : @(ExtSdkSetConversationSilentModeValue),
+          ExtSdkRemoveConversationSilentMode : @(ExtSdkRemoveConversationSilentModeValue),
+          ExtSdkFetchConversationSilentMode : @(ExtSdkFetchConversationSilentModeValue),
+          ExtSdkSetSilentModeForAll : @(ExtSdkSetSilentModeForAllValue),
+          ExtSdkFetchSilentModeForAll : @(ExtSdkFetchSilentModeForAllValue),
+          ExtSdkFetchSilentModeForConversations : @(ExtSdkFetchSilentModeForConversationsValue),
+          ExtSdkSetPreferredNotificationLanguage : @(ExtSdkSetPreferredNotificationLanguageValue),
+          ExtSdkFetchPreferredNotificationLanguage : @(ExtSdkFetchPreferredNotificationLanguageValue),
 
           /// EMUserInfoManagerWrapper
           ExtSdkMethodKeyUpdateOwnUserInfo : @(ExtSdkMethodKeyUpdateOwnUserInfoValue),
@@ -291,6 +292,7 @@
           ExtSdkMethodKeyChatLeaveChatThread : @(ExtSdkMethodKeyChatLeaveChatThreadValue),
           ExtSdkMethodKeyChatDestroyChatThread : @(ExtSdkMethodKeyChatDestroyChatThreadValue),
           ExtSdkMethodKeyChatGetMessageThread : @(ExtSdkMethodKeyChatGetMessageThreadValue),
+          ExtSdkMethodKeyChatGetThreadConversation : @(ExtSdkMethodKeyChatGetThreadConversationValue),
 
           /// EMThreadManagerDelegate
           ExtSdkMethodKeyChatOnChatThreadCreated : @(ExtSdkMethodKeyChatOnChatThreadCreatedValue),

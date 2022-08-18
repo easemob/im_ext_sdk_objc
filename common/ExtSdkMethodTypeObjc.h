@@ -77,6 +77,7 @@ static NSString *_Nonnull const ExtSdkMethodKeySearchChatMsgFromDB = @"searchCha
 static NSString *_Nonnull const ExtSdkMethodKeyGetMessage = @"getMessage";
 static NSString *_Nonnull const ExtSdkMethodKeyAsyncFetchGroupAcks = @"asyncFetchGroupAcks";
 static NSString *_Nonnull const ExtSdkMethodKeydeleteRemoteConversation = @"deleteRemoteConversation";
+static NSString *_Nonnull const ExtSdkMethodKeyDeleteMessagesBeforeTimestamp = @"deleteMessagesBeforeTimestamp";
 
 static NSString *_Nonnull const ExtSdkMethodKeyTranslateMessage = @"translateMessage";
 static NSString *_Nonnull const ExtSdkMethodKeyFetchSupportedLanguages = @"fetchSupportLanguages";
@@ -241,15 +242,15 @@ static NSString *_Nonnull const ExtSdkMethodKeyGetNoPushUsers = @"getNoPushUsers
 
 static NSString *_Nonnull const ExtSdkMethodKeyUpdatePushConfig = @"updatePushConfig";
 
-static NSString *_Nonnull const ChatReportPushAction = @"reportPushAction";
-static NSString *_Nonnull const ChatSetConversationSilentMode = @"setConversationSilentMode";
-static NSString *_Nonnull const ChatRemoveConversationSilentMode = @"removeConversationSilentMode";
-static NSString *_Nonnull const ChatFetchConversationSilentMode = @"fetchConversationSilentMode";
-static NSString *_Nonnull const ChatSetSilentModeForAll = @"setSilentModeForAll";
-static NSString *_Nonnull const ChatFetchSilentModeForAll = @"fetchSilentModeForAll";
-static NSString *_Nonnull const ChatFetchSilentModeForConversations = @"fetchSilentModeForConversations";
-static NSString *_Nonnull const ChatSetPreferredNotificationLanguage = @"setPreferredNotificationLanguage";
-static NSString *_Nonnull const ChatFetchPreferredNotificationLanguage = @"fetchPreferredNotificationLanguage";
+static NSString *_Nonnull const ExtSdkReportPushAction = @"reportPushAction";
+static NSString *_Nonnull const ExtSdkSetConversationSilentMode = @"setConversationSilentMode";
+static NSString *_Nonnull const ExtSdkRemoveConversationSilentMode = @"removeConversationSilentMode";
+static NSString *_Nonnull const ExtSdkFetchConversationSilentMode = @"fetchConversationSilentMode";
+static NSString *_Nonnull const ExtSdkSetSilentModeForAll = @"setSilentModeForAll";
+static NSString *_Nonnull const ExtSdkFetchSilentModeForAll = @"fetchSilentModeForAll";
+static NSString *_Nonnull const ExtSdkFetchSilentModeForConversations = @"fetchSilentModeForConversations";
+static NSString *_Nonnull const ExtSdkSetPreferredNotificationLanguage = @"setPreferredNotificationLanguage";
+static NSString *_Nonnull const ExtSdkFetchPreferredNotificationLanguage = @"fetchPreferredNotificationLanguage";
 
 #pragma mark - EMUserInfoManagerWrapper
 static NSString *_Nonnull const ExtSdkMethodKeyUpdateOwnUserInfo = @"updateOwnUserInfo";
@@ -282,6 +283,7 @@ static NSString *_Nonnull const ExtSdkMethodKeyChatJoinChatThread = @"joinChatTh
 static NSString *_Nonnull const ExtSdkMethodKeyChatLeaveChatThread = @"leaveChatThread";
 static NSString *_Nonnull const ExtSdkMethodKeyChatDestroyChatThread = @"destroyChatThread";
 static NSString *_Nonnull const ExtSdkMethodKeyChatGetMessageThread = @"getMessageThread";
+static NSString *_Nonnull const ExtSdkMethodKeyChatGetThreadConversation = @"getThreadConversation";
 
 #pragma mark - EMThreadManagerDelegate
 static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadCreated = @"onChatThreadCreated";
@@ -371,6 +373,7 @@ static const int ExtSdkMethodKeySearchChatMsgFromDBValue = 520;
 static const int ExtSdkMethodKeyGetMessageValue = 521;
 static const int ExtSdkMethodKeyAsyncFetchGroupAcksValue = 522;
 static const int ExtSdkMethodKeydeleteRemoteConversationValue = 523;
+static const int ExtSdkMethodKeyDeleteMessagesBeforeTimestampValue = 531;
 
 static const int ExtSdkMethodKeyTranslateMessageValue = 524;
 static const int ExtSdkMethodKeyFetchSupportedLanguagesValue = 525;
@@ -534,15 +537,15 @@ static const int ExtSdkMethodKeyUpdateUserPushServiceValue = 1013;
 static const int ExtSdkMethodKeyGetNoPushUsersValue = 1014;
 static const int ExtSdkMethodKeyUpdatePushConfigValue = 1015;
 
-static const int ChatReportPushActionValue = 1016;
-static const int ChatSetConversationSilentModeValue = 1017;
-static const int ChatRemoveConversationSilentModeValue = 1018;
-static const int ChatFetchConversationSilentModeValue = 1019;
-static const int ChatSetSilentModeForAllValue = 1020;
-static const int ChatFetchSilentModeForAllValue = 1021;
-static const int ChatFetchSilentModeForConversationsValue = 1022;
-static const int ChatSetPreferredNotificationLanguageValue = 1023;
-static const int ChatFetchPreferredNotificationLanguageValue = 1024;
+static const int ExtSdkReportPushActionValue = 1016;
+static const int ExtSdkSetConversationSilentModeValue = 1017;
+static const int ExtSdkRemoveConversationSilentModeValue = 1018;
+static const int ExtSdkFetchConversationSilentModeValue = 1019;
+static const int ExtSdkSetSilentModeForAllValue = 1020;
+static const int ExtSdkFetchSilentModeForAllValue = 1021;
+static const int ExtSdkFetchSilentModeForConversationsValue = 1022;
+static const int ExtSdkSetPreferredNotificationLanguageValue = 1023;
+static const int ExtSdkFetchPreferredNotificationLanguageValue = 1024;
 
 #pragma mark - EMUserInfoManagerWrapper value
 static const int ExtSdkMethodKeyUpdateOwnUserInfoValue = 1100;
@@ -575,6 +578,7 @@ static const int ExtSdkMethodKeyChatJoinChatThreadValue = 1509;
 static const int ExtSdkMethodKeyChatLeaveChatThreadValue = 1510;
 static const int ExtSdkMethodKeyChatDestroyChatThreadValue = 1511;
 static const int ExtSdkMethodKeyChatGetMessageThreadValue = 1513;
+static const int ExtSdkMethodKeyChatGetThreadConversationValue = 1518;
 
 #pragma mark - EMThreadManagerDelegate
 static const int ExtSdkMethodKeyChatOnChatThreadCreatedValue = 1514;
