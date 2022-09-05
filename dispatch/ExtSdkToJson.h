@@ -11,6 +11,12 @@
 #import <HyphenateChat/EMChatThread.h>
 #import <HyphenateChat/EMChatThreadEvent.h>
 #import <HyphenateChat/EMChatroom.h>
+#import <HyphenateChat/EMCircleChannel.h>
+#import <HyphenateChat/EMCircleChannelExt.h>
+#import <HyphenateChat/EMCircleServer.h>
+#import <HyphenateChat/EMCircleServerEvent.h>
+#import <HyphenateChat/EMCircleServerTag.h>
+#import <HyphenateChat/EMCircleUser.h>
 #import <HyphenateChat/EMConversation.h>
 #import <HyphenateChat/EMCursorResult.h>
 #import <HyphenateChat/EMDeviceConfig.h>
@@ -151,6 +157,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EMSilentModeTime (Helper) <ExtSdkToJson>
 + (EMSilentModeTime *)formJsonObject:(NSDictionary *)dict;
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface EMCircleServerTag (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface EMCircleServer (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface EMCircleUser (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
++ (int)userRoleTypeToInt:(EMCircleUserRole)role;
+@end
+
+@interface EMCircleChannel (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
++ (EMCircleChannelType)typeFromInt:(NSUInteger)type;
++ (EMCircleChannelRank)rankFromInt:(NSUInteger)rank;
++ (NSUInteger)typeToInt:(EMCircleChannelType)type;
++ (NSUInteger)rankToInt:(EMCircleChannelRank)rank;
+@end
+
+@interface EMCircleServerEvent (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
+@interface EMCircleChannelExt (Json) <ExtSdkToJson>
 - (NSDictionary *)toJsonObject;
 @end
 

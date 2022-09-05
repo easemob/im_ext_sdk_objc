@@ -14,6 +14,7 @@
 #import "ExtSdkPresenceManagerWrapper.h"
 #import "ExtSdkPushManagerWrapper.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
+#import "ExtSdkCircleManagerWrapper.h"
 
 static NSString *const TAG = @"ExtSdkDispatch";
 @interface ExtSdkDispatch () {
@@ -814,6 +815,154 @@ static NSString *const TAG = @"ExtSdkDispatch";
 
     case ExtSdkMethodKeyChatGetThreadConversationValue:
         [[ExtSdkChatThreadManagerWrapper getInstance] getThreadConversation:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKcreateCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] createCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKdestroyCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] destroyCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKupdateCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] updateCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKjoinCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] joinCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKleaveCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] leaveCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKremoveUserFromCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] removeUserFromCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKinviteUserToCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] inviteUserToCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKacceptCircleServerInvitationValue:
+        [[ExtSdkCircleManagerWrapper getInstance] acceptCircleServerInvitation:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKdeclineCircleServerInvitationValue:
+        [[ExtSdkCircleManagerWrapper getInstance] declineCircleServerInvitation:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKaddTagsToCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] addTagsToCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKremoveTagsFromCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] removeTagsFromCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchCircleServerTagsValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchCircleServerTags:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKaddModeratorToCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] addModeratorToCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKremoveModeratorFromCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] removeModeratorFromCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchSelfCircleServerRoleValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchSelfCircleServerRole:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchJoinedCircleServersValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchJoinedCircleServers:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchCircleServerDetailValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchCircleServerDetail:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchCircleServersWithKeywordValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchCircleServersWithKeyword:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchCircleServerMembersValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchCircleServerMembers:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKcheckSelfInCircleServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] checkSelfInCircleServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKcreateCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] createCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKdestroyCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] destroyCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKupdateCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] updateCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKjoinCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] joinCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKleaveCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] leaveCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKremoveUserFromCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] removeUserFromCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKinviteUserToCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] inviteUserToCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKacceptCircleChannelInvitationValue:
+        [[ExtSdkCircleManagerWrapper getInstance] acceptCircleChannelInvitation:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKdeclineCircleChannelInvitationValue:
+        [[ExtSdkCircleManagerWrapper getInstance] declineCircleChannelInvitation:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKmuteUserInCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] muteUserInCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKunmuteUserInCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] unmuteUserInCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchCircleChannelDetailValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchCircleChannelDetail:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchPublicCircleChannelInServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchPublicCircleChannelInServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchCircleChannelMembersValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchCircleChannelMembers:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchVisiblePrivateCircleChannelInServerValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchVisiblePrivateCircleChannelInServer:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKcheckSelfIsInCircleChannelValue:
+        [[ExtSdkCircleManagerWrapper getInstance] checkSelfIsInCircleChannel:ps withMethodType:methodType result:callback];
+        break;
+
+    case MKfetchCircleChannelMuteUsersValue:
+        [[ExtSdkCircleManagerWrapper getInstance] fetchCircleChannelMuteUsers:ps withMethodType:methodType result:callback];
         break;
 
     default:

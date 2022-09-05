@@ -1238,3 +1238,178 @@
 }
 
 @end
+
+@implementation EMCircleServerTag (Json)
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+    ret[@"tagId"] = self.tagId;
+    ret[@"tagName"] = self.name;
+    return ret;
+}
+
+@end
+
+@implementation EMCircleServer (Json)
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+    ret[@"serverId"] = self.serverId;
+    ret[@"serverName"] = self.name;
+    ret[@"serverIcon"] = self.icon;
+    ret[@"serverDescription"] = self.desc;
+    ret[@"serverExtension"] = self.ext;
+    ret[@"serverOwner"] = self.owner;
+    ret[@"defaultChannelId"] = self.defaultChannelId;
+    NSMutableArray *tags = [NSMutableArray array];
+    for (EMCircleServerTag *item in self.tags) {
+        [tags addObject:[item toJsonObject]];
+    }
+    ret[@"serverTags"] = tags;
+    return ret;
+}
+
+@end
+
+@implementation EMCircleUser (Json)
+
++ (int)userRoleTypeToInt:(EMCircleUserRole)role {
+    int ret = 0;
+    switch (role) {
+    case EMCircleUserRoleOwner:
+        ret = 0;
+        break;
+    case EMCircleUserRoleModerator:
+        ret = 1;
+        break;
+    case EMCircleUserRoleUser:
+        ret = 2;
+        break;
+    default:
+        break;
+    }
+    return ret;
+}
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+    ret[@"userId"] = self.userId;
+    ret[@"userRole"] = @([EMCircleUser userRoleTypeToInt:self.role]);
+    return ret;
+}
+
+@end
+
+@implementation EMCircleChannel (Json)
+
++ (EMCircleChannelType)typeFromInt:(NSUInteger)type {
+    EMCircleChannelType ret = EMCircleChannelPublic;
+    switch (type) {
+    case 0:
+        ret = EMCircleChannelPublic;
+        break;
+    case 1:
+        ret = EMCircleChannelPrivate;
+        break;
+    default:
+        break;
+    }
+    return ret;
+}
+
++ (EMCircleChannelRank)rankFromInt:(NSUInteger)rank {
+    EMCircleChannelRank ret = EMCircleChannelRank2000;
+    switch (rank) {
+    case 0:
+        ret = EMCircleChannelRank2000;
+        break;
+    case 1:
+        ret = EMCircleChannelRank20000;
+        break;
+    case 2:
+        ret = EMCircleChannelRank100000;
+        break;
+    default:
+        break;
+    }
+    return ret;
+}
+
++ (NSUInteger)typeToInt:(EMCircleChannelType)type {
+    NSUInteger ret = 0;
+    switch (type) {
+    case EMCircleChannelPublic:
+        ret = 0;
+        break;
+    case EMCircleChannelPrivate:
+        ret = 1;
+        break;
+    default:
+        break;
+    }
+    return ret;
+}
++ (NSUInteger)rankToInt:(EMCircleChannelRank)rank {
+    NSUInteger ret = 0;
+    switch (rank) {
+    case EMCircleChannelRank2000:
+        ret = 0;
+        break;
+    case EMCircleChannelRank20000:
+        ret = 1;
+        break;
+    case EMCircleChannelRank100000:
+        ret = 2;
+        break;
+    default:
+        break;
+    }
+    return ret;
+}
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+    ret[@"serverId"] = self.serverId;
+    ret[@"channelId"] = self.channelId;
+    ret[@"channelName"] = self.name;
+    ret[@"channelDescription"] = self.desc;
+    ret[@"channelExtension"] = self.ext;
+    ret[@"isDefaultChannel"] = @(self.isDefault);
+    ret[@"channelType"] = @([EMCircleChannel typeToInt:self.type]);
+    ret[@"channelRank"] = @([EMCircleChannel rankToInt:self.rank]);
+    return ret;
+}
+
+@end
+
+@implementation EMCircleServerEvent (Json)
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+    ret[@"serverId"] = self.serverId;
+    ret[@"serverName"] = self.serverName;
+    ret[@"serverDescription"] = self.serverDesc;
+    ret[@"serverCustom"] = self.serverCustom;
+    ret[@"serverIconUrl"] = self.serverIconUrl;
+    ret[@"eventSenderId"] = self.from;
+    ret[@"eventReceiveIds"] = self.tos;
+    ret[@"timestamp"] = @(self.ts);
+    return ret;
+}
+
+@end
+
+@implementation EMCircleChannelExt (Json)
+
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
+    ret[@"serverId"] = self.serverId;
+    ret[@"serverName"] = self.serverName;
+    ret[@"serverIcon"] = self.serverIcon;
+    ret[@"channelId"] = self.channelId;
+    ret[@"channelName"] = self.channelName;
+    ret[@"channelDescription"] = self.channelDesc;
+    return ret;
+}
+
+@end

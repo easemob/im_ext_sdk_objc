@@ -258,7 +258,7 @@ static NSString *_Nonnull const ExtSdkMethodKeyUpdateOwnUserInfoWithType = @"upd
 static NSString *_Nonnull const ExtSdkMethodKeyFetchUserInfoById = @"fetchUserInfoById";
 static NSString *_Nonnull const ExtSdkMethodKeyFetchUserInfoByIdWithType = @"fetchUserInfoByIdWithType";
 
-#pragma make - EMPresenceManagerWrapper
+#pragma mark - EMPresenceManagerWrapper
 static NSString *_Nonnull const ExtSdkMethodKeyPublishPresenceWithDescription = @"publishPresenceWithDescription";
 static NSString *_Nonnull const ExtSdkMethodKeyPresenceSubscribe = @"presenceSubscribe";
 static NSString *_Nonnull const ExtSdkMethodKeyPresenceUnsubscribe = @"presenceUnsubscribe";
@@ -292,6 +292,67 @@ static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadDestroyed = @"onC
 static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadUserRemoved = @"onChatThreadUserRemoved";
 
 // TODO: EMChatThreadManagerListener
+
+#pragma mark - CircleManager
+static NSString *_Nonnull const MKcreateCircleServer = @"createCircleServer";
+static NSString *_Nonnull const MKdestroyCircleServer = @"destroyCircleServer";
+static NSString *_Nonnull const MKupdateCircleServer = @"updateCircleServer";
+static NSString *_Nonnull const MKjoinCircleServer = @"joinCircleServer";
+static NSString *_Nonnull const MKleaveCircleServer = @"leaveCircleServer";
+static NSString *_Nonnull const MKremoveUserFromCircleServer = @"removeUserFromCircleServer";
+static NSString *_Nonnull const MKinviteUserToCircleServer = @"inviteUserToCircleServer";
+static NSString *_Nonnull const MKacceptCircleServerInvitation = @"acceptCircleServerInvitation";
+static NSString *_Nonnull const MKdeclineCircleServerInvitation = @"declineCircleServerInvitation";
+static NSString *_Nonnull const MKaddTagsToCircleServer = @"addTagsToCircleServer";
+static NSString *_Nonnull const MKremoveTagsFromCircleServer = @"removeTagsFromCircleServer";
+static NSString *_Nonnull const MKfetchCircleServerTags = @"fetchCircleServerTags";
+static NSString *_Nonnull const MKaddModeratorToCircleServer = @"addModeratorToCircleServer";
+static NSString *_Nonnull const MKremoveModeratorFromCircleServer = @"removeModeratorFromCircleServer";
+static NSString *_Nonnull const MKfetchSelfCircleServerRole = @"fetchSelfCircleServerRole";
+static NSString *_Nonnull const MKfetchJoinedCircleServers = @"fetchJoinedCircleServers";
+static NSString *_Nonnull const MKfetchCircleServerDetail = @"fetchCircleServerDetail";
+static NSString *_Nonnull const MKfetchCircleServersWithKeyword = @"fetchCircleServersWithKeyword";
+static NSString *_Nonnull const MKfetchCircleServerMembers = @"fetchCircleServerMembers";
+static NSString *_Nonnull const MKcheckSelfInCircleServer = @"checkSelfInCircleServer";
+static NSString *_Nonnull const MKcreateCircleChannel = @"createCircleChannel";
+static NSString *_Nonnull const MKdestroyCircleChannel = @"destroyCircleChannel";
+static NSString *_Nonnull const MKupdateCircleChannel = @"updateCircleChannel";
+static NSString *_Nonnull const MKjoinCircleChannel = @"joinCircleChannel";
+static NSString *_Nonnull const MKleaveCircleChannel = @"leaveCircleChannel";
+static NSString *_Nonnull const MKremoveUserFromCircleChannel = @"removeUserFromCircleChannel";
+static NSString *_Nonnull const MKinviteUserToCircleChannel = @"inviteUserToCircleChannel";
+static NSString *_Nonnull const MKacceptCircleChannelInvitation = @"acceptCircleChannelInvitation";
+static NSString *_Nonnull const MKdeclineCircleChannelInvitation = @"declineCircleChannelInvitation";
+static NSString *_Nonnull const MKmuteUserInCircleChannel = @"muteUserInCircleChannel";
+static NSString *_Nonnull const MKunmuteUserInCircleChannel = @"unmuteUserInCircleChannel";
+static NSString *_Nonnull const MKfetchCircleChannelDetail = @"fetchCircleChannelDetail";
+static NSString *_Nonnull const MKfetchPublicCircleChannelInServer = @"fetchPublicCircleChannelInServer";
+static NSString *_Nonnull const MKfetchCircleChannelMembers = @"fetchCircleChannelMembers";
+static NSString *_Nonnull const MKfetchVisiblePrivateCircleChannelInServer = @"fetchVisiblePrivateCircleChannelInServer";
+static NSString *_Nonnull const MKcheckSelfIsInCircleChannel = @"checkSelfIsInCircleChannel";
+static NSString *_Nonnull const MKfetchCircleChannelMuteUsers = @"fetchCircleChannelMuteUsers";
+
+#pragma mark - CircleManager listener
+static NSString *_Nonnull const MKonCircleServerDestroyed = @"onCircleServerDestroyed";
+static NSString *_Nonnull const MKonCircleServerUpdated = @"onCircleServerUpdated";
+static NSString *_Nonnull const MKonMemberJoinedCircleServer = @"onMemberJoinedCircleServer";
+static NSString *_Nonnull const MKonMemberLeftCircleServer = @"onMemberLeftCircleServer";
+static NSString *_Nonnull const MKonMemberRemovedFromCircleServer = @"onMemberRemovedFromCircleServer";
+static NSString *_Nonnull const MKonReceiveInvitationFromCircleServer = @"onReceiveInvitationFromCircleServer";
+static NSString *_Nonnull const MKonInvitationBeAcceptedFromCircleServer = @"onInvitationBeAcceptedFromCircleServer";
+static NSString *_Nonnull const MKonInvitationBeDeclinedFromCircleServer = @"onInvitationBeDeclinedFromCircleServer";
+static NSString *_Nonnull const MKonRoleAssignedFromCircleServer = @"onRoleAssignedFromCircleServer";
+
+static NSString *_Nonnull const MKonCircleChannelCreated = @"onCircleChannelCreated";
+static NSString *_Nonnull const MKonCircleChannelDestroyed = @"onCircleChannelDestroyed";
+static NSString *_Nonnull const MKonCircleChannelUpdated = @"onCircleChannelUpdated";
+static NSString *_Nonnull const MKonMemberJoinedCircleChannel = @"onMemberJoinedCircleChannel";
+static NSString *_Nonnull const MKonReceiveInvitationFromCircleChannel = @"onReceiveInvitationFromCircleChannel";
+static NSString *_Nonnull const MKonInvitationBeAcceptedFromCircleChannel = @"onInvitationBeAcceptedFromCircleChannel";
+static NSString *_Nonnull const MKonInvitationBeDeclinedFromCircleChannel = @"onInvitationBeDeclinedFromCircleChannel";
+static NSString *_Nonnull const MKonMemberRemovedFromCircleChannel = @"onMemberRemovedFromCircleChannel";
+static NSString *_Nonnull const MKonMemberLeftCircleChannel = @"onMemberLeftCircleChannel";
+static NSString *_Nonnull const MKonMemberMuteChangedInCircleChannel = @"onMemberMuteChangedInCircleChannel";
 
 // ############################################################################
 // value start
@@ -586,7 +647,66 @@ static const int ExtSdkMethodKeyChatOnChatThreadUpdatedValue = 1515;
 static const int ExtSdkMethodKeyChatOnChatThreadDestroyedValue = 1516;
 static const int ExtSdkMethodKeyChatOnChatThreadUserRemovedValue = 1517;
 
-// TODO: EMChatThreadManagerListener
+#pragma mark - CircleManager
+static const int MKcreateCircleServerValue = 1600;
+static const int MKdestroyCircleServerValue = 1601;
+static const int MKupdateCircleServerValue = 1602;
+static const int MKjoinCircleServerValue = 1603;
+static const int MKleaveCircleServerValue = 1604;
+static const int MKremoveUserFromCircleServerValue = 1605;
+static const int MKinviteUserToCircleServerValue = 1606;
+static const int MKacceptCircleServerInvitationValue = 1607;
+static const int MKdeclineCircleServerInvitationValue = 1608;
+static const int MKaddTagsToCircleServerValue = 1609;
+static const int MKremoveTagsFromCircleServerValue = 1610;
+static const int MKfetchCircleServerTagsValue = 1611;
+static const int MKaddModeratorToCircleServerValue = 1612;
+static const int MKremoveModeratorFromCircleServerValue = 1613;
+static const int MKfetchSelfCircleServerRoleValue = 1614;
+static const int MKfetchJoinedCircleServersValue = 1615;
+static const int MKfetchCircleServerDetailValue = 1616;
+static const int MKfetchCircleServersWithKeywordValue = 1617;
+static const int MKfetchCircleServerMembersValue = 1618;
+static const int MKcheckSelfInCircleServerValue = 1619;
+static const int MKcreateCircleChannelValue = 1620;
+static const int MKdestroyCircleChannelValue = 1621;
+static const int MKupdateCircleChannelValue = 1622;
+static const int MKjoinCircleChannelValue = 1623;
+static const int MKleaveCircleChannelValue = 1624;
+static const int MKremoveUserFromCircleChannelValue = 1625;
+static const int MKinviteUserToCircleChannelValue = 1626;
+static const int MKacceptCircleChannelInvitationValue = 1627;
+static const int MKdeclineCircleChannelInvitationValue = 1628;
+static const int MKmuteUserInCircleChannelValue = 1629;
+static const int MKunmuteUserInCircleChannelValue = 1630;
+static const int MKfetchCircleChannelDetailValue = 1631;
+static const int MKfetchPublicCircleChannelInServerValue = 1632;
+static const int MKfetchCircleChannelMembersValue = 1633;
+static const int MKfetchVisiblePrivateCircleChannelInServerValue = 1634;
+static const int MKcheckSelfIsInCircleChannelValue = 1635;
+static const int MKfetchCircleChannelMuteUsersValue = 1636;
+
+#pragma mark - CircleManager listener
+static const int MKonCircleServerDestroyedValue = 1637;
+static const int MKonCircleServerUpdatedValue = 1638;
+static const int MKonMemberJoinedCircleServerValue = 1639;
+static const int MKonMemberLeftCircleServerValue = 1640;
+static const int MKonMemberRemovedFromCircleServerValue = 1641;
+static const int MKonReceiveInvitationFromCircleServerValue = 1642;
+static const int MKonInvitationBeAcceptedFromCircleServerValue = 1643;
+static const int MKonInvitationBeDeclinedFromCircleServerValue = 1644;
+static const int MKonRoleAssignedFromCircleServerValue = 1645;
+
+static const int MKonCircleChannelCreatedValue = 1646;
+static const int MKonCircleChannelDestroyedValue = 1647;
+static const int MKonCircleChannelUpdatedValue = 1648;
+static const int MKonMemberJoinedCircleChannelValue = 1649;
+static const int MKonReceiveInvitationFromCircleChannelValue = 1650;
+static const int MKonInvitationBeAcceptedFromCircleChannelValue = 1651;
+static const int MKonInvitationBeDeclinedFromCircleChannelValue = 1652;
+static const int MKonMemberRemovedFromCircleChannelValue = 1653;
+static const int MKonMemberLeftCircleChannelValue = 1654;
+static const int MKonMemberMuteChangedInCircleChannelValue = 1655;
 
 @interface ExtSdkMethodTypeObjc : NSObject
 
