@@ -284,6 +284,11 @@ RCT_EXPORT_METHOD(callMethod
 
         ExtSdkMethodKeyMuteAllChatRoomMembers,
         ExtSdkMethodKeyUnMuteAllChatRoomMembers,
+        
+        MKfetchChatRoomAttributes,
+        MKfetchChatRoomAllAttributes,
+        MKsetChatRoomAttributes,
+        MKremoveChatRoomAttributes,
 
         ExtSdkMethodKeyChatroomChanged,
 

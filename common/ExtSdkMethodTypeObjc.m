@@ -181,6 +181,11 @@
 
           ExtSdkMethodKeyMuteAllChatRoomMembers : @(ExtSdkMethodKeyMuteAllChatRoomMembersValue),
           ExtSdkMethodKeyUnMuteAllChatRoomMembers : @(ExtSdkMethodKeyUnMuteAllChatRoomMembersValue),
+          
+          MKfetchChatRoomAttributes : @(MKfetchChatRoomAttributesValue),
+          MKfetchChatRoomAllAttributes : @(MKfetchChatRoomAllAttributesValue),
+          MKsetChatRoomAttributes : @(MKsetChatRoomAttributesValue),
+          MKremoveChatRoomAttributes : @(MKremoveChatRoomAttributesValue),
 
           ExtSdkMethodKeyChatroomChanged : @(ExtSdkMethodKeyChatroomChangedValue),
 

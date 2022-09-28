@@ -169,6 +169,11 @@ static NSString *_Nonnull const ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromSe
 static NSString *_Nonnull const ExtSdkMethodKeyMuteAllChatRoomMembers = @"muteAllChatRoomMembers";
 static NSString *_Nonnull const ExtSdkMethodKeyUnMuteAllChatRoomMembers = @"unMuteAllChatRoomMembers";
 
+static NSString *_Nonnull const MKfetchChatRoomAttributes = @"fetchChatRoomAttributes";
+static NSString *_Nonnull const MKfetchChatRoomAllAttributes = @"fetchChatRoomAllAttributes";
+static NSString *_Nonnull const MKsetChatRoomAttributes = @"setChatRoomAttributes";
+static NSString *_Nonnull const MKremoveChatRoomAttributes = @"removeChatRoomAttributes";
+
 static NSString *_Nonnull const ExtSdkMethodKeyChatroomChanged = @"onChatRoomChanged";
 
 #pragma mark - EMGroupManagerWrapper
@@ -464,6 +469,11 @@ static const int ExtSdkMethodKeyIsMemberInChatRoomWhiteListFromServerValue = 826
 
 static const int ExtSdkMethodKeyMuteAllChatRoomMembersValue = 827;
 static const int ExtSdkMethodKeyUnMuteAllChatRoomMembersValue = 828;
+
+static const int MKfetchChatRoomAttributesValue = 830;
+static const int MKfetchChatRoomAllAttributesValue = 831;
+static const int MKsetChatRoomAttributesValue = 832;
+static const int MKremoveChatRoomAttributesValue = 833;
 
 static const int ExtSdkMethodKeyChatroomChangedValue = 829;
 

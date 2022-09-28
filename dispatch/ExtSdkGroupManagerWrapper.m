@@ -779,12 +779,14 @@
 
 #pragma mark - EMGroupManagerDelegate
 
-- (void)groupInvitationDidReceive:(NSString *)aGroupId
-                          inviter:(NSString *)aInviter
-                          message:(NSString *)aMessage {
+- (void)groupInvitationDidReceive:(NSString *_Nonnull)aGroupId
+                        groupName:(NSString *_Nonnull)aGroupName
+                          inviter:(NSString *_Nonnull)aInviter
+                          message:(NSString *_Nullable)aMessage {
     NSDictionary *map = @{
         @"type" : @"onInvitationReceived",
         @"groupId" : aGroupId,
+        @"groupName" : aGroupName,
         @"inviter" : aInviter,
         @"message" : aMessage
     };

@@ -570,6 +570,133 @@
                           }];
 }
 
+- (void)fetchChatRoomAttributes:(NSDictionary *)param
+                 withMethodType:(NSString *)aChannelName
+                         result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    NSArray *keys = param[@"keys"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.roomManager
+        fetchChatroomAttributes:roomId
+                           keys:keys
+                     completion:^(EMError *_Nullable aError,
+                                  NSDictionary<NSString *, NSString *>
+                                      *_Nullable properties) {
+                       [weakSelf onResult:result
+                           withMethodType:aChannelName
+                                withError:aError
+                               withParams:properties];
+                     }];
+}
+
+- (void)fetchChatRoomAllAttributes:(NSDictionary *)param
+                    withMethodType:(NSString *)aChannelName
+                            result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.roomManager
+        fetchChatroomAllAttributes:roomId
+                        completion:^(EMError *_Nullable error,
+                                     NSDictionary<NSString *, NSString *>
+                                         *_Nullable properties) {
+                          [weakSelf onResult:result
+                              withMethodType:aChannelName
+                                   withError:error
+                                  withParams:properties];
+                        }];
+}
+
+- (void)setChatRoomAttributes:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    NSArray *attributesArray = param[@"attributes"];
+    NSNumber *autoDelete = param[@"autoDelete"];
+    BOOL forced = [param[@"forced"] boolValue];
+    __weak typeof(self) weakSelf = self;
+    
+    NSMutableDictionary* attributes = [NSMutableDictionary dictionary];
+    for (int i = 0; i < attributesArray.count; ++i) {
+        NSDictionary* kv = attributesArray[i];
+        [attributes addEntriesFromDictionary:kv];
+    }
+
+    void (^block)(EMError *, NSDictionary<NSString *, EMError *> *) =
+        ^(EMError *error, NSDictionary<NSString *, EMError *> *failureKeys) {
+          NSMutableDictionary *tmp = [NSMutableDictionary dictionary];
+          for (NSString *key in failureKeys) {
+              tmp[key] = @(failureKeys[key].code);
+          }
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:failureKeys.count == 0 ? error : nil
+                  withParams:tmp];
+        };
+
+    if (forced) {
+        [EMClient.sharedClient.roomManager
+            setChatroomAttributesForced:roomId
+                             attributes:attributes
+                             autoDelete:[autoDelete boolValue]
+                        completionBlock:^(EMError *_Nullable aError,
+                                          NSDictionary<NSString *, EMError *>
+                                              *_Nullable failureKeys) {
+                          block(aError, failureKeys);
+                        }];
+    } else {
+        [EMClient.sharedClient.roomManager
+            setChatroomAttributes:roomId
+                       attributes:attributes
+                       autoDelete:[autoDelete boolValue]
+                  completionBlock:^(EMError *_Nullable aError,
+                                    NSDictionary<NSString *, EMError *>
+                                        *_Nullable failureKeys) {
+                    block(aError, failureKeys);
+                  }];
+    }
+}
+
+- (void)removeChatRoomAttributes:(NSDictionary *)param
+                  withMethodType:(NSString *)aChannelName
+                          result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *roomId = param[@"roomId"];
+    NSArray *keys = param[@"keys"];
+    BOOL forced = [param[@"forced"] boolValue];
+    __weak typeof(self) weakSelf = self;
+
+    void (^block)(EMError *, NSDictionary<NSString *, EMError *> *) =
+        ^(EMError *error, NSDictionary<NSString *, EMError *> *failureKeys) {
+          NSMutableDictionary *tmp = [NSMutableDictionary dictionary];
+          for (NSString *key in failureKeys.allKeys) {
+              tmp[key] = @(failureKeys[key].code);
+          }
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:failureKeys.count == 0 ? error : nil
+                  withParams:tmp];
+        };
+
+    if (forced) {
+        [EMClient.sharedClient.roomManager
+            removeChatroomAttributesForced:roomId
+                                attributes:keys
+                           completionBlock:^(EMError *_Nullable aError,
+                                             NSDictionary<NSString *, EMError *>
+                                                 *_Nullable failureKeys) {
+                             block(aError, failureKeys);
+                           }];
+    } else {
+        [EMClient.sharedClient.roomManager
+            removeChatroomAttributes:roomId
+                          attributes:keys
+                     completionBlock:^(EMError *_Nullable aError,
+                                       NSDictionary<NSString *, EMError *>
+                                           *_Nullable failureKeys) {
+                       block(aError, failureKeys);
+                     }];
+    }
+}
+
 #pragma mark - EMChatroomManagerDelegate
 
 - (void)userDidJoinChatroom:(EMChatroom *)aChatroom user:(NSString *)aUsername {
@@ -703,6 +830,41 @@
         @"type" : @"onAllMemberMuteStateChanged",
         @"roomId" : aChatroom.chatroomId,
         @"isMuted" : @(aMuted)
+    };
+    [self onReceive:ExtSdkMethodKeyChatroomChanged withParams:map];
+}
+
+- (void)chatroomSpecificationDidUpdate:(EMChatroom *)aChatroom {
+    NSDictionary *map = @{
+        @"type" : @"onSpecificationChanged",
+        @"room" : [aChatroom toJsonObject]
+    };
+    [self onReceive:ExtSdkMethodKeyChatroomChanged withParams:map];
+}
+
+- (void)chatroomAttributesDidUpdated:(NSString *_Nonnull)roomId
+                        attributeMap:
+                            (NSDictionary<NSString *, NSString *> *_Nullable)
+                                attributeMap
+                                from:(NSString *_Nonnull)fromId {
+    NSDictionary *map = @{
+        @"type" : @"onAttributesUpdated",
+        @"roomId" : roomId,
+        @"attributes" : attributeMap,
+        @"from" : fromId,
+    };
+    [self onReceive:ExtSdkMethodKeyChatroomChanged withParams:map];
+}
+
+- (void)chatroomAttributesDidRemoved:(NSString *_Nonnull)roomId
+                          attributes:(NSArray<__kindof NSString *> *_Nullable)
+                                         attributes
+                                from:(NSString *_Nonnull)fromId {
+    NSDictionary *map = @{
+        @"type" : @"onAttributesRemoved",
+        @"roomId" : roomId,
+        @"removedKeys" : attributes,
+        @"from" : fromId,
     };
     [self onReceive:ExtSdkMethodKeyChatroomChanged withParams:map];
 }

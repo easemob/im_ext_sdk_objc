@@ -153,10 +153,14 @@
         @([EMGroup premissionTypeToInt:self.permissionType]);
 
     if (self.settings != nil) {
-        ret[@"maxUserCount"] = @(self.settings.maxUsers);
-        ret[@"isMemberOnly"] = @([self isMemberOnly]);
-        ret[@"isMemberAllowToInvite"] = @([self isMemberAllowToInvite]);
-        ret[@"ext"] = self.settings.ext;
+        NSMutableDictionary *opt = [NSMutableDictionary dictionary];
+        opt[@"maxCount"] = @(self.settings.maxUsers);
+        opt[@"style"] = @(self.settings.style);
+        opt[@"inviteNeedConfirm"] = @([self isMemberAllowToInvite]);
+        opt[@"ext"] = self.settings.ext;
+        opt[@"isDisabled"] = @(self.isDisabled);
+        opt[@"isMemberOnly"] = @([self isMemberOnly]);
+        ret[@"options"] = opt;
     }
 
     return ret;
@@ -984,6 +988,8 @@
     data[@"pushStyle"] = @(self.displayStyle != EMPushDisplayStyleSimpleBanner);
     data[@"noDisturbStartHour"] = @(self.silentModeStart);
     data[@"noDisturbEndHour"] = @(self.silentModeEnd);
+    data[@"displayStyle"] = @(self.displayStyle);
+    data[@"displayName"] = self.displayName;
     return data;
 }
 

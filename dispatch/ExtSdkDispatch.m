@@ -816,6 +816,19 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkChatThreadManagerWrapper getInstance] getThreadConversation:ps withMethodType:methodType result:callback];
         break;
 
+    case MKfetchChatRoomAttributesValue:
+        [[ExtSdkChatroomManagerWrapper getInstance] fetchChatRoomAttributes:ps withMethodType:methodType result:callback];
+        break;
+    case MKfetchChatRoomAllAttributesValue:
+        [[ExtSdkChatroomManagerWrapper getInstance] fetchChatRoomAllAttributes:ps withMethodType:methodType result:callback];
+        break;
+    case MKsetChatRoomAttributesValue:
+        [[ExtSdkChatroomManagerWrapper getInstance] setChatRoomAttributes:ps withMethodType:methodType result:callback];
+        break;
+    case MKremoveChatRoomAttributesValue:
+        [[ExtSdkChatroomManagerWrapper getInstance] removeChatRoomAttributes:ps withMethodType:methodType result:callback];
+        break;
+
     default:
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
