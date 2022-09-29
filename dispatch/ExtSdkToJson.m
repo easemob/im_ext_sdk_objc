@@ -925,8 +925,36 @@
     data[@"imServer"] = self.chatServer;
     data[@"restServer"] = self.restServer;
     data[@"dnsUrl"] = self.dnsURL;
+    data[@"areaCode"] = @(self.area);
 
     return data;
+}
++ (AreaCode)AreaCodeFromInt:(int)code {
+    AreaCode ret = AreaCodeGLOB;
+    switch (code) {
+        case 1 << 0:
+            ret = AreaCodeCN;
+            break;
+        case 1 << 1:
+            ret = AreaCodeNA;
+            break;
+        case 1 << 2:
+            ret = AreaCodeEU;
+            break;
+        case 1 << 3:
+            ret = AreaCodeAS;
+            break;
+        case 1 << 4:
+            ret = AreaCodeJP;
+            break;
+        case 1 << 5:
+            ret = AreaCodeIN;
+            break;
+        default:
+            ret = AreaCodeGLOB;
+            break;
+    }
+    return ret;
 }
 + (EMOptions *)fromJsonObject:(NSDictionary *)aJson {
     EMOptions *options = [EMOptions optionsWithAppkey:aJson[@"appKey"]];
@@ -956,6 +984,7 @@
     options.chatServer = aJson[@"imServer"];
     options.restServer = aJson[@"restServer"];
     options.dnsURL = aJson[@"dnsURL"];
+    options.area = [EMOptions AreaCodeFromInt:[aJson[@"areaCode"] intValue]];
 
     NSDictionary *pushConfig = aJson[@"pushConfig"];
     if (pushConfig != nil) {

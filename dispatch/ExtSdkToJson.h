@@ -97,6 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EMOptions (Json) <ExtSdkToJson>
 - (NSDictionary *)toJsonObject;
 + (EMOptions *)fromJsonObject:(NSDictionary *)aJson;
++ (AreaCode)AreaCodeFromInt:(int)code;
 @end
 
 @interface EMPageResult (Json) <ExtSdkToJson>
