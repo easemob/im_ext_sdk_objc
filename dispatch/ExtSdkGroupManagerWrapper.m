@@ -1014,4 +1014,12 @@
     [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
 }
 
+- (void)groupStateChanged:(EMGroup *)aGroup isDisabled:(BOOL)aDisabled {
+    NSDictionary *map = @{
+        @"type" : @"onStateChanged",
+        @"group" : [aGroup toJsonObject],
+    };
+    [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
+}
+
 @end

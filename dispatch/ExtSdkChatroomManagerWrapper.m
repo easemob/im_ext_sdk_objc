@@ -614,10 +614,10 @@
     NSNumber *autoDelete = param[@"autoDelete"];
     BOOL forced = [param[@"forced"] boolValue];
     __weak typeof(self) weakSelf = self;
-    
-    NSMutableDictionary* attributes = [NSMutableDictionary dictionary];
+
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     for (int i = 0; i < attributesArray.count; ++i) {
-        NSDictionary* kv = attributesArray[i];
+        NSDictionary *kv = attributesArray[i];
         [attributes addEntriesFromDictionary:kv];
     }
 
@@ -844,7 +844,7 @@
 
 - (void)chatroomAttributesDidUpdated:(NSString *_Nonnull)roomId
                         attributeMap:
-                            (NSDictionary<NSString *, NSString *> *_Nullable)
+                            (NSDictionary<NSString *, NSString *> *_Nonnull)
                                 attributeMap
                                 from:(NSString *_Nonnull)fromId {
     NSDictionary *map = @{
@@ -857,8 +857,8 @@
 }
 
 - (void)chatroomAttributesDidRemoved:(NSString *_Nonnull)roomId
-                          attributes:(NSArray<__kindof NSString *> *_Nullable)
-                                         attributes
+                          attributes:
+                              (NSArray<__kindof NSString *> *_Nonnull)attributes
                                 from:(NSString *_Nonnull)fromId {
     NSDictionary *map = @{
         @"type" : @"onAttributesRemoved",
