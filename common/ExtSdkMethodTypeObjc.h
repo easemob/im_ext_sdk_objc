@@ -88,6 +88,10 @@ static NSString *_Nonnull const ExtSdkMethodKeyChatFetchReactionList = @"fetchRe
 static NSString *_Nonnull const ExtSdkMethodKeyChatFetchReactionDetail = @"fetchReactionDetail";
 static NSString *_Nonnull const ExtSdkMethodKeyChatReportMessage = @"reportMessage";
 
+static NSString *_Nonnull const ExtSdkMethodKeyFetchConversationsFromServerWithPage = @"fetchConversationsFromServerWithPage";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIds = @"removeMessagesFromServerWithMsgIds";
+static NSString *_Nonnull const ExtSdkMethodKeyRemoveMessagesFromServerWithTs = @"removeMessagesFromServerWithTs";
+
 #pragma mark - EMChatManagerDelegate
 static NSString *_Nonnull const ExtSdkMethodKeyOnMessagesReceived = @"onMessagesReceived";
 static NSString *_Nonnull const ExtSdkMethodKeyOnCmdMessagesReceived = @"onCmdMessagesReceived";
@@ -388,6 +392,10 @@ static const int ExtSdkMethodKeyChatRemoveReactionValue = 527;
 static const int ExtSdkMethodKeyChatFetchReactionListValue = 528;
 static const int ExtSdkMethodKeyChatFetchReactionDetailValue = 529;
 static const int ExtSdkMethodKeyChatReportMessageValue = 530;
+
+static const int ExtSdkMethodKeyFetchConversationsFromServerWithPageValue = 532;
+static const int ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIdsValue = 533;
+static const int ExtSdkMethodKeyRemoveMessagesFromServerWithTsValue = 534;
 
 #pragma mark - EMChatManagerDelegate value
 static const int ExtSdkMethodKeyOnMessagesReceivedValue = 600;

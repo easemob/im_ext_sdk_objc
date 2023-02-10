@@ -86,6 +86,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)toJsonObject;
 + (EMChatType)chatTypeFromInt:(int)aType;
 + (int)chatTypeToInt:(EMChatType)aType;
++ (EMChatRoomMessagePriority)priorityFromInt:(int)priority;
++ (int)priorityToInt:(EMChatRoomMessagePriority)priority;
 @end
 
 @interface EMMessageBody (Json) <ExtSdkToJson>

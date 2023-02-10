@@ -101,6 +101,10 @@
           ExtSdkMethodKeyChatFetchReactionList : @(ExtSdkMethodKeyChatFetchReactionListValue),
           ExtSdkMethodKeyChatFetchReactionDetail : @(ExtSdkMethodKeyChatFetchReactionDetailValue),
           ExtSdkMethodKeyChatReportMessage : @(ExtSdkMethodKeyChatReportMessageValue),
+          
+          ExtSdkMethodKeyFetchConversationsFromServerWithPage : @(ExtSdkMethodKeyFetchConversationsFromServerWithPageValue),
+          ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIds : @(ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIdsValue),
+          ExtSdkMethodKeyRemoveMessagesFromServerWithTs : @(ExtSdkMethodKeyRemoveMessagesFromServerWithTsValue),
 
           /// EMChatManagerDelegate
           ExtSdkMethodKeyOnMessagesReceived : @(ExtSdkMethodKeyOnMessagesReceivedValue),

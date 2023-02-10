@@ -201,6 +201,10 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyChatFetchReactionList,
         ExtSdkMethodKeyChatFetchReactionDetail,
         ExtSdkMethodKeyChatReportMessage,
+        
+        ExtSdkMethodKeyFetchConversationsFromServerWithPage,
+        ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIds,
+        ExtSdkMethodKeyRemoveMessagesFromServerWithTs,
 
         /// EMChatManagerDelegate
         ExtSdkMethodKeyOnMessagesReceived,

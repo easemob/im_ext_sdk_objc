@@ -752,6 +752,92 @@
                   }];
 }
 
+- (void)fetchConversationsFromServerWithPage:(NSDictionary *)param
+                              withMethodType:(NSString *)aChannelName
+                                      result:(nonnull id<ExtSdkCallbackObjc>)
+                                                 result {
+    int pageSize = [param[@"pageSize"] intValue];
+    int pageNum = [param[@"pageNum"] intValue];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.chatManager
+        getConversationsFromServerByPage:pageNum
+                                pageSize:pageSize
+                              completion:^(NSArray<EMConversation *>
+                                               *_Nullable aConversations,
+                                           EMError *_Nullable aError) {
+                                NSArray *sortedList = [aConversations
+                                    sortedArrayUsingComparator:
+                                        ^NSComparisonResult(id _Nonnull obj1,
+                                                            id _Nonnull obj2) {
+                                          if (((EMConversation *)obj1)
+                                                  .latestMessage.timestamp >
+                                              ((EMConversation *)obj2)
+                                                  .latestMessage.timestamp) {
+                                              return NSOrderedAscending;
+                                          } else {
+                                              return NSOrderedDescending;
+                                          }
+                                        }];
+                                NSMutableArray *conList =
+                                    [NSMutableArray array];
+                                for (EMConversation
+                                         *conversation in sortedList) {
+                                    [conList
+                                        addObject:[conversation toJsonObject]];
+                                }
+
+                                [weakSelf onResult:result
+                                    withMethodType:aChannelName
+                                         withError:aError
+                                        withParams:conList];
+                              }];
+}
+
+- (void)removeMessagesFromServerWithMsgIds:(NSDictionary *)param
+                            withMethodType:(NSString *)aChannelName
+                                    result:
+                                        (nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *convId = param[@"convId"];
+    EMConversationType type =
+        [EMConversation typeFromInt:[param[@"convType"] intValue]];
+    EMConversation *conversation =
+        [EMClient.sharedClient.chatManager getConversation:convId
+                                                      type:type
+                                          createIfNotExist:YES];
+    NSArray *msgIds = param[@"msgIds"];
+    [conversation
+        removeMessagesFromServerMessageIds:msgIds
+                                completion:^(EMError *_Nullable aError) {
+                                  [weakSelf onResult:result
+                                      withMethodType:aChannelName
+                                           withError:aError
+                                          withParams:nil];
+                                }];
+}
+
+- (void)removeMessagesFromServerWithTs:(NSDictionary *)param
+                        withMethodType:(NSString *)aChannelName
+                                result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *convId = param[@"convId"];
+    EMConversationType type =
+        [EMConversation typeFromInt:[param[@"convType"] intValue]];
+    long timestamp = [param[@"timestamp"] longValue];
+    EMConversation *conversation =
+        [EMClient.sharedClient.chatManager getConversation:convId
+                                                      type:type
+                                          createIfNotExist:YES];
+    [conversation
+        removeMessagesFromServerWithTimeStamp:timestamp
+                                   completion:^(EMError *_Nullable aError) {
+                                     [weakSelf onResult:result
+                                         withMethodType:aChannelName
+                                              withError:aError
+                                             withParams:nil];
+                                   }];
+}
+
 #pragma mark - EMChatManagerDelegate
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {

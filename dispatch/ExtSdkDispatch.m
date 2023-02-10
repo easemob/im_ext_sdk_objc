@@ -708,6 +708,16 @@ static NSString *const TAG = @"ExtSdkDispatch";
     case ExtSdkMethodKeyChatReportMessageValue:
         [[ExtSdkChatManagerWrapper getInstance] reportMessage:ps withMethodType:methodType result:callback];
         break;
+            
+    case ExtSdkMethodKeyFetchConversationsFromServerWithPageValue:
+        [[ExtSdkChatManagerWrapper getInstance] fetchConversationsFromServerWithPage:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIdsValue:
+        [[ExtSdkChatManagerWrapper getInstance] removeMessagesFromServerWithMsgIds:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyRemoveMessagesFromServerWithTsValue:
+        [[ExtSdkChatManagerWrapper getInstance] removeMessagesFromServerWithTs:ps withMethodType:methodType result:callback];
+        break;
 
     case ExtSdkMethodKeyChatOnReadAckForGroupMessageUpdatedValue:
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
