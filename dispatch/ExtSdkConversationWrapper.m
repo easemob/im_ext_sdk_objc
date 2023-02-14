@@ -29,15 +29,32 @@
 - (void)getConversationWithParam:(NSDictionary *)param
                       completion:
                           (void (^)(EMConversation *conversation))aCompletion {
-    __weak NSString *conversationId = param[@"convId"];
-    EMConversationType type =
-        [EMConversation typeFromInt:[param[@"convType"] intValue]];
-    EMConversation *conversation =
+    NSString *conversationId;
+    EMConversationType type;
+    if (param[@"convId"]) {
+        conversationId = param[@"convId"];
+        type = [EMConversation typeFromInt:[param[@"convType"] intValue]];
+    } else if (param[@"msg"]) {
+        NSDictionary *msg = param[@"msg"];
+        if (msg[@"conversationId"] && ![msg[@"conversationId"] isEqual:@""]) {
+            conversationId = msg[@"conversationId"];
+        } else {
+            conversationId = [msg[@"send"] boolValue] ? msg[@"to"] : msg[@"from"];
+        }
+        
+        type = [EMConversation typeFromInt:[msg[@"chatType"] intValue]];
+    } else {
+        if (aCompletion) {
+            aCompletion(nil);
+        }
+        return;
+    }
+    EMConversation *conv =
         [EMClient.sharedClient.chatManager getConversation:conversationId
                                                       type:type
                                           createIfNotExist:YES];
     if (aCompletion) {
-        aCompletion(conversation);
+        aCompletion(conv);
     }
 }
 

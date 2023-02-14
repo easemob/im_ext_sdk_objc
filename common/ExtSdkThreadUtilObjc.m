@@ -17,7 +17,11 @@
 }
 
 + (void)mainThreadExecute:(void (^)(void))callback {
-    dispatch_async(dispatch_get_main_queue(), callback);
+    if ([NSThread isMainThread]) {
+        callback();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), callback);
+    }
 }
 
 @end
