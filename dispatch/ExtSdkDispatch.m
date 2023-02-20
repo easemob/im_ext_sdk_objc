@@ -469,7 +469,7 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkGroupManagerWrapper getInstance] getJoinedGroups:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetGroupsWithoutPushNotificationValue:
-        [[ExtSdkGroupManagerWrapper getInstance] getGroupsWithoutPushNotification:ps withMethodType:methodType result:callback];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"%@ is deprecated", methodType]];
         break;
     case ExtSdkMethodKeyGetJoinedGroupsFromServerValue:
         [[ExtSdkGroupManagerWrapper getInstance] getJoinedGroupsFromServer:ps withMethodType:methodType result:callback];
@@ -624,7 +624,7 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkPushManagerWrapper getInstance] updateImPushStyle:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyUpdateGroupPushServiceValue:
-        [[ExtSdkPushManagerWrapper getInstance] updateGroupPushService:ps withMethodType:methodType result:callback];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"%@ is deprecated", methodType]];
         break;
     case ExtSdkMethodKeyGetNoDisturbGroupsValue:
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
@@ -633,13 +633,13 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkPushManagerWrapper getInstance] bindDeviceToken:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyEnablePushValue:
-        [[ExtSdkPushManagerWrapper getInstance] enablePush:ps withMethodType:methodType result:callback];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"%@ is deprecated", methodType]];
         break;
     case ExtSdkMethodKeyDisablePushValue:
-        [[ExtSdkPushManagerWrapper getInstance] disablePush:ps withMethodType:methodType result:callback];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"%@ is deprecated", methodType]];
         break;
     case ExtSdkMethodKeyGetNoPushGroupsValue:
-        [[ExtSdkPushManagerWrapper getInstance] getNoPushGroups:ps withMethodType:methodType result:callback];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"%@ is deprecated", methodType]];
         break;
     case ExtSdkMethodKeySetNoDisturbUsersValue:
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
@@ -648,10 +648,10 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
     case ExtSdkMethodKeyUpdateUserPushServiceValue:
-        [[ExtSdkPushManagerWrapper getInstance] updateUserPushService:ps withMethodType:methodType result:callback];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"%@ is deprecated", methodType]];
         break;
     case ExtSdkMethodKeyGetNoPushUsersValue:
-        [[ExtSdkPushManagerWrapper getInstance] getNoPushUsers:ps withMethodType:methodType result:callback];
+        [callback onFail:1 withExtension:[NSString stringWithFormat:@"%@ is deprecated", methodType]];
         break;
 
     /// #pragma mark - EMUserInfoManagerWrapper value
