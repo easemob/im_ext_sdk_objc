@@ -348,11 +348,11 @@
 - (void)autoLoginDidCompleteWithError:(EMError *)aError {
 }
 
-- (void)tokenWillExpire:(int)aErrorCode {
+- (void)tokenWillExpire:(EMErrorCode)aErrorCode {
     [self onReceive:ExtSdkMethodKeyOnTokenWillExpire withParams:nil];
 }
 
-- (void)tokenDidExpire:(int)aErrorCode {
+- (void)tokenDidExpire:(EMErrorCode)aErrorCode {
     [self onReceive:ExtSdkMethodKeyOnTokenDidExpire withParams:nil];
 }
 
