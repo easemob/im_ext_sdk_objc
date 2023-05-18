@@ -332,6 +332,7 @@
                    withParams:@{
                        @"progress" : @(progress),
                        @"localTime" : @(msg.localTime),
+                       @"msgId" : msg.messageId,
                        @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
                    }];
         }
@@ -342,6 +343,7 @@
                            @"error" : [error toJsonObject],
                            @"localTime" : @(msg.localTime),
                            @"message" : [message toJsonObject],
+                           @"msgId" : msg.messageId,
                            @"callbackType" : ExtSdkMethodKeyOnMessageError
                        }];
           } else {
@@ -349,6 +351,7 @@
                        withParams:@{
                            @"message" : [message toJsonObject],
                            @"localTime" : @(msg.localTime),
+                           @"msgId" : msg.messageId,
                            @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
                        }];
           }
@@ -381,6 +384,7 @@
                    withParams:@{
                        @"progress" : @(progress),
                        @"localTime" : @(msg.localTime),
+                       @"msgId" : msg.messageId,
                        @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
                    }];
         }
@@ -391,6 +395,7 @@
                            @"error" : [error toJsonObject],
                            @"localTime" : @(msg.localTime),
                            @"message" : [message toJsonObject],
+                           @"msgId" : msg.messageId,
                            @"callbackType" : ExtSdkMethodKeyOnMessageError
                        }];
           } else {
@@ -398,6 +403,7 @@
                        withParams:@{
                            @"message" : [message toJsonObject],
                            @"localTime" : @(msg.localTime),
+                           @"msgId" : msg.messageId,
                            @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
                        }];
           }

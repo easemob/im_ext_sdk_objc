@@ -171,7 +171,7 @@
     if (self.settings.style == EMGroupStylePrivateOnlyOwnerInvite ||
         self.settings.style == EMGroupStylePrivateMemberCanInvite ||
         self.settings.style == EMGroupStylePublicJoinNeedApproval) {
-        return true;
+        return YES;
     }
 
     return NO;
@@ -846,8 +846,7 @@
     ret[@"secret"] = self.secretKey;
     ret[@"displayName"] = self.displayName;
     ret[@"localPath"] = self.localPath;
-    ret[@"sendOriginalImage"] =
-        self.compressionRatio == 1.0 ? @(true) : @(false);
+    ret[@"sendOriginalImage"] = self.compressionRatio == 1.0 ? @(YES) : @(NO);
     return ret;
 }
 @end
