@@ -844,6 +844,34 @@
                                    }];
 }
 
+- (void)fetchHistoryMessagesByOptions:(NSDictionary *)param
+                       withMethodType:(NSString *)aChannelName
+                               result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *convId = param[@"convId"];
+    EMConversationType type =
+        [EMConversation typeFromInt:[param[@"convType"] intValue]];
+    NSString *cursor = param[@"cursor"];
+    int pageSize = [param[@"pageSize"] intValue];
+    EMFetchServerMessagesOption *option =
+        [EMFetchServerMessagesOption formJsonObject:param[@"options"]];
+
+    [EMClient.sharedClient.chatManager
+        fetchMessagesFromServerBy:convId
+                 conversationType:type
+                           cursor:cursor
+                         pageSize:pageSize
+                           option:option
+                       completion:^(
+                           EMCursorResult<EMChatMessage *> *_Nullable data,
+                           EMError *_Nullable aError) {
+                         [weakSelf onResult:result
+                             withMethodType:aChannelName
+                                  withError:aError
+                                 withParams:[data toJsonObject]];
+                       }];
+}
+
 #pragma mark - EMChatManagerDelegate
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {

@@ -15,6 +15,7 @@
 #import <HyphenateChat/EMCursorResult.h>
 #import <HyphenateChat/EMDeviceConfig.h>
 #import <HyphenateChat/EMError.h>
+#import <HyphenateChat/EMFetchServerMessagesOption.h>
 #import <HyphenateChat/EMGroup.h>
 #import <HyphenateChat/EMGroupMessageAck.h>
 #import <HyphenateChat/EMGroupOptions.h>
@@ -22,6 +23,7 @@
 #import <HyphenateChat/EMMessageBody.h>
 #import <HyphenateChat/EMMessageReaction.h>
 #import <HyphenateChat/EMMessageReactionChange.h>
+#import <HyphenateChat/EMMessageReactionOperation.h>
 #import <HyphenateChat/EMOptions.h>
 #import <HyphenateChat/EMPageResult.h>
 #import <HyphenateChat/EMPresence.h>
@@ -127,6 +129,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)toJsonArray;
 @end
 
+@interface EMMessageReactionOperation (Json) <ExtSdkToJson>
+- (NSDictionary *)toJsonObject;
+@end
+
 @interface EMMessageReaction (Json) <ExtSdkToJson>
 - (NSDictionary *)toJsonObject;
 @end
@@ -155,6 +161,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EMSilentModeTime (Helper) <ExtSdkToJson>
 + (EMSilentModeTime *)formJsonObject:(NSDictionary *)dict;
 - (NSDictionary *)toJsonObject;
+@end
+
+@interface EMFetchServerMessagesOption (Helper) <ExtSdkToJson>
++ (EMFetchServerMessagesOption *)formJsonObject:(NSDictionary *)dict;
 @end
 
 NS_ASSUME_NONNULL_END

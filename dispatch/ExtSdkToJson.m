@@ -363,6 +363,7 @@
     msg.ext = aJson[@"attributes"];
     msg.priority =
         [EMChatMessage priorityFromInt:[aJson[@"priority"] intValue]];
+    msg.deliverOnlineOnly = aJson[@"deliverOnlineOnly"];
     return msg;
 }
 
@@ -388,6 +389,7 @@
     ret[@"isChatThread"] = @(self.isChatThreadMessage);
     ret[@"isOnline"] = @(self.onlineState);
     ret[@"priority"] = @([EMChatMessage priorityToInt:self.priority]);
+    ret[@"deliverOnlineOnly"] = @(self.deliverOnlineOnly);
 
     return ret;
 }
@@ -1134,6 +1136,16 @@
 }
 @end
 
+@implementation EMMessageReactionOperation (Json)
+- (NSDictionary *)toJsonObject {
+    return @{
+        @"userId" : self.userId,
+        @"reaction" : self.reaction,
+        @"operate" : @(self.operate),
+    };
+}
+@end
+
 @implementation EMMessageReaction (Json)
 
 - (nonnull NSDictionary *)toJsonObject {
@@ -1153,12 +1165,18 @@
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
     ret[@"conversationId"] = self.conversationId;
     ret[@"messageId"] = self.messageId;
+
     NSMutableArray *reactions = [NSMutableArray array];
     for (EMMessageReaction *reaction in self.reactions) {
         [reactions addObject:[reaction toJsonObject]];
     }
-
     ret[@"reactions"] = reactions;
+
+    NSMutableArray *operations = [NSMutableArray array];
+    for (EMMessageReactionOperation *reaction in self.operations) {
+        [operations addObject:[reaction toJsonObject]];
+    }
+    ret[@"operations"] = operations;
     return ret;
 }
 
@@ -1306,4 +1324,51 @@
     return @{@"hour" : @(self.hours), @"minute" : @(self.minutes)};
 }
 
+@end
+
+@implementation EMFetchServerMessagesOption (Json)
++ (EMFetchServerMessagesOption *)formJsonObject:(NSDictionary *)dict {
+    if (dict == nil) {
+        return nil;
+    }
+    EMFetchServerMessagesOption *options =
+        [[EMFetchServerMessagesOption alloc] init];
+    options.direction = [dict[@"direction"] isEqual:@(0)]
+                            ? EMMessageSearchDirectionUp
+                            : EMMessageSearchDirectionDown;
+    options.startTime = [dict[@"startTs"] intValue];
+    options.endTime = [dict[@"endTs"] intValue];
+    options.from = dict[@"from"];
+    options.isSave = [dict[@"needSave"] boolValue];
+    NSArray *types = dict[@"msgTypes"];
+    NSMutableArray<NSNumber *> *list = [NSMutableArray new];
+    if (types) {
+        for (int i = 0; i < types.count; i++) {
+            NSString *type = types[i];
+            if ([type isEqualToString:@"txt"]) {
+                [list addObject:@(EMMessageBodyTypeText)];
+            } else if ([type isEqualToString:@"img"]) {
+                [list addObject:@(EMMessageBodyTypeImage)];
+            } else if ([type isEqualToString:@"loc"]) {
+                [list addObject:@(EMMessageBodyTypeLocation)];
+            } else if ([type isEqualToString:@"video"]) {
+                [list addObject:@(EMMessageBodyTypeVideo)];
+            } else if ([type isEqualToString:@"voice"]) {
+                [list addObject:@(EMMessageBodyTypeVoice)];
+            } else if ([type isEqualToString:@"file"]) {
+                [list addObject:@(EMMessageBodyTypeFile)];
+            } else if ([type isEqualToString:@"cmd"]) {
+                [list addObject:@(EMMessageBodyTypeCmd)];
+            } else if ([type isEqualToString:@"custom"]) {
+                [list addObject:@(EMMessageBodyTypeCustom)];
+            }
+        }
+    }
+
+    if (list.count > 0) {
+        options.msgTypes = list;
+    }
+
+    return options;
+}
 @end

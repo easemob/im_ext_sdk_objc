@@ -78,6 +78,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadMsgWithTime:(NSDictionary *)param
          withMethodType:(NSString *)aChannelName
                  result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)deleteMessagesWithTimestamp:(NSDictionary *)param
+              withMethodType:(NSString *)aChannelName
+                      result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 @end
 
 NS_ASSUME_NONNULL_END

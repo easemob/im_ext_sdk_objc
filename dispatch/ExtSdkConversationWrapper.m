@@ -39,9 +39,10 @@
         if (msg[@"conversationId"] && ![msg[@"conversationId"] isEqual:@""]) {
             conversationId = msg[@"conversationId"];
         } else {
-            conversationId = [msg[@"send"] boolValue] ? msg[@"to"] : msg[@"from"];
+            conversationId =
+                [msg[@"send"] boolValue] ? msg[@"to"] : msg[@"from"];
         }
-        
+
         type = [EMConversation typeFromInt:[msg[@"chatType"] intValue]];
     } else {
         if (aCompletion) {
@@ -235,6 +236,24 @@
                           [conversation deleteAllMessages:&error];
                           [weakSelf onResult:result
                               withMethodType:ExtSdkMethodKeyClearAllMsg
+                                   withError:error
+                                  withParams:nil];
+                        }];
+}
+
+- (void)deleteMessagesWithTimestamp:(NSDictionary *)param
+              withMethodType:(NSString *)aChannelName
+                      result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    [self getConversationWithParam:param
+                        completion:^(EMConversation *conversation) {
+                          long startTs = [param[@"startTs"] longLongValue];
+                          long endTs = [param[@"endTs"] longLongValue];
+                          EMError *error =
+                              [conversation removeMessagesStart:startTs
+                                                             to:endTs];
+                          [weakSelf onResult:result
+                              withMethodType:aChannelName
                                    withError:error
                                   withParams:nil];
                         }];

@@ -784,6 +784,70 @@
                     }];
 }
 
+- (void)setMemberAttribute:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
+                    result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *groupId = param[@"groupId"];
+    NSString *userId = param[@"member"];
+    NSDictionary *attributes = param[@"attributes"];
+    [EMClient.sharedClient.groupManager
+        setMemberAttribute:groupId
+                    userId:userId
+                attributes:attributes
+                completion:^(EMError *_Nullable error) {
+                  [weakSelf onResult:result
+                      withMethodType:aChannelName
+                           withError:error
+                          withParams:nil];
+                }];
+}
+
+- (void)fetchMemberAttributes:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+
+    NSString *groupId = param[@"groupId"];
+    NSString *userId = param[@"member"];
+
+    [EMClient.sharedClient.groupManager
+        fetchMemberAttribute:groupId
+                      userId:userId
+                  completion:^(
+                      NSDictionary<NSString *, NSString *> *_Nullable data,
+                      EMError *_Nullable error) {
+                    [weakSelf onResult:result
+                        withMethodType:aChannelName
+                             withError:error
+                            withParams:data];
+                  }];
+}
+
+- (void)fetchMembersAttributes:(NSDictionary *)param
+                withMethodType:(NSString *)aChannelName
+                        result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+
+    NSString *groupId = param[@"groupId"];
+    NSArray<NSString *> *userIds = param[@"members"];
+    NSArray<NSString *> *keys = param[@"keys"];
+    [EMClient.sharedClient.groupManager
+        fetchMembersAttributes:groupId
+                       userIds:userIds
+                          keys:keys
+                    completion:^(
+                        NSDictionary<NSString *,
+                                     NSDictionary<NSString *, NSString *> *>
+                            *_Nullable attributes,
+                        EMError *_Nullable error) {
+                      [weakSelf onResult:result
+                          withMethodType:aChannelName
+                               withError:error
+                              withParams:attributes];
+                    }];
+}
+
 #pragma mark - EMGroupManagerDelegate
 
 - (void)groupInvitationDidReceive:(NSString *_Nonnull)aGroupId
@@ -1025,6 +1089,21 @@
     NSDictionary *map = @{
         @"type" : @"onStateChanged",
         @"group" : [aGroup toJsonObject],
+    };
+    [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
+}
+
+- (void)onAttributesChangedOfGroupMember:(NSString *_Nonnull)groupId
+                                  userId:(NSString *_Nonnull)userId
+                              attributes:(NSDictionary<NSString *, NSString *>
+                                              *_Nullable)attributes
+                              operatorId:(NSString *_Nonnull)operatorId {
+    NSDictionary *map = @{
+        @"type" : @"onMemberAttributesChanged",
+        @"groupId" : groupId,
+        @"member" : userId,
+        @"attributes" : attributes,
+        @"operator" : operatorId,
     };
     [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
 }

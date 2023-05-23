@@ -308,6 +308,12 @@
           ExtSdkMethodKeyChatOnChatThreadUpdated : @(ExtSdkMethodKeyChatOnChatThreadUpdatedValue),
           ExtSdkMethodKeyChatOnChatThreadDestroyed : @(ExtSdkMethodKeyChatOnChatThreadDestroyedValue),
           ExtSdkMethodKeyChatOnChatThreadUserRemoved : @(ExtSdkMethodKeyChatOnChatThreadUserRemovedValue),
+          
+          ExtSdkMethodKeyfetchHistoryMessagesByOptions : @(ExtSdkMethodKeyfetchHistoryMessagesByOptionsValue),
+          ExtSdkMethodKeydeleteMessagesWithTs : @(ExtSdkMethodKeydeleteMessagesWithTsValue),
+          ExtSdkMethodKeysetMemberAttributesFromGroup : @(ExtSdkMethodKeysetMemberAttributesFromGroupValue),
+          ExtSdkMethodKeyfetchMemberAttributesFromGroup : @(ExtSdkMethodKeyfetchMemberAttributesFromGroupValue),
+          ExtSdkMethodKeyfetchMembersAttributesFromGroup : @(ExtSdkMethodKeyfetchMembersAttributesFromGroupValue),
       };
     });
     if (nil != key) {

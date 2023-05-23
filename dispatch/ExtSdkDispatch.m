@@ -838,6 +838,21 @@ static NSString *const TAG = @"ExtSdkDispatch";
     case MKremoveChatRoomAttributesValue:
         [[ExtSdkChatroomManagerWrapper getInstance] removeChatRoomAttributes:ps withMethodType:methodType result:callback];
         break;
+    case ExtSdkMethodKeyfetchHistoryMessagesByOptionsValue:
+        [[ExtSdkChatManagerWrapper getInstance] fetchHistoryMessagesByOptions:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeydeleteMessagesWithTsValue:
+        [[ExtSdkConversationWrapper getInstance] deleteMessagesWithTimestamp:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeysetMemberAttributesFromGroupValue:
+        [[ExtSdkGroupManagerWrapper getInstance] setMemberAttribute:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyfetchMemberAttributesFromGroupValue:
+        [[ExtSdkGroupManagerWrapper getInstance] fetchMemberAttributes:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyfetchMembersAttributesFromGroupValue:
+        [[ExtSdkGroupManagerWrapper getInstance] fetchMembersAttributes:ps withMethodType:methodType result:callback];
+        break;
 
     default:
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];

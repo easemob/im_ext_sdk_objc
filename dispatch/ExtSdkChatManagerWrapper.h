@@ -131,14 +131,20 @@ NS_ASSUME_NONNULL_BEGIN
                                result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)fetchConversationsFromServerWithPage:(NSDictionary *)param
-                       withMethodType:(NSString *)aChannelName
-                               result:(nonnull id<ExtSdkCallbackObjc>)result;
+                              withMethodType:(NSString *)aChannelName
+                                      result:(nonnull id<ExtSdkCallbackObjc>)
+                                                 result;
 
 - (void)removeMessagesFromServerWithMsgIds:(NSDictionary *)param
-                       withMethodType:(NSString *)aChannelName
-                               result:(nonnull id<ExtSdkCallbackObjc>)result;
+                            withMethodType:(NSString *)aChannelName
+                                    result:
+                                        (nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)removeMessagesFromServerWithTs:(NSDictionary *)param
+                        withMethodType:(NSString *)aChannelName
+                                result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchHistoryMessagesByOptions:(NSDictionary *)param
                        withMethodType:(NSString *)aChannelName
                                result:(nonnull id<ExtSdkCallbackObjc>)result;
 

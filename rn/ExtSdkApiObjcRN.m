@@ -411,6 +411,12 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyChatOnChatThreadUpdated,
         ExtSdkMethodKeyChatOnChatThreadDestroyed,
         ExtSdkMethodKeyChatOnChatThreadUserRemoved,
+        
+        ExtSdkMethodKeyfetchHistoryMessagesByOptions,
+        ExtSdkMethodKeydeleteMessagesWithTs,
+        ExtSdkMethodKeysetMemberAttributesFromGroup,
+        ExtSdkMethodKeyfetchMemberAttributesFromGroup,
+        ExtSdkMethodKeyfetchMembersAttributesFromGroup,
     ];
 //    NSLog(@"%@: supportedEvents: %@", TAG, ret);
     return ret;
