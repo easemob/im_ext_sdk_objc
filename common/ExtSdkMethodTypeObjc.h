@@ -34,6 +34,7 @@ static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidChangePassword = @"onUse
 static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidLoginTooManyDevice = @"onUserDidLoginTooManyDevice";
 static NSString *_Nonnull const ExtSdkMethodKeyOnUserKickedByOtherDevice = @"onUserKickedByOtherDevice";
 static NSString *_Nonnull const ExtSdkMethodKeyOnUserAuthenticationFailed = @"onUserAuthenticationFailed";
+static NSString *_Nonnull const ExtSdkMethodKeyOnAppActiveNumberReachLimit = @"onAppActiveNumberReachLimit";
 
 #pragma mark - EMContactManagerWrapper
 static NSString *_Nonnull const ExtSdkMethodKeyAddContact = @"addContact";
@@ -344,6 +345,7 @@ static const int ExtSdkMethodKeyOnUserDidChangePasswordValue = 209;
 static const int ExtSdkMethodKeyOnUserDidLoginTooManyDeviceValue = 210;
 static const int ExtSdkMethodKeyOnUserKickedByOtherDeviceValue = 211;
 static const int ExtSdkMethodKeyOnUserAuthenticationFailedValue = 212;
+static const int ExtSdkMethodKeyOnAppActiveNumberReachLimitValue = 213;
 
 #pragma mark - EMContactManagerWrapper value
 static const int ExtSdkMethodKeyAddContactValue = 300;

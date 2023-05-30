@@ -417,6 +417,7 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeysetMemberAttributesFromGroup,
         ExtSdkMethodKeyfetchMemberAttributesFromGroup,
         ExtSdkMethodKeyfetchMembersAttributesFromGroup,
+        ExtSdkMethodKeyOnAppActiveNumberReachLimit,
     ];
 //    NSLog(@"%@: supportedEvents: %@", TAG, ret);
     return ret;

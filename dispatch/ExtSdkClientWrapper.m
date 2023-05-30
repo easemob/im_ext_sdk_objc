@@ -7,6 +7,7 @@
 
 #import "ExtSdkClientWrapper.h"
 #import "ExtSdkChatManagerWrapper.h"
+#import "ExtSdkChatThreadManagerWrapper.h"
 #import "ExtSdkChatroomManagerWrapper.h"
 #import "ExtSdkContactManagerWrapper.h"
 #import "ExtSdkConversationWrapper.h"
@@ -17,7 +18,6 @@
 #import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkToJson.h"
 #import "ExtSdkUserInfoManagerWrapper.h"
-#import "ExtSdkChatThreadManagerWrapper.h"
 #import <UserNotifications/UserNotifications.h>
 
 @interface ExtSdkClientWrapper () <EMClientDelegate, EMMultiDevicesDelegate>
@@ -141,7 +141,8 @@
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     BOOL unbindToken = [param[@"unbindToken"] boolValue];
-    if (YES == unbindToken && nil == EMClient.sharedClient.options.apnsCertName) {
+    if (YES == unbindToken &&
+        nil == EMClient.sharedClient.options.apnsCertName) {
         unbindToken = NO;
     }
     [EMClient.sharedClient logout:unbindToken
@@ -317,21 +318,36 @@
           withMethodType:(NSString *)aChannelName
                   result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSDictionary *dict = param[@"config"];
-    NSString* deviceToken = dict[@"deviceToken"];
-    NSData* deviceTokenData = [deviceToken dataUsingEncoding:NSUTF8StringEncoding];
-//    EMError* error = [EMClient.sharedClient bindDeviceToken:[deviceToken dataUsingEncoding:NSUTF8StringEncoding]];
-//    [self onResult:result withMethodType:aChannelName withError:error withParams:nil];
-    
-//    [EMClient.sharedClient asyncBindDeviceToken:[deviceToken dataUsingEncoding:NSUTF8StringEncoding]] success:^{
-//        [self onResult:result withMethodType:aChannelName withError:nil withParams:nil];
-//    } failure:^(EMError *aError) {
-//        [self onResult:result withMethodType:aChannelName withError:aError withParams:nil];
-//    }];
-    
+    NSString *deviceToken = dict[@"deviceToken"];
+    NSData *deviceTokenData =
+        [deviceToken dataUsingEncoding:NSUTF8StringEncoding];
+    //    EMError* error = [EMClient.sharedClient bindDeviceToken:[deviceToken
+    //    dataUsingEncoding:NSUTF8StringEncoding]]; [self onResult:result
+    //    withMethodType:aChannelName withError:error withParams:nil];
+
+    //    [EMClient.sharedClient asyncBindDeviceToken:[deviceToken
+    //    dataUsingEncoding:NSUTF8StringEncoding]] success:^{
+    //        [self onResult:result withMethodType:aChannelName withError:nil
+    //        withParams:nil];
+    //    } failure:^(EMError *aError) {
+    //        [self onResult:result withMethodType:aChannelName withError:aError
+    //        withParams:nil];
+    //    }];
+
     // must be NSString* type for deviceToken
-    [EMClient.sharedClient registerForRemoteNotificationsWithDeviceToken:deviceToken completion:^(EMError * _Nullable aError) {
-        [self onResult:result withMethodType:aChannelName withError:aError withParams:nil];
-    }];
+    [EMClient.sharedClient
+        registerForRemoteNotificationsWithDeviceToken:deviceToken
+                                           completion:^(
+                                               EMError *_Nullable aError) {
+                                             [self onResult:result
+                                                 withMethodType:aChannelName
+                                                      withError:aError
+                                                     withParams:nil];
+                                           }];
+}
+
+- (void)activeNumbersReachLimitation {
+    [self onReceive:ExtSdkMethodKeyOnAppActiveNumberReachLimit withParams:nil];
 }
 
 #pragma - mark EMClientDelegate
@@ -346,6 +362,11 @@
 }
 
 - (void)autoLoginDidCompleteWithError:(EMError *)aError {
+    if (aError.code == EMErrorServerServingForbidden) {
+        [self userDidForbidByServer];
+    } else if (aError.code == EMAppActiveNumbersReachLimitation) {
+        [self activeNumbersReachLimitation];
+    }
 }
 
 - (void)tokenWillExpire:(EMErrorCode)aErrorCode {
