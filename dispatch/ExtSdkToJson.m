@@ -316,6 +316,35 @@
 }
 @end
 
+@interface LocalFileHandler : NSObject
+
++ (NSString *)reset:(NSString *)localPath;
+
+@end
+
+@implementation LocalFileHandler
+
++ (NSString *)reset:(NSString *)localPath {
+#if !TARGET_OS_SIMULATOR
+    NSRange range = [localPath rangeOfString:@"/Library/"
+                                     options:NSBackwardsSearch];
+    NSRange range2 = [localPath rangeOfString:@"file://"
+                                      options:NSAnchoredSearch];
+    if (range.location == NSNotFound && range2.location != NSNotFound) {
+        return [localPath
+            stringByReplacingCharactersInRange:NSMakeRange(0, range2.length)
+                                    withString:@""];
+
+    } else {
+        return localPath;
+    }
+#else
+    return localPath;
+#endif
+}
+
+@end
+
 @implementation EMChatMessage (Json)
 
 + (EMChatMessage *)fromJsonObject:(NSDictionary *)aJson {
@@ -734,11 +763,11 @@
 + (EMMessageBody *)fromJsonObject:(NSDictionary *)aJson {
     NSString *path = aJson[@"localPath"];
     NSString *displayName = aJson[@"displayName"];
-    EMFileMessageBody *ret =
-        [[EMFileMessageBody alloc] initWithLocalPath:path
-                                         displayName:displayName];
+    EMFileMessageBody *ret = [[EMFileMessageBody alloc]
+        initWithLocalPath:[LocalFileHandler reset:path]
+              displayName:displayName];
     ret.secretKey = aJson[@"secret"];
-    ret.remotePath = aJson[@"remotePath"];
+    //    ret.remotePath = aJson[@"remotePath"];
     ret.fileLength = [aJson[@"fileSize"] longLongValue];
     ret.downloadStatus =
         [ret downloadStatusFromInt:[aJson[@"fileStatus"] intValue]];
@@ -813,18 +842,22 @@
 + (EMMessageBody *)fromJsonObject:(NSDictionary *)aJson {
     NSString *path = aJson[@"localPath"];
     NSString *displayName = aJson[@"displayName"];
-    NSData *imageData = [NSData dataWithContentsOfFile:path];
-    EMImageMessageBody *ret =
-        [[EMImageMessageBody alloc] initWithData:imageData
-                                     displayName:displayName];
+    //    NSData *imageData = [NSData dataWithContentsOfFile:path];
+    //    EMImageMessageBody *ret =
+    //        [[EMImageMessageBody alloc] initWithData:imageData
+    //                                     displayName:displayName];
+    EMImageMessageBody *ret = [[EMImageMessageBody alloc]
+        initWithLocalPath:[LocalFileHandler reset:path]
+              displayName:displayName];
+
     ret.secretKey = aJson[@"secret"];
-    ret.remotePath = aJson[@"remotePath"];
+    //    ret.remotePath = aJson[@"remotePath"];
     ret.fileLength = [aJson[@"fileSize"] longLongValue];
     ret.downloadStatus =
         [ret downloadStatusFromInt:[aJson[@"fileStatus"] intValue]];
-    ret.thumbnailLocalPath = aJson[@"thumbnailLocalPath"];
-    ret.thumbnailRemotePath = aJson[@"thumbnailRemotePath"];
-    ret.thumbnailSecretKey = aJson[@"thumbnailSecret"];
+    //    ret.thumbnailLocalPath = aJson[@"thumbnailLocalPath"];
+    //    ret.thumbnailRemotePath = aJson[@"thumbnailRemotePath"];
+    //    ret.thumbnailSecretKey = aJson[@"thumbnailSecret"];
     ret.size =
         CGSizeMake([aJson[@"width"] floatValue], [aJson[@"height"] floatValue]);
     ret.thumbnailDownloadStatus =
@@ -864,16 +897,16 @@
 + (EMVideoMessageBody *)fromJsonObject:(NSDictionary *)aJson {
     NSString *path = aJson[@"localPath"];
     NSString *displayName = aJson[@"displayName"];
-    EMVideoMessageBody *ret =
-        [[EMVideoMessageBody alloc] initWithLocalPath:path
-                                          displayName:displayName];
+    EMVideoMessageBody *ret = [[EMVideoMessageBody alloc]
+        initWithLocalPath:[LocalFileHandler reset:path]
+              displayName:displayName];
     ret.duration = [aJson[@"duration"] intValue];
     ret.secretKey = aJson[@"secret"];
-    ret.remotePath = aJson[@"remotePath"];
+    //    ret.remotePath = aJson[@"remotePath"];
     ret.fileLength = [aJson[@"fileSize"] longLongValue];
-    ret.thumbnailLocalPath = aJson[@"thumbnailLocalPath"];
-    ret.thumbnailRemotePath = aJson[@"thumbnailRemotePath"];
-    ret.thumbnailSecretKey = aJson[@"thumbnailSecret"];
+    //    ret.thumbnailLocalPath = aJson[@"thumbnailLocalPath"];
+    //    ret.thumbnailRemotePath = aJson[@"thumbnailRemotePath"];
+    //    ret.thumbnailSecretKey = aJson[@"thumbnailSecret"];
     ret.thumbnailDownloadStatus =
         [ret downloadStatusFromInt:[aJson[@"thumbnailStatus"] intValue]];
     ret.thumbnailSize =
@@ -911,11 +944,11 @@
 + (EMVoiceMessageBody *)fromJsonObject:(NSDictionary *)aJson {
     NSString *path = aJson[@"localPath"];
     NSString *displayName = aJson[@"displayName"];
-    EMVoiceMessageBody *ret =
-        [[EMVoiceMessageBody alloc] initWithLocalPath:path
-                                          displayName:displayName];
+    EMVoiceMessageBody *ret = [[EMVoiceMessageBody alloc]
+        initWithLocalPath:[LocalFileHandler reset:path]
+              displayName:displayName];
     ret.secretKey = aJson[@"secret"];
-    ret.remotePath = aJson[@"remotePath"];
+    //    ret.remotePath = aJson[@"remotePath"];
     ret.duration = [aJson[@"duration"] intValue];
     ret.downloadStatus =
         [ret downloadStatusFromInt:[aJson[@"fileStatus"] intValue]];
