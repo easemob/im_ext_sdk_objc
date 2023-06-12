@@ -392,7 +392,7 @@
     msg.ext = aJson[@"attributes"];
     msg.priority =
         [EMChatMessage priorityFromInt:[aJson[@"priority"] intValue]];
-    msg.deliverOnlineOnly = aJson[@"deliverOnlineOnly"];
+    msg.deliverOnlineOnly = [aJson[@"deliverOnlineOnly"] boolValue];
     return msg;
 }
 
@@ -695,14 +695,15 @@
 + (EMCmdMessageBody *)fromJsonObject:(NSDictionary *)aJson {
     EMCmdMessageBody *ret =
         [[EMCmdMessageBody alloc] initWithAction:aJson[@"action"]];
-    ret.isDeliverOnlineOnly = [aJson[@"deliverOnlineOnly"] boolValue];
+//    ret.isDeliverOnlineOnly = [aJson[@"deliverOnlineOnly"] boolValue];
+    ret.action = aJson[@"action"];
     return ret;
 }
 
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
     ret[@"action"] = self.action;
-    ret[@"deliverOnlineOnly"] = @(self.isDeliverOnlineOnly);
+//    ret[@"deliverOnlineOnly"] = @(self.isDeliverOnlineOnly);
     return ret;
 }
 
