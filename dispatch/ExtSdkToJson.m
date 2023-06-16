@@ -1370,8 +1370,8 @@
     options.direction = [dict[@"direction"] isEqual:@(0)]
                             ? EMMessageSearchDirectionUp
                             : EMMessageSearchDirectionDown;
-    options.startTime = [dict[@"startTs"] intValue];
-    options.endTime = [dict[@"endTs"] intValue];
+    options.startTime = [dict[@"startTs"] longLongValue];
+    options.endTime = [dict[@"endTs"] longLongValue];
     options.from = dict[@"from"];
     options.isSave = [dict[@"needSave"] boolValue];
     NSArray *types = dict[@"msgTypes"];
