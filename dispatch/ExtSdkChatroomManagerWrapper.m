@@ -733,7 +733,8 @@
             @"type" : @"onRemovedFromChatRoom",
             @"roomId" : aChatroom.chatroomId,
             @"roomName" : aChatroom.subject,
-            @"participant" : [[EMClient sharedClient] currentUsername]
+            @"participant" : [[EMClient sharedClient] currentUsername],
+            @"reason" : @(aReason)
         };
     }
 

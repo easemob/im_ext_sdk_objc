@@ -51,6 +51,8 @@
     ret[@"convId"] = self.conversationId;
     ret[@"convType"] = @([self.class typeToInt:self.type]);
     ret[@"isChatThread"] = @(self.isChatThread);
+    ret[@"isPinned"] = @(self.isPinned);
+    ret[@"pinnedTime"] = @(self.pinnedTime);
     ret[@"ext"] = self.ext;
     return ret;
 }
@@ -393,6 +395,9 @@
     msg.priority =
         [EMChatMessage priorityFromInt:[aJson[@"priority"] intValue]];
     msg.deliverOnlineOnly = [aJson[@"deliverOnlineOnly"] boolValue];
+    if (aJson[@"receiverList"]) {
+        msg.receiverList = aJson[@"receiverList"];
+    }
     return msg;
 }
 
@@ -419,6 +424,7 @@
     ret[@"isOnline"] = @(self.onlineState);
     ret[@"priority"] = @([EMChatMessage priorityToInt:self.priority]);
     ret[@"deliverOnlineOnly"] = @(self.deliverOnlineOnly);
+    ret[@"receiverList"] = self.receiverList;
 
     return ret;
 }
@@ -551,6 +557,8 @@
         ret = [EMCmdMessageBody fromJsonObject:bodyJson];
     } else if ([type isEqualToString:@"custom"]) {
         ret = [EMCustomMessageBody fromJsonObject:bodyJson];
+    } else if ([type isEqualToString:@"combine"]) {
+        ret = [EMCombineMessageBody fromJsonObject:bodyJson];
     }
     return ret;
 }
@@ -583,10 +591,16 @@
     case EMMessageBodyTypeVoice:
         type = @"voice";
         break;
+    case EMMessageBodyTypeCombine:
+        type = @"combine";
+        break;
     default:
         break;
     }
     ret[@"type"] = type;
+    ret[@"lastModifyOperatorId"] = self.operatorId;
+    ret[@"lastModifyTime"] = @(self.operationTime);
+    ret[@"modifyCount"] = @(self.operatorCount);
 
     return ret;
 }
@@ -611,6 +625,8 @@
         ret = EMMessageBodyTypeVideo;
     } else if ([aStrType isEqualToString:@"voice"]) {
         ret = EMMessageBodyTypeVoice;
+    } else if ([aStrType isEqualToString:@"combine"]) {
+        ret = EMMessageBodyTypeCombine;
     }
     return ret;
 }
@@ -695,7 +711,7 @@
 + (EMCmdMessageBody *)fromJsonObject:(NSDictionary *)aJson {
     EMCmdMessageBody *ret =
         [[EMCmdMessageBody alloc] initWithAction:aJson[@"action"]];
-//    ret.isDeliverOnlineOnly = [aJson[@"deliverOnlineOnly"] boolValue];
+    //    ret.isDeliverOnlineOnly = [aJson[@"deliverOnlineOnly"] boolValue];
     ret.action = aJson[@"action"];
     return ret;
 }
@@ -703,7 +719,7 @@
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
     ret[@"action"] = self.action;
-//    ret[@"deliverOnlineOnly"] = @(self.isDeliverOnlineOnly);
+    //    ret[@"deliverOnlineOnly"] = @(self.isDeliverOnlineOnly);
     return ret;
 }
 
@@ -747,6 +763,52 @@
     NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
     ret[@"event"] = self.event;
     ret[@"params"] = self.customExt;
+    return ret;
+}
+
+@end
+
+#pragma mark - combine
+
+@interface EMCombineMessageBody (Json)
+
++ (EMMessageBody *)fromJsonObject:(NSDictionary *)aJson;
+- (NSDictionary *)toJsonObject;
+
+@end
+
+@implementation EMCombineMessageBody (Json)
+
++ (EMMessageBody *)fromJsonObject:(NSDictionary *)aJson {
+
+    NSString *title = aJson[@"title"];
+    NSString *summary = aJson[@"summary"];
+    NSArray *messageIdList = aJson[@"messageIdList"];
+    NSString *compatibleText = aJson[@"compatibleText"];
+    NSString *localPath = aJson[@"localPath"];
+    NSString *remotePath = aJson[@"remotePath"];
+    NSString *secret = aJson[@"secret"];
+
+    EMCombineMessageBody *ret =
+        [[EMCombineMessageBody alloc] initWithTitle:title
+                                            summary:summary
+                                     compatibleText:compatibleText
+                                      messageIdList:messageIdList];
+
+    ret.remotePath = remotePath;
+    ret.secretKey = secret;
+    ret.localPath = localPath;
+    return ret;
+}
+- (NSDictionary *)toJsonObject {
+    NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
+    ret[@"title"] = self.title;
+    ret[@"summary"] = self.summary;
+    ret[@"compatibleText"] = self.compatibleText;
+    ret[@"localPath"] = self.localPath;
+    ret[@"remotePath"] = self.remotePath;
+    ret[@"secret"] = self.secretKey;
+    // ret[@"messageIdList"] = self.messageIdList;
     return ret;
 }
 
@@ -996,6 +1058,9 @@
     data[@"restServer"] = self.restServer;
     data[@"dnsUrl"] = self.dnsURL;
     data[@"areaCode"] = @(self.area);
+    data[@"enableEmptyConversation"] = @(self.loadEmptyConversations);
+    data[@"customDeviceName"] = self.customDeviceName;
+    data[@"customOSType"] = @(self.customOSType);
 
     return data;
 }
@@ -1055,7 +1120,13 @@
     options.restServer = aJson[@"restServer"];
     options.dnsURL = aJson[@"dnsURL"];
     options.area = [EMOptions AreaCodeFromInt:[aJson[@"areaCode"] intValue]];
-
+    options.loadEmptyConversations =
+        [aJson[@"enableEmptyConversation"] boolValue];
+    options.customDeviceName = aJson[@"customDeviceName"];
+    if (aJson[@"customOSType"]) {
+        options.customOSType = [aJson[@"customOSType"] intValue];
+    }
+    
     NSDictionary *pushConfig = aJson[@"pushConfig"];
     if (pushConfig != nil) {
         options.apnsCertName = pushConfig[@"deviceId"];
@@ -1395,6 +1466,8 @@
                 [list addObject:@(EMMessageBodyTypeCmd)];
             } else if ([type isEqualToString:@"custom"]) {
                 [list addObject:@(EMMessageBodyTypeCustom)];
+            } else if ([type isEqualToString:@"combine"]) {
+                [list addObject:@(EMMessageBodyTypeCombine)];
             }
         }
     }

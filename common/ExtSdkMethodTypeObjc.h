@@ -27,6 +27,12 @@ static NSString *_Nonnull const ExtSdkMethodKeySendDataToFlutter = @"onSendDataT
 static NSString *_Nonnull const ExtSdkMethodKeyOnTokenWillExpire = @"onTokenWillExpire";
 static NSString *_Nonnull const ExtSdkMethodKeyOnTokenDidExpire = @"onTokenDidExpire";
 
+static NSString *_Nonnull const ExtSdkMethodKeyOnMultiDeviceEventContact = @"onMultiDeviceEventContact";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMultiDeviceEventGroup = @"onMultiDeviceEventGroup";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMultiDeviceEventThread = @"onMultiDeviceEventThread";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMultiDeviceEventRemoveMessage = @"onMultiDeviceEventRemoveMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMultiDeviceEventConversation = @"onMultiDeviceEventConversation";
+
 static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidLoginFromOtherDevice = @"onUserDidLoginFromOtherDevice";
 static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidRemoveFromServer = @"onUserDidRemoveFromServer";
 static NSString *_Nonnull const ExtSdkMethodKeyOnUserDidForbidByServer = @"onUserDidForbidByServer";
@@ -94,6 +100,12 @@ static NSString *_Nonnull const ExtSdkMethodKeyFetchConversationsFromServerWithP
 static NSString *_Nonnull const ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIds = @"removeMessagesFromServerWithMsgIds";
 static NSString *_Nonnull const ExtSdkMethodKeyRemoveMessagesFromServerWithTs = @"removeMessagesFromServerWithTs";
 
+static NSString *_Nonnull const ExtSdkMethodKeyGetConversationsFromServerWithCursor = @"getConversationsFromServerWithCursor";
+static NSString *_Nonnull const ExtSdkMethodKeyGetPinnedConversationsFromServerWithCursor = @"getPinnedConversationsFromServerWithCursor";
+static NSString *_Nonnull const ExtSdkMethodKeyPinConversation = @"pinConversation";
+static NSString *_Nonnull const ExtSdkMethodKeyModifyMessage = @"modifyMessage";
+static NSString *_Nonnull const ExtSdkMethodKeyDownloadAndParseCombineMessage = @"downloadAndParseCombineMessage";
+
 #pragma mark - EMChatManagerDelegate
 static NSString *_Nonnull const ExtSdkMethodKeyOnMessagesReceived = @"onMessagesReceived";
 static NSString *_Nonnull const ExtSdkMethodKeyOnCmdMessagesReceived = @"onCmdMessagesReceived";
@@ -107,6 +119,7 @@ static NSString *_Nonnull const ExtSdkMethodKeyOnConversationHasRead = @"onConve
 
 static NSString *_Nonnull const ExtSdkMethodKeyChatOnReadAckForGroupMessageUpdated = @"onReadAckForGroupMessageUpdated";
 static NSString *_Nonnull const ExtSdkMethodKeyChatOnMessageReactionDidChange = @"messageReactionDidChange";
+static NSString *_Nonnull const ExtSdkMethodKeyOnMessageContentChanged = @"onMessageContentChanged";
 
 #pragma mark - EMMessageListener
 static NSString *_Nonnull const ExtSdkMethodKeyOnMessageProgressUpdate = @"onMessageProgressUpdate";
@@ -266,6 +279,8 @@ static NSString *_Nonnull const ExtSdkFetchSilentModeForAll = @"fetchSilentModeF
 static NSString *_Nonnull const ExtSdkFetchSilentModeForConversations = @"fetchSilentModeForConversations";
 static NSString *_Nonnull const ExtSdkSetPreferredNotificationLanguage = @"setPreferredNotificationLanguage";
 static NSString *_Nonnull const ExtSdkFetchPreferredNotificationLanguage = @"fetchPreferredNotificationLanguage";
+static NSString *_Nonnull const ExtSdkSetPushTemplate = @"setPushTemplate";
+static NSString *_Nonnull const ExtSdkGetPushTemplate = @"getPushTemplate";
 
 #pragma mark - EMUserInfoManagerWrapper
 static NSString *_Nonnull const ExtSdkMethodKeyUpdateOwnUserInfo = @"updateOwnUserInfo";
@@ -346,6 +361,11 @@ static const int ExtSdkMethodKeyOnUserDidLoginTooManyDeviceValue = 210;
 static const int ExtSdkMethodKeyOnUserKickedByOtherDeviceValue = 211;
 static const int ExtSdkMethodKeyOnUserAuthenticationFailedValue = 212;
 static const int ExtSdkMethodKeyOnAppActiveNumberReachLimitValue = 213;
+static const int ExtSdkMethodKeyOnMultiDeviceEventContactValue = 214;
+static const int ExtSdkMethodKeyOnMultiDeviceEventGroupValue = 215;
+static const int ExtSdkMethodKeyOnMultiDeviceEventThreadValue = 216;
+static const int ExtSdkMethodKeyOnMultiDeviceEventRemoveMessageValue = 217;
+static const int ExtSdkMethodKeyOnMultiDeviceEventConversationValue = 218;
 
 #pragma mark - EMContactManagerWrapper value
 static const int ExtSdkMethodKeyAddContactValue = 300;
@@ -404,6 +424,11 @@ static const int ExtSdkMethodKeyFetchConversationsFromServerWithPageValue = 532;
 static const int ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIdsValue = 533;
 static const int ExtSdkMethodKeyRemoveMessagesFromServerWithTsValue = 534;
 static const int ExtSdkMethodKeyfetchHistoryMessagesByOptionsValue = 535;
+static const int ExtSdkMethodKeyGetConversationsFromServerWithCursorValue = 536;
+static const int ExtSdkMethodKeyGetPinnedConversationsFromServerWithCursorValue = 537;
+static const int ExtSdkMethodKeyPinConversationValue = 538;
+static const int ExtSdkMethodKeyModifyMessageValue = 539;
+static const int ExtSdkMethodKeyDownloadAndParseCombineMessageValue = 540;
 
 #pragma mark - EMChatManagerDelegate value
 static const int ExtSdkMethodKeyOnMessagesReceivedValue = 600;
@@ -418,6 +443,7 @@ static const int ExtSdkMethodKeyOnConversationHasReadValue = 607;
 
 static const int ExtSdkMethodKeyChatOnReadAckForGroupMessageUpdatedValue = 608;
 static const int ExtSdkMethodKeyChatOnMessageReactionDidChangeValue = 609;
+static const int ExtSdkMethodKeyOnMessageContentChangedValue = 610;
 
 #pragma mark - EMMessageListener value
 static const int ExtSdkMethodKeyOnMessageProgressUpdateValue = 1200;
@@ -576,6 +602,8 @@ static const int ExtSdkFetchSilentModeForAllValue = 1021;
 static const int ExtSdkFetchSilentModeForConversationsValue = 1022;
 static const int ExtSdkSetPreferredNotificationLanguageValue = 1023;
 static const int ExtSdkFetchPreferredNotificationLanguageValue = 1024;
+static const int ExtSdkSetPushTemplateValue = 1025;
+static const int ExtSdkGetPushTemplateValue = 1026;
 
 #pragma mark - EMUserInfoManagerWrapper value
 static const int ExtSdkMethodKeyUpdateOwnUserInfoValue = 1100;

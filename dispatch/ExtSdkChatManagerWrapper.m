@@ -878,6 +878,106 @@
                        }];
 }
 
+- (void)getConversationsFromServerWithCursor:(NSDictionary *)param
+                              withMethodType:(NSString *)aChannelName
+                                      result:(nonnull id<ExtSdkCallbackObjc>)
+                                                 result {
+    __weak typeof(self) weakSelf = self;
+    NSString *cursor = param[@"cursor"];
+    int pageSize = [param[@"pageSize"] intValue];
+    [EMClient.sharedClient.chatManager
+        getConversationsFromServerWithCursor:cursor
+                                    pageSize:pageSize
+                                  completion:^(EMCursorResult<EMConversation *>
+                                                   *_Nullable ret,
+                                               EMError *_Nullable error) {
+                                    [weakSelf onResult:result
+                                        withMethodType:aChannelName
+                                             withError:error
+                                            withParams:[ret toJsonObject]];
+                                  }];
+}
+
+- (void)getPinnedConversationsFromServerWithCursor:(NSDictionary *)param
+                                    withMethodType:(NSString *)aChannelName
+                                            result:
+                                                (nonnull id<ExtSdkCallbackObjc>)
+                                                    result {
+    __weak typeof(self) weakSelf = self;
+    NSString *cursor = param[@"cursor"];
+    int pageSize = [param[@"pageSize"] intValue];
+    [EMClient.sharedClient.chatManager
+        getPinnedConversationsFromServerWithCursor:cursor
+                                          pageSize:pageSize
+                                        completion:^(
+                                            EMCursorResult<EMConversation *>
+                                                *_Nullable ret,
+                                            EMError *_Nullable error) {
+                                          [weakSelf onResult:result
+                                              withMethodType:aChannelName
+                                                   withError:error
+                                                  withParams:[ret
+                                                                 toJsonObject]];
+                                        }];
+}
+
+- (void)pinConversation:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
+                 result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *convId = param[@"convId"];
+    BOOL isPinned = [param[@"isPinned"] boolValue];
+    [EMClient.sharedClient.chatManager
+        pinConversation:convId
+               isPinned:isPinned
+        completionBlock:^(EMError *_Nullable error) {
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:error
+                  withParams:nil];
+        }];
+}
+
+- (void)modifyMessage:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
+               result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *msgId = param[@"msgId"];
+    EMMessageBody *body = [EMTextMessageBody fromJsonObject:param[@"body"]];
+    [EMClient.sharedClient.chatManager
+        modifyMessage:msgId
+                 body:body
+           completion:^(EMError *_Nullable error,
+                        EMChatMessage *_Nullable message) {
+             [weakSelf onResult:result
+                 withMethodType:aChannelName
+                      withError:error
+                     withParams: error != nil ? nil : [message toJsonObject]];
+           }];
+}
+
+- (void)downloadAndParseCombineMessage:(NSDictionary *)param
+                        withMethodType:(NSString *)aChannelName
+                                result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
+    [EMClient.sharedClient.chatManager
+        downloadAndParseCombineMessage:msg
+                            completion:^(
+                                NSArray<EMChatMessage *> *_Nullable messages,
+                                EMError *_Nullable error) {
+                              NSMutableArray *msgJsonAry =
+                                  [NSMutableArray array];
+                              for (EMChatMessage *msg in messages) {
+                                  [msgJsonAry addObject:[msg toJsonObject]];
+                              }
+                              [weakSelf onResult:result
+                                  withMethodType:aChannelName
+                                       withError:error
+                                      withParams:msgJsonAry];
+                            }];
+}
+
 #pragma mark - EMChatManagerDelegate
 
 - (void)conversationListDidUpdate:(NSArray *)aConversationList {
@@ -977,6 +1077,17 @@
 
     [self onReceive:ExtSdkMethodKeyChatOnMessageReactionDidChange
          withParams:list];
+}
+
+- (void)onMessageContentChanged:(EMChatMessage *_Nonnull)message
+                     operatorId:(NSString *_Nonnull)operatorId
+                  operationTime:(NSUInteger)operationTime {
+    NSDictionary *dict = @{
+        @"message" : [message toJsonObject],
+        @"lastModifyOperatorId" : operatorId,
+        @"lastModifyTime" : @(operationTime)
+    };
+    [self onReceive:ExtSdkMethodKeyOnMessageContentChanged withParams:dict];
 }
 
 @end

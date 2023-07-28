@@ -240,11 +240,11 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkChatManagerWrapper getInstance] deleteConversation:ps withMethodType:methodType result:callback];
         break;
         //    case ExtSdkMethodKeySetVoiceMessageListenedValue:
-        //        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
-        //        break;
+        //        [callback onFail:1 withExtension:[NSString
+        //        stringWithFormat:@"not implement: %@", methodType]]; break;
         //    case ExtSdkMethodKeyUpdateParticipantValue:
-        //        [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
-        //        break;
+        //        [callback onFail:1 withExtension:[NSString
+        //        stringWithFormat:@"not implement: %@", methodType]]; break;
     case ExtSdkMethodKeyUpdateConversationsNameValue:
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;
@@ -708,7 +708,7 @@ static NSString *const TAG = @"ExtSdkDispatch";
     case ExtSdkMethodKeyChatReportMessageValue:
         [[ExtSdkChatManagerWrapper getInstance] reportMessage:ps withMethodType:methodType result:callback];
         break;
-            
+
     case ExtSdkMethodKeyFetchConversationsFromServerWithPageValue:
         [[ExtSdkChatManagerWrapper getInstance] fetchConversationsFromServerWithPage:ps withMethodType:methodType result:callback];
         break;
@@ -852,6 +852,28 @@ static NSString *const TAG = @"ExtSdkDispatch";
         break;
     case ExtSdkMethodKeyfetchMembersAttributesFromGroupValue:
         [[ExtSdkGroupManagerWrapper getInstance] fetchMembersAttributes:ps withMethodType:methodType result:callback];
+        break;
+
+    case ExtSdkMethodKeyGetConversationsFromServerWithCursorValue:
+        [[ExtSdkChatManagerWrapper getInstance] getConversationsFromServerWithCursor:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyGetPinnedConversationsFromServerWithCursorValue:
+        [[ExtSdkChatManagerWrapper getInstance] getPinnedConversationsFromServerWithCursor:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyPinConversationValue:
+        [[ExtSdkChatManagerWrapper getInstance] pinConversation:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyModifyMessageValue:
+        [[ExtSdkChatManagerWrapper getInstance] modifyMessage:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyDownloadAndParseCombineMessageValue:
+        [[ExtSdkChatManagerWrapper getInstance] downloadAndParseCombineMessage:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkSetPushTemplateValue:
+        [[ExtSdkPushManagerWrapper getInstance] setPushTemplate:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkGetPushTemplateValue:
+        [[ExtSdkPushManagerWrapper getInstance] getPushTemplate:ps withMethodType:methodType result:callback];
         break;
 
     default:

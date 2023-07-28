@@ -315,6 +315,21 @@
           ExtSdkMethodKeyfetchMemberAttributesFromGroup : @(ExtSdkMethodKeyfetchMemberAttributesFromGroupValue),
           ExtSdkMethodKeyfetchMembersAttributesFromGroup : @(ExtSdkMethodKeyfetchMembersAttributesFromGroupValue),
           ExtSdkMethodKeyOnAppActiveNumberReachLimit : @(ExtSdkMethodKeyOnAppActiveNumberReachLimitValue),
+          
+          ExtSdkMethodKeyGetConversationsFromServerWithCursor : @(ExtSdkMethodKeyGetConversationsFromServerWithCursorValue),
+          ExtSdkMethodKeyGetPinnedConversationsFromServerWithCursor : @(ExtSdkMethodKeyGetPinnedConversationsFromServerWithCursorValue),
+          ExtSdkMethodKeyPinConversation : @(ExtSdkMethodKeyPinConversationValue),
+          ExtSdkMethodKeyModifyMessage : @(ExtSdkMethodKeyModifyMessageValue),
+          ExtSdkMethodKeyDownloadAndParseCombineMessage : @(ExtSdkMethodKeyDownloadAndParseCombineMessageValue),
+          ExtSdkMethodKeyOnMessageContentChanged : @(ExtSdkMethodKeyOnMessageContentChangedValue),
+          ExtSdkSetPushTemplate : @(ExtSdkSetPushTemplateValue),
+          ExtSdkGetPushTemplate : @(ExtSdkGetPushTemplateValue),
+          
+          ExtSdkMethodKeyOnMultiDeviceEventContact : @(ExtSdkMethodKeyOnMultiDeviceEventContactValue),
+          ExtSdkMethodKeyOnMultiDeviceEventGroup : @(ExtSdkMethodKeyOnMultiDeviceEventGroupValue),
+          ExtSdkMethodKeyOnMultiDeviceEventThread : @(ExtSdkMethodKeyOnMultiDeviceEventThreadValue),
+          ExtSdkMethodKeyOnMultiDeviceEventRemoveMessage : @(ExtSdkMethodKeyOnMultiDeviceEventRemoveMessageValue),
+          ExtSdkMethodKeyOnMultiDeviceEventConversation : @(ExtSdkMethodKeyOnMultiDeviceEventConversationValue),
       };
     });
     if (nil != key) {

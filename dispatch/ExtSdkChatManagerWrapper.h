@@ -148,6 +148,29 @@ NS_ASSUME_NONNULL_BEGIN
                        withMethodType:(NSString *)aChannelName
                                result:(nonnull id<ExtSdkCallbackObjc>)result;
 
+- (void)getConversationsFromServerWithCursor:(NSDictionary *)param
+                              withMethodType:(NSString *)aChannelName
+                                      result:(nonnull id<ExtSdkCallbackObjc>)
+                                                 result;
+
+- (void)getPinnedConversationsFromServerWithCursor:(NSDictionary *)param
+                                    withMethodType:(NSString *)aChannelName
+                                            result:
+                                                (nonnull id<ExtSdkCallbackObjc>)
+                                                    result;
+
+- (void)pinConversation:(NSDictionary *)param
+         withMethodType:(NSString *)aChannelName
+                 result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)modifyMessage:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
+               result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)downloadAndParseCombineMessage:(NSDictionary *)param
+                        withMethodType:(NSString *)aChannelName
+                                result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 @end
 
 NS_ASSUME_NONNULL_END

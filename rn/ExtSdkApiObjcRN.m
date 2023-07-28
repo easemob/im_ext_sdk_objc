@@ -418,6 +418,20 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyfetchMemberAttributesFromGroup,
         ExtSdkMethodKeyfetchMembersAttributesFromGroup,
         ExtSdkMethodKeyOnAppActiveNumberReachLimit,
+        
+        ExtSdkMethodKeyGetConversationsFromServerWithCursor,
+        ExtSdkMethodKeyGetPinnedConversationsFromServerWithCursor,
+        ExtSdkMethodKeyPinConversation,
+        ExtSdkMethodKeyModifyMessage,
+        ExtSdkMethodKeyDownloadAndParseCombineMessage,
+        ExtSdkMethodKeyOnMessageContentChanged,
+        ExtSdkSetPushTemplate,
+        ExtSdkGetPushTemplate,
+        ExtSdkMethodKeyOnMultiDeviceEventContact,
+        ExtSdkMethodKeyOnMultiDeviceEventGroup,
+        ExtSdkMethodKeyOnMultiDeviceEventThread,
+        ExtSdkMethodKeyOnMultiDeviceEventRemoveMessage,
+        ExtSdkMethodKeyOnMultiDeviceEventConversation,
     ];
 //    NSLog(@"%@: supportedEvents: %@", TAG, ret);
     return ret;
