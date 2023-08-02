@@ -598,9 +598,11 @@
         break;
     }
     ret[@"type"] = type;
-    ret[@"lastModifyOperatorId"] = self.operatorId;
-    ret[@"lastModifyTime"] = @(self.operationTime);
-    ret[@"modifyCount"] = @(self.operatorCount);
+    if(self.operatorId && self.operatorId.length > 0) {
+        ret[@"lastModifyOperatorId"] = self.operatorId;
+        ret[@"lastModifyTime"] = @(self.operationTime);
+        ret[@"modifyCount"] = @(self.operatorCount);
+    }
 
     return ret;
 }
