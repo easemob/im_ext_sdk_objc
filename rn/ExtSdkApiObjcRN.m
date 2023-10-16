@@ -9,8 +9,8 @@
 #import "ExtSdkApiRNImpl.h"
 #import "ExtSdkCallbackObjcRN.h"
 #import "ExtSdkDelegateObjcRN.h"
-#import "ExtSdkThreadUtilObjc.h"
 #import "ExtSdkMethodTypeObjc.h"
+#import "ExtSdkThreadUtilObjc.h"
 #import <HyphenateChat/EMClient.h>
 #import <UIKit/UIApplication.h>
 
@@ -41,13 +41,15 @@ static NSString *const TAG = @"ExtSdkApiRN";
     if (self) {
         self->impl = [[ExtSdkApiRNImpl alloc] init];
         self->delegate = [[ExtSdkDelegateObjcRN alloc] initWithApi:self];
-        [self->impl addListener:[[ExtSdkDelegateObjcRN alloc] initWithApi:self]];
+        [self->impl
+            addListener:[[ExtSdkDelegateObjcRN alloc] initWithApi:self]];
         [self registerSystemNotify];
     }
     return self;
 }
 
-- (void)onReceive:(nonnull NSString *)methodType withParams:(nullable id<NSObject>)data {
+- (void)onReceive:(nonnull NSString *)methodType
+       withParams:(nullable id<NSObject>)data {
     NSLog(@"%@: onReceive:", TAG);
     [ExtSdkThreadUtilObjc mainThreadExecute:^{
       [self sendEventWithName:methodType body:data];
@@ -61,23 +63,27 @@ static NSString *const TAG = @"ExtSdkApiRN";
 #pragma mark - Others
 
 - (void)registerSystemNotify {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground:)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(applicationWillEnterForeground:)
+               name:UIApplicationWillEnterForegroundNotification
+             object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(applicationDidEnterBackground:)
+               name:UIApplicationDidEnterBackgroundNotification
+             object:nil];
 }
 
 - (void)applicationWillEnterForeground:(NSNotification *)notification {
     NSLog(@"%@: applicationWillEnterForeground:", TAG);
-    [[EMClient sharedClient] applicationWillEnterForeground:[UIApplication sharedApplication]];
+    [[EMClient sharedClient]
+        applicationWillEnterForeground:[UIApplication sharedApplication]];
 }
 - (void)applicationDidEnterBackground:(NSNotification *)notification {
     NSLog(@"%@: applicationDidEnterBackground:", TAG);
-    [[EMClient sharedClient] applicationDidEnterBackground:[UIApplication sharedApplication]];
+    [[EMClient sharedClient]
+        applicationDidEnterBackground:[UIApplication sharedApplication]];
 }
 
 #pragma mark - RCTBridgeModule
@@ -90,11 +96,16 @@ RCT_EXPORT_METHOD(callMethod
                   : (RCTPromiseResolveBlock)resolve
                   : (RCTPromiseRejectBlock)reject) {
     NSLog(@"%@: callMethod:", TAG);
-    id<ExtSdkCallbackObjc> callback = [[ExtSdkCallbackObjcRN alloc] initWithResolve:resolve withReject:reject];
-    __weak typeof(self) weakself = self; // TODO: 后续解决 mm文件无法使用typeof关键字: 使用分类方式解决
+    id<ExtSdkCallbackObjc> callback =
+        [[ExtSdkCallbackObjcRN alloc] initWithResolve:resolve
+                                           withReject:reject];
+    __weak typeof(self) weakself =
+        self; // TODO: 后续解决 mm文件无法使用typeof关键字: 使用分类方式解决
     [ExtSdkThreadUtilObjc asyncExecute:^{
       if (weakself) {
-          [[weakself getApi] callSdkApi:methodName withParams:params withCallback:callback];
+          [[weakself getApi] callSdkApi:methodName
+                             withParams:params
+                           withCallback:callback];
       }
     }];
 }
@@ -148,7 +159,6 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyOnUserKickedByOtherDevice,
         ExtSdkMethodKeyOnUserAuthenticationFailed,
 
-
         /// EMContactManagerWrapper
         ExtSdkMethodKeyAddContact,
         ExtSdkMethodKeyDeleteContact,
@@ -201,7 +211,7 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyChatFetchReactionList,
         ExtSdkMethodKeyChatFetchReactionDetail,
         ExtSdkMethodKeyChatReportMessage,
-        
+
         ExtSdkMethodKeyFetchConversationsFromServerWithPage,
         ExtSdkMethodKeyRemoveMessagesFromServerWithMsgIds,
         ExtSdkMethodKeyRemoveMessagesFromServerWithTs,
@@ -288,7 +298,7 @@ RCT_EXPORT_METHOD(callMethod
 
         ExtSdkMethodKeyMuteAllChatRoomMembers,
         ExtSdkMethodKeyUnMuteAllChatRoomMembers,
-        
+
         MKfetchChatRoomAttributes,
         MKfetchChatRoomAllAttributes,
         MKsetChatRoomAttributes,
@@ -411,14 +421,14 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyChatOnChatThreadUpdated,
         ExtSdkMethodKeyChatOnChatThreadDestroyed,
         ExtSdkMethodKeyChatOnChatThreadUserRemoved,
-        
+
         ExtSdkMethodKeyfetchHistoryMessagesByOptions,
         ExtSdkMethodKeydeleteMessagesWithTs,
         ExtSdkMethodKeysetMemberAttributesFromGroup,
         ExtSdkMethodKeyfetchMemberAttributesFromGroup,
         ExtSdkMethodKeyfetchMembersAttributesFromGroup,
         ExtSdkMethodKeyOnAppActiveNumberReachLimit,
-        
+
         ExtSdkMethodKeyGetConversationsFromServerWithCursor,
         ExtSdkMethodKeyGetPinnedConversationsFromServerWithCursor,
         ExtSdkMethodKeyPinConversation,
@@ -432,8 +442,10 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyOnMultiDeviceEventThread,
         ExtSdkMethodKeyOnMultiDeviceEventRemoveMessage,
         ExtSdkMethodKeyOnMultiDeviceEventConversation,
+
+        ExtSdkMethodKeyGetMsgCount,
     ];
-//    NSLog(@"%@: supportedEvents: %@", TAG, ret);
+    //    NSLog(@"%@: supportedEvents: %@", TAG, ret);
     return ret;
 }
 

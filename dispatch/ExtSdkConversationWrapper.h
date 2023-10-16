@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
            withMethodType:(NSString *)aChannelName
                    result:(nonnull id<ExtSdkCallbackObjc>)result;
 
+- (void)getMsgCount:(nullable NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
+             result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 - (void)getLatestMsg:(NSDictionary *)param
       withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result;
@@ -80,8 +84,8 @@ NS_ASSUME_NONNULL_BEGIN
                  result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)deleteMessagesWithTimestamp:(NSDictionary *)param
-              withMethodType:(NSString *)aChannelName
-                      result:(nonnull id<ExtSdkCallbackObjc>)result;
+                     withMethodType:(NSString *)aChannelName
+                             result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 @end
 

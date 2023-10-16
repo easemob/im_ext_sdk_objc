@@ -330,6 +330,8 @@
           ExtSdkMethodKeyOnMultiDeviceEventThread : @(ExtSdkMethodKeyOnMultiDeviceEventThreadValue),
           ExtSdkMethodKeyOnMultiDeviceEventRemoveMessage : @(ExtSdkMethodKeyOnMultiDeviceEventRemoveMessageValue),
           ExtSdkMethodKeyOnMultiDeviceEventConversation : @(ExtSdkMethodKeyOnMultiDeviceEventConversationValue),
+          
+          ExtSdkMethodKeyGetMsgCount : @(ExtSdkMethodKeyGetMsgCountValue),
       };
     });
     if (nil != key) {

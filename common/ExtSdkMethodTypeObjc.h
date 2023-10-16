@@ -132,6 +132,7 @@ static NSString *_Nonnull const ExtSdkMethodKeyOnMessageStatusChanged = @"onMess
 #pragma mark - EMConversationWrapper
 
 static NSString *_Nonnull const ExtSdkMethodKeyGetUnreadMsgCount = @"getUnreadMsgCount";
+static NSString *_Nonnull const ExtSdkMethodKeyGetMsgCount = @"getMsgCount";
 static NSString *_Nonnull const ExtSdkMethodKeyMarkAllMsgsAsRead = @"markAllMessagesAsRead";
 static NSString *_Nonnull const ExtSdkMethodKeyMarkMsgAsRead = @"markMessageAsRead";
 static NSString *_Nonnull const ExtSdkMethodKeySyncConversationExt = @"syncConversationExt";
@@ -467,6 +468,7 @@ static const int ExtSdkMethodKeyClearAllMsgValue = 708;
 static const int ExtSdkMethodKeyInsertMsgValue = 709;
 static const int ExtSdkMethodKeyAppendMsgValue = 710;
 static const int ExtSdkMethodKeyUpdateConversationMsgValue = 711;
+static const int ExtSdkMethodKeyGetMsgCountValue = 720;
 
 static const int ExtSdkMethodKeyLoadMsgWithIdValue = 712;
 static const int ExtSdkMethodKeyLoadMsgWithStartIdValue = 713;

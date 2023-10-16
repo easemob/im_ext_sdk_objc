@@ -74,6 +74,19 @@
                       }];
 }
 
+- (void)getMsgCount:(nullable NSDictionary *)param
+     withMethodType:(NSString *)aChannelName
+             result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    [self getConversationWithParam:param
+                        completion:^(EMConversation *conversation) {
+                          [weakSelf onResult:result
+                              withMethodType:aChannelName
+                                   withError:nil
+                                  withParams:@(conversation.messagesCount)];
+                        }];
+}
+
 - (void)getLatestMsg:(NSDictionary *)param
       withMethodType:(NSString *)aChannelName
               result:(nonnull id<ExtSdkCallbackObjc>)result {
@@ -242,8 +255,8 @@
 }
 
 - (void)deleteMessagesWithTimestamp:(NSDictionary *)param
-              withMethodType:(NSString *)aChannelName
-                      result:(nonnull id<ExtSdkCallbackObjc>)result {
+                     withMethodType:(NSString *)aChannelName
+                             result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     [self getConversationWithParam:param
                         completion:^(EMConversation *conversation) {

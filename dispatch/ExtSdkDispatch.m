@@ -313,6 +313,9 @@ static NSString *const TAG = @"ExtSdkDispatch";
     case ExtSdkMethodKeyGetUnreadMsgCountValue:
         [[ExtSdkConversationWrapper getInstance] getUnreadMsgCount:ps withMethodType:methodType result:callback];
         break;
+    case ExtSdkMethodKeyGetMsgCountValue:
+        [[ExtSdkConversationWrapper getInstance] getMsgCount:ps withMethodType:methodType result:callback];
+        break;
     case ExtSdkMethodKeyMarkAllMsgsAsReadValue:
         [[ExtSdkConversationWrapper getInstance] markAllMsgsAsRead:ps withMethodType:methodType result:callback];
         break;
