@@ -444,6 +444,12 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeyOnMultiDeviceEventConversation,
 
         ExtSdkMethodKeyGetMsgCount,
+        
+        ExtSdkMethodKeygetAllContacts,
+        ExtSdkMethodKeysetContactRemark,
+        ExtSdkMethodKeygetContact,
+        ExtSdkMethodKeyfetchAllContacts,
+        ExtSdkMethodKeyfetchContacts,
     ];
     //    NSLog(@"%@: supportedEvents: %@", TAG, ret);
     return ret;

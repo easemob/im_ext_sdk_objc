@@ -322,6 +322,12 @@ static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadUpdated = @"onCha
 static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadDestroyed = @"onChatThreadDestroyed";
 static NSString *_Nonnull const ExtSdkMethodKeyChatOnChatThreadUserRemoved = @"onChatThreadUserRemoved";
 
+static NSString *_Nonnull const ExtSdkMethodKeygetAllContacts = @"getAllContacts";
+static NSString *_Nonnull const ExtSdkMethodKeysetContactRemark = @"setContactRemark";
+static NSString *_Nonnull const ExtSdkMethodKeygetContact = @"getContact";
+static NSString *_Nonnull const ExtSdkMethodKeyfetchAllContacts = @"fetchAllContacts";
+static NSString *_Nonnull const ExtSdkMethodKeyfetchContacts = @"fetchContacts";
+
 // TODO: EMChatThreadManagerListener
 
 // ############################################################################
@@ -647,6 +653,14 @@ static const int ExtSdkMethodKeyChatOnChatThreadDestroyedValue = 1516;
 static const int ExtSdkMethodKeyChatOnChatThreadUserRemovedValue = 1517;
 
 // TODO: EMChatThreadManagerListener
+
+// TODO: others
+
+static const int ExtSdkMethodKeygetAllContactsValue = 2000;
+static const int ExtSdkMethodKeysetContactRemarkValue = 2001;
+static const int ExtSdkMethodKeygetContactValue = 2002;
+static const int ExtSdkMethodKeyfetchAllContactsValue = 2003;
+static const int ExtSdkMethodKeyfetchContactsValue = 2004;
 
 @interface ExtSdkMethodTypeObjc : NSObject
 

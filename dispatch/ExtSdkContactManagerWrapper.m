@@ -7,6 +7,7 @@
 
 #import "ExtSdkContactManagerWrapper.h"
 #import "ExtSdkMethodTypeObjc.h"
+#import "ExtSdkToJson.h"
 
 @interface ExtSdkContactManagerWrapper () <EMContactManagerDelegate>
 
@@ -184,6 +185,88 @@
                    withError:aError
                   withParams:aList];
         }];
+}
+
+- (void)getAllContacts:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
+                result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSArray<EMContact *> *contacts =
+        [EMClient.sharedClient.contactManager getAllContacts];
+    NSMutableArray *contactList = [NSMutableArray array];
+    for (EMContact *contact in contacts) {
+        [contactList addObject:[contact toJsonObject]];
+    }
+    [self onResult:result
+        withMethodType:aChannelName
+             withError:nil
+            withParams:contactList];
+}
+
+- (void)setContactRemark:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *userId = param[@"userId"];
+    NSString *remark = param[@"remark"];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.contactManager
+        setContactRemark:userId
+                  remark:remark
+              completion:^(EMContact *_Nullable contact,
+                           EMError *_Nullable aError) {
+                [weakSelf onResult:result
+                    withMethodType:aChannelName
+                         withError:aError
+                        withParams:nil];
+              }];
+}
+
+- (void)getContact:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result {
+    NSString *userId = param[@"userId"];
+    EMContact *contact =
+        [EMClient.sharedClient.contactManager getContact:userId];
+    [self onResult:result
+        withMethodType:aChannelName
+             withError:nil
+            withParams:[contact toJsonObject]];
+}
+
+- (void)fetchAllContacts:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.contactManager
+        getAllContactsFromServerWithCompletion:^(
+            NSArray<EMContact *> *_Nullable aList, EMError *_Nullable aError) {
+          NSMutableArray *contactList = [NSMutableArray array];
+          for (EMContact *contact in aList) {
+              [contactList addObject:[contact toJsonObject]];
+          }
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:aError
+                  withParams:contactList];
+        }];
+}
+
+- (void)fetchContacts:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
+               result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    NSString *cursor = param[@"cursor"];
+    int pageSize = [param[@"pageSize"] intValue];
+    [EMClient.sharedClient.contactManager
+        getContactsFromServerWithCursor:cursor
+                               pageSize:pageSize
+                             completion:^(
+                                 EMCursorResult<EMContact *> *_Nullable aResult,
+                                 EMError *_Nullable aError) {
+                               [weakSelf onResult:result
+                                   withMethodType:aChannelName
+                                        withError:aError
+                                       withParams:[aResult toJsonObject]];
+                             }];
 }
 
 #pragma mark - ExtSdkContactManagerDelegate

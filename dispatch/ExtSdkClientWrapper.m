@@ -363,11 +363,14 @@
     withMethodType:(NSString *)aChannelName
             result:(nonnull id<ExtSdkCallbackObjc>)result {
     NSString *newAgoraToken = param[@"agora_token"];
-    [EMClient.sharedClient renewToken:newAgoraToken];
-    [self onResult:result
-        withMethodType:ExtSdkMethodKeyRenewToken
-             withError:nil
-            withParams:nil];
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient renewToken:newAgoraToken
+                           completion:^(EMError *_Nullable aError) {
+                             [weakSelf onResult:result
+                                 withMethodType:ExtSdkMethodKeyRenewToken
+                                      withError:aError
+                                     withParams:nil];
+                           }];
 }
 
 - (void)updatePushConfig:(NSDictionary *)param
@@ -420,7 +423,7 @@
 - (void)autoLoginDidCompleteWithError:(EMError *)aError {
     if (aError.code == EMErrorServerServingForbidden) {
         [self userDidForbidByServer];
-    } else if (aError.code == EMAppActiveNumbersReachLimitation) {
+    } else if (aError.code == EMErrorAppActiveNumbersReachLimitation) {
         [self activeNumbersReachLimitation];
     }
 }

@@ -848,6 +848,20 @@
                     }];
 }
 
+- (void)fetchJoinedGroupCount:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    [EMClient.sharedClient.groupManager
+        getJoinedGroupsCountFromServerWithCompletion:^(
+            NSInteger groupCount, EMError *_Nullable aError) {
+          [weakSelf onResult:result
+              withMethodType:aChannelName
+                   withError:aError
+                  withParams:@(groupCount)];
+        }];
+}
+
 #pragma mark - EMGroupManagerDelegate
 
 - (void)groupInvitationDidReceive:(NSString *_Nonnull)aGroupId
@@ -927,9 +941,22 @@
 
 - (void)joinGroupRequestDidDecline:(NSString *)aGroupId
                             reason:(NSString *)aReason {
+    //    NSDictionary *map = @{
+    //        @"type" : @"onRequestToJoinDeclined",
+    //        @"groupId" : aGroupId,
+    //        @"reason" : aReason
+    //    };
+    //    [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];
+}
+
+- (void)joinGroupRequestDidDecline:(NSString *_Nonnull)aGroupId
+                            reason:(NSString *_Nullable)aReason
+                          decliner:(NSString *_Nullable)aDecliner
+                         applicant:(NSString *_Nonnull)aApplicant {
     NSDictionary *map = @{
         @"type" : @"onRequestToJoinDeclined",
         @"groupId" : aGroupId,
+        @"applicant" : aApplicant,
         @"reason" : aReason
     };
     [self onReceive:ExtSdkMethodKeyOnGroupChanged withParams:map];

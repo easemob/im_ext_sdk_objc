@@ -208,6 +208,10 @@ NS_ASSUME_NONNULL_BEGIN
                 withMethodType:(NSString *)aChannelName
                         result:(nonnull id<ExtSdkCallbackObjc>)result;
 
+- (void)fetchJoinedGroupCount:(NSDictionary *)param
+               withMethodType:(NSString *)aChannelName
+                       result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 @end
 
 NS_ASSUME_NONNULL_END

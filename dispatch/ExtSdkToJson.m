@@ -425,6 +425,7 @@
     ret[@"priority"] = @([EMChatMessage priorityToInt:self.priority]);
     ret[@"deliverOnlineOnly"] = @(self.deliverOnlineOnly);
     ret[@"receiverList"] = self.receiverList;
+    ret[@"isBroadcast"] = @(self.broadcast);
 
     return ret;
 }
@@ -598,7 +599,7 @@
         break;
     }
     ret[@"type"] = type;
-    if(self.operatorId && self.operatorId.length > 0) {
+    if (self.operatorId && self.operatorId.length > 0) {
         ret[@"lastModifyOperatorId"] = self.operatorId;
         ret[@"lastModifyTime"] = @(self.operationTime);
         ret[@"modifyCount"] = @(self.operatorCount);
@@ -1128,7 +1129,7 @@
     if (aJson[@"customOSType"]) {
         options.customOSType = [aJson[@"customOSType"] intValue];
     }
-    
+
     NSDictionary *pushConfig = aJson[@"pushConfig"];
     if (pushConfig != nil) {
         options.apnsCertName = pushConfig[@"deviceId"];
@@ -1480,4 +1481,21 @@
 
     return options;
 }
+@end
+
+@implementation EMContact (Json)
+
+- (nonnull NSDictionary *)toJsonObject {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    data[@"userId"] = self.userId;
+    data[@"remark"] = self.remark;
+    return data;
+}
+
++ (nonnull EMContact *)formJsonObject:(nonnull NSDictionary *)dict {
+    EMContact *contact = [[EMContact alloc] initWithUserId:dict[@"userId"]
+                                                    remark:dict[@"remark"]];
+    return contact;
+}
+
 @end

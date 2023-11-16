@@ -59,6 +59,26 @@ NS_ASSUME_NONNULL_BEGIN
                    withMethodType:(NSString *)aChannelName
                            result:(nonnull id<ExtSdkCallbackObjc>)result;
 
+- (void)getAllContacts:(NSDictionary *)param
+        withMethodType:(NSString *)aChannelName
+                result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)setContactRemark:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)getContact:(NSDictionary *)param
+    withMethodType:(NSString *)aChannelName
+            result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchAllContacts:(NSDictionary *)param
+          withMethodType:(NSString *)aChannelName
+                  result:(nonnull id<ExtSdkCallbackObjc>)result;
+
+- (void)fetchContacts:(NSDictionary *)param
+       withMethodType:(NSString *)aChannelName
+               result:(nonnull id<ExtSdkCallbackObjc>)result;
+
 @end
 
 NS_ASSUME_NONNULL_END

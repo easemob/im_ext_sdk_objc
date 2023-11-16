@@ -332,6 +332,12 @@
           ExtSdkMethodKeyOnMultiDeviceEventConversation : @(ExtSdkMethodKeyOnMultiDeviceEventConversationValue),
           
           ExtSdkMethodKeyGetMsgCount : @(ExtSdkMethodKeyGetMsgCountValue),
+          
+          ExtSdkMethodKeygetAllContacts : @(ExtSdkMethodKeygetAllContactsValue),
+          ExtSdkMethodKeysetContactRemark : @(ExtSdkMethodKeysetContactRemarkValue),
+          ExtSdkMethodKeygetContact : @(ExtSdkMethodKeygetContactValue),
+          ExtSdkMethodKeyfetchAllContacts : @(ExtSdkMethodKeyfetchAllContactsValue),
+          ExtSdkMethodKeyfetchContacts : @(ExtSdkMethodKeyfetchContactsValue),
       };
     });
     if (nil != key) {

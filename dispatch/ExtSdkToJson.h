@@ -11,6 +11,7 @@
 #import <HyphenateChat/EMChatThread.h>
 #import <HyphenateChat/EMChatThreadEvent.h>
 #import <HyphenateChat/EMChatroom.h>
+#import <HyphenateChat/EMContact.h>
 #import <HyphenateChat/EMConversation.h>
 #import <HyphenateChat/EMCursorResult.h>
 #import <HyphenateChat/EMDeviceConfig.h>
@@ -158,13 +159,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)toJsonObject;
 @end
 
-@interface EMSilentModeTime (Helper) <ExtSdkToJson>
+@interface EMSilentModeTime (Json) <ExtSdkToJson>
 + (EMSilentModeTime *)formJsonObject:(NSDictionary *)dict;
 - (NSDictionary *)toJsonObject;
 @end
 
-@interface EMFetchServerMessagesOption (Helper) <ExtSdkToJson>
+@interface EMFetchServerMessagesOption (Json) <ExtSdkToJson>
 + (EMFetchServerMessagesOption *)formJsonObject:(NSDictionary *)dict;
+@end
+
+@interface EMContact (Json) <ExtSdkToJson>
++ (EMContact *)formJsonObject:(NSDictionary *)dict;
+- (NSDictionary *)toJsonObject;
 @end
 
 NS_ASSUME_NONNULL_END
