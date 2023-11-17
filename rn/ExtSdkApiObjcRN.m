@@ -450,6 +450,7 @@ RCT_EXPORT_METHOD(callMethod
         ExtSdkMethodKeygetContact,
         ExtSdkMethodKeyfetchAllContacts,
         ExtSdkMethodKeyfetchContacts,
+        ExtSdkMethodKeyfetchJoinedGroupCount,
     ];
     //    NSLog(@"%@: supportedEvents: %@", TAG, ret);
     return ret;

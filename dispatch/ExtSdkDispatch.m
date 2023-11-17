@@ -879,6 +879,25 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkPushManagerWrapper getInstance] getPushTemplate:ps withMethodType:methodType result:callback];
         break;
 
+    case ExtSdkMethodKeyfetchJoinedGroupCountValue:
+        [[ExtSdkGroupManagerWrapper getInstance] fetchJoinedGroupCount:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeygetAllContactsValue:
+        [[ExtSdkContactManagerWrapper getInstance] getAllContacts:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeysetContactRemarkValue:
+        [[ExtSdkContactManagerWrapper getInstance] setContactRemark:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeygetContactValue:
+        [[ExtSdkContactManagerWrapper getInstance] getContact:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyfetchAllContactsValue:
+        [[ExtSdkContactManagerWrapper getInstance] fetchAllContacts:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyfetchContactsValue:
+        [[ExtSdkContactManagerWrapper getInstance] fetchContacts:ps withMethodType:methodType result:callback];
+        break;
+
     default:
         [callback onFail:1 withExtension:[NSString stringWithFormat:@"not implement: %@", methodType]];
         break;

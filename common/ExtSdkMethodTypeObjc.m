@@ -338,6 +338,7 @@
           ExtSdkMethodKeygetContact : @(ExtSdkMethodKeygetContactValue),
           ExtSdkMethodKeyfetchAllContacts : @(ExtSdkMethodKeyfetchAllContactsValue),
           ExtSdkMethodKeyfetchContacts : @(ExtSdkMethodKeyfetchContactsValue),
+          ExtSdkMethodKeyfetchJoinedGroupCount : @(ExtSdkMethodKeyfetchJoinedGroupCountValue),
       };
     });
     if (nil != key) {

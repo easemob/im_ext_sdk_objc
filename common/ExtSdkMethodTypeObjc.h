@@ -327,6 +327,7 @@ static NSString *_Nonnull const ExtSdkMethodKeysetContactRemark = @"setContactRe
 static NSString *_Nonnull const ExtSdkMethodKeygetContact = @"getContact";
 static NSString *_Nonnull const ExtSdkMethodKeyfetchAllContacts = @"fetchAllContacts";
 static NSString *_Nonnull const ExtSdkMethodKeyfetchContacts = @"fetchContacts";
+static NSString *_Nonnull const ExtSdkMethodKeyfetchJoinedGroupCount = @"fetchJoinedGroupCount";
 
 // TODO: EMChatThreadManagerListener
 
@@ -661,6 +662,7 @@ static const int ExtSdkMethodKeysetContactRemarkValue = 2001;
 static const int ExtSdkMethodKeygetContactValue = 2002;
 static const int ExtSdkMethodKeyfetchAllContactsValue = 2003;
 static const int ExtSdkMethodKeyfetchContactsValue = 2004;
+static const int ExtSdkMethodKeyfetchJoinedGroupCountValue = 2005;
 
 @interface ExtSdkMethodTypeObjc : NSObject
 
