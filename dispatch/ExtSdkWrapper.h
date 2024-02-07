@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
             withMethodType:(nonnull NSString *)methodType
                withMessage:(nullable EMChatMessage *)message;
 
+- (void)mergeMessageBody:(EMMessageBody *)msgBody
+       withDBMessageBody:(EMMessageBody *)dbMsgBody;
+- (void)mergeMessage:(EMChatMessage *)msg withDBMessage:(EMChatMessage *)dbMsg;
+
 @end
 
 NS_ASSUME_NONNULL_END

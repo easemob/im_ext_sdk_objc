@@ -212,9 +212,13 @@
                         NSDictionary *msgDict = param[@"msg"];
                         EMChatMessage *msg =
                             [EMChatMessage fromJsonObject:msgDict];
+                        EMChatMessage *dbMsg =
+                            [EMClient.sharedClient.chatManager
+                                getMessageWithMessageId:msg.messageId];
+                        [self mergeMessage:msg withDBMessage:dbMsg];
 
                         EMError *error = nil;
-                        [conversation updateMessageChange:msg error:&error];
+                        [conversation updateMessageChange:dbMsg error:&error];
                         [weakSelf onResult:result
                             withMethodType:ExtSdkMethodKeyUpdateConversationMsg
                                  withError:error

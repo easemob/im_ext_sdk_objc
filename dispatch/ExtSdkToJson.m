@@ -648,7 +648,7 @@
 + (EMMessageBody *)fromJsonObject:(NSDictionary *)aJson {
     EMTextMessageBody *body =
         [[EMTextMessageBody alloc] initWithText:aJson[@"content"]];
-    body.targetLanguages = aJson[@"targetLanguages"];
+    body.targetLanguages = aJson[@"targetLanguageCodes"];
     // 给底层的时候不需要设置
     return body;
 }
@@ -656,7 +656,7 @@
 - (NSDictionary *)toJsonObject {
     NSMutableDictionary *ret = [[super toJsonObject] mutableCopy];
     ret[@"content"] = self.text;
-    ret[@"targetLanguages"] = self.targetLanguages;
+    ret[@"targetLanguageCodes"] = self.targetLanguages;
     NSMutableDictionary *kv = [NSMutableDictionary dictionary];
     for (NSString *key in self.translations.allKeys) {
         [kv setValue:[self.translations valueForKey:key] forKey:key];

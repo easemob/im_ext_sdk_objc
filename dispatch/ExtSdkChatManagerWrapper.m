@@ -276,15 +276,24 @@
                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
     EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
+    EMChatMessage *dbMsg = [EMClient.sharedClient.chatManager
+        getMessageWithMessageId:param[@"message"][@"msgId"]];
 
     if ([self checkMessageParams:result
                   withMethodType:aChannelName
                      withMessage:msg]) {
         return;
     }
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:dbMsg]) {
+        return;
+    }
+
+    [self mergeMessage:msg withDBMessage:dbMsg];
 
     [EMClient.sharedClient.chatManager
-        updateMessage:msg
+        updateMessage:dbMsg
            completion:^(EMChatMessage *aMessage, EMError *aError) {
              [weakSelf onResult:result
                  withMethodType:aChannelName
@@ -601,6 +610,9 @@
     EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"message"]];
     NSArray *languages = param[@"languages"];
 
+    EMChatMessage *dbMsg = [EMClient.sharedClient.chatManager
+        getMessageWithMessageId:msg.messageId];
+
     if ([self checkMessageParams:result
                   withMethodType:aChannelName
                      withMessage:msg]) {
@@ -609,7 +621,7 @@
 
     __weak typeof(self) weakSelf = self;
     [EMClient.sharedClient.chatManager
-        translateMessage:msg
+        translateMessage:dbMsg
          targetLanguages:languages
               completion:^(EMChatMessage *message, EMError *error) {
                 [weakSelf onResult:result
@@ -952,7 +964,7 @@
              [weakSelf onResult:result
                  withMethodType:aChannelName
                       withError:error
-                     withParams: error != nil ? nil : [message toJsonObject]];
+                     withParams:error != nil ? nil : [message toJsonObject]];
            }];
 }
 
