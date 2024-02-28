@@ -136,25 +136,25 @@
     __weak typeof(self) weakSelf = self;
     NSArray *ids = param[@"threadIds"];
     [EMClient.sharedClient.threadManager
-         getLastMessageFromSeverWithChatThreads:ids
-                                     completion:^(NSDictionary<NSString *,
-                                                               EMChatMessage *>
-                                                      *_Nonnull messageMap,
-                                                  EMError *_Nonnull aError) {
-                                       NSMutableDictionary *ret =
-                                           [NSMutableDictionary
-                                               dictionaryWithCapacity:0];
-                                       for (NSString *key in messageMap
-                                                .allKeys) {
-                                           EMChatMessage *msg = messageMap[key];
-                                           [ret setValue:[msg toJsonObject]
-                                                  forKey:key];
-                                       }
-                                       [weakSelf onResult:result
-                                           withMethodType:aChannelName
-                                                withError:aError
-                                               withParams:ret];
-                                     }];
+        getLastMessageFromSeverWithChatThreads:ids
+                                    completion:^(NSDictionary<NSString *,
+                                                              EMChatMessage *>
+                                                     *_Nonnull messageMap,
+                                                 EMError *_Nonnull aError) {
+                                      NSMutableDictionary *ret =
+                                          [NSMutableDictionary
+                                              dictionaryWithCapacity:0];
+                                      for (NSString *key in messageMap
+                                               .allKeys) {
+                                          EMChatMessage *msg = messageMap[key];
+                                          [ret setValue:[msg toJsonObject]
+                                                 forKey:key];
+                                      }
+                                      [weakSelf onResult:result
+                                          withMethodType:aChannelName
+                                               withError:aError
+                                              withParams:ret];
+                                    }];
 }
 
 - (void)removeMemberFromChatThread:(NSDictionary *)param
@@ -284,15 +284,29 @@
     __weak typeof(self) weakSelf = self;
     NSString *conId = param[@"convId"];
     BOOL needCreate = [param[@"createIfNeed"] boolValue];
-    EMConversation *con = [EMClient.sharedClient.chatManager
-         getConversation:conId
-                    type:EMConversationTypeGroupChat
-        createIfNotExist:needCreate
-                isThread:YES];
-    [weakSelf onResult:result
-        withMethodType:aChannelName
-             withError:nil
-            withParams:[con toJsonObject]];
+    EMConversation *conv;
+    if (!param[@"isChatThread"]) {
+        NSMutableDictionary *newParam =
+            [[NSMutableDictionary alloc] initWithDictionary:param];
+        newParam[@"isChatThread"] = @(YES);
+        EMConversation *conv = [self getConversation:newParam];
+
+    } else {
+        EMConversation *conv = [self getConversation:param];
+    }
+    if (conv) {
+        [weakSelf onResult:result
+            withMethodType:aChannelName
+                 withError:nil
+                withParams:[conv toJsonObject]];
+    } else {
+        EMError *aError = [EMError errorWithDescription:@"no have conversation"
+                                                   code:1];
+        [weakSelf onResult:result
+            withMethodType:aChannelName
+                 withError:aError
+                withParams:nil];
+    }
 }
 
 #pragma mark - EMThreadManagerDelegate

@@ -216,23 +216,16 @@
             withParams:[msg toJsonObject]];
 }
 
-- (void)getConversation:(NSDictionary *)param
-         withMethodType:(NSString *)aChannelName
-                 result:(nonnull id<ExtSdkCallbackObjc>)result {
+- (void)getConversationApi:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
+                    result:(nonnull id<ExtSdkCallbackObjc>)result {
     __weak typeof(self) weakSelf = self;
-    NSString *conId = param[@"convId"];
-    EMConversationType type =
-        [EMConversation typeFromInt:[param[@"convType"] intValue]];
-    BOOL needCreate = [param[@"createIfNeed"] boolValue];
-    EMConversation *con =
-        [EMClient.sharedClient.chatManager getConversation:conId
-                                                      type:type
-                                          createIfNotExist:needCreate];
+    EMConversation *conv = [self getConversation:param];
 
     [weakSelf onResult:result
         withMethodType:aChannelName
              withError:nil
-            withParams:[con toJsonObject]];
+            withParams:[conv toJsonObject]];
 }
 
 - (void)markAllMessagesAsRead:(NSDictionary *)param
@@ -825,10 +818,7 @@
     NSString *convId = param[@"convId"];
     EMConversationType type =
         [EMConversation typeFromInt:[param[@"convType"] intValue]];
-    EMConversation *conversation =
-        [EMClient.sharedClient.chatManager getConversation:convId
-                                                      type:type
-                                          createIfNotExist:YES];
+    EMConversation *conversation = [self getConversation:param];
     NSArray *msgIds = param[@"msgIds"];
     [conversation
         removeMessagesFromServerMessageIds:msgIds
@@ -848,10 +838,7 @@
     EMConversationType type =
         [EMConversation typeFromInt:[param[@"convType"] intValue]];
     long timestamp = [param[@"timestamp"] longValue];
-    EMConversation *conversation =
-        [EMClient.sharedClient.chatManager getConversation:convId
-                                                      type:type
-                                          createIfNotExist:YES];
+    EMConversation *conversation = [self getConversation:param];
     [conversation
         removeMessagesFromServerWithTimeStamp:timestamp
                                    completion:^(EMError *_Nullable aError) {

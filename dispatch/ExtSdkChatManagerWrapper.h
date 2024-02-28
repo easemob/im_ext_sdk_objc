@@ -42,9 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
                  withMethodType:(NSString *)aChannelName
                          result:(nonnull id<ExtSdkCallbackObjc>)result;
 
-- (void)getConversation:(NSDictionary *)param
-         withMethodType:(NSString *)aChannelName
-                 result:(nonnull id<ExtSdkCallbackObjc>)result;
+- (void)getConversationApi:(NSDictionary *)param
+            withMethodType:(NSString *)aChannelName
+                    result:(nonnull id<ExtSdkCallbackObjc>)result;
 
 - (void)markAllMessagesAsRead:(NSDictionary *)param
                withMethodType:(NSString *)aChannelName

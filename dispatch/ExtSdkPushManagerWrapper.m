@@ -284,13 +284,8 @@
     NSMutableArray *conversations = [NSMutableArray array];
     NSArray *convs = param[@"convs"];
     for (int i = 0; i < convs.count; ++i) {
-        EMConversationType convType = [EMConversation
-            typeFromInt:[[convs objectAtIndex:i][@"convType"] intValue]];
-        NSString *convId = [convs objectAtIndex:i][@"convId"];
         EMConversation *conversation =
-            [EMClient.sharedClient.chatManager getConversation:convId
-                                                          type:convType
-                                              createIfNotExist:YES];
+            [self getConversation:[convs objectAtIndex:i]];
         [conversations addObject:conversation];
     }
     [EMClient.sharedClient.pushManager

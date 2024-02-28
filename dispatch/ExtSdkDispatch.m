@@ -209,7 +209,7 @@ static NSString *const TAG = @"ExtSdkDispatch";
         [[ExtSdkChatManagerWrapper getInstance] recallMessage:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyGetConversationValue:
-        [[ExtSdkChatManagerWrapper getInstance] getConversation:ps withMethodType:methodType result:callback];
+        [[ExtSdkChatManagerWrapper getInstance] getConversationApi:ps withMethodType:methodType result:callback];
         break;
     case ExtSdkMethodKeyMarkAllChatMsgAsReadValue:
         [[ExtSdkChatManagerWrapper getInstance] markAllMessagesAsRead:ps withMethodType:methodType result:callback];

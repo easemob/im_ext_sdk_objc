@@ -164,4 +164,28 @@ static NSString *const TAG = @"ExtSdkWrapper";
     dbMsg.receiverList = msg.receiverList;
     [self mergeMessageBody:msg.body withDBMessageBody:dbMsg.body];
 }
+
+- (EMConversation *)getConversation:(NSDictionary *)param {
+    NSString *convId = param[@"convId"];
+    EMConversationType convType =
+        [EMConversation typeFromInt:[param[@"convType"] intValue]];
+    BOOL isChatThread =
+        param[@"isChatThread"] ? [param[@"isChatThread"] boolValue] : NO;
+    BOOL createIfNotExist =
+        param[@"createIfNeed"] ? [param[@"createIfNeed"] boolValue] : YES;
+    return [[EMClient.sharedClient chatManager] getConversation:convId
+                                                           type:convType
+                                               createIfNotExist:createIfNotExist
+                                                       isThread:isChatThread];
+}
+
+- (EMConversation *)getConversationFromMessage:(EMChatMessage *)msg {
+    BOOL createIfNotExist = msg.body.type != EMMessageBodyTypeCmd;
+    return [[EMClient.sharedClient chatManager]
+         getConversation:msg.conversationId
+                    type:(EMConversationType)msg.chatType
+        createIfNotExist:createIfNotExist
+                isThread:msg.isChatThreadMessage];
+}
+
 @end

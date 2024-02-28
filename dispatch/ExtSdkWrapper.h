@@ -27,6 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
        withDBMessageBody:(EMMessageBody *)dbMsgBody;
 - (void)mergeMessage:(EMChatMessage *)msg withDBMessage:(EMChatMessage *)dbMsg;
 
+- (EMConversation *)getConversation:(NSDictionary *)param;
+
+- (EMConversation *)getConversationFromMessage:(EMChatMessage *)msg;
+
 @end
 
 NS_ASSUME_NONNULL_END
