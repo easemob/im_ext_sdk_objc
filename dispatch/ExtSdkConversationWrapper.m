@@ -33,7 +33,7 @@
     if (param[@"convId"]) {
         conv = [self getConversation:param];
     } else if (param[@"msg"]) {
-        EMChatMessage *msg = [EMChatMessage fromJsonObject:param];
+        EMChatMessage *msg = [EMChatMessage fromJsonObject:param[@"msg"]];
         conv = [self getConversationFromMessage:msg];
     }
 
