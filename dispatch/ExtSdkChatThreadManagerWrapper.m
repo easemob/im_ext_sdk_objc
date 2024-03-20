@@ -263,19 +263,15 @@
     NSString *msgId = param[@"msgId"];
     EMChatMessage *msg =
         [EMClient.sharedClient.chatManager getMessageWithMessageId:msgId];
-    if (msg != nil) {
-        [self onResult:result
-            withMethodType:aChannelName
-                 withError:nil
-                withParams:[msg.chatThread toJsonObject]];
-    } else {
-        [self onResult:result
-            withMethodType:aChannelName
-                 withError:[EMError errorWithDescription:
-                                        @"The message does not exist."
-                                                    code:1]
-                withParams:nil];
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
     }
+    [self onResult:result
+        withMethodType:aChannelName
+             withError:nil
+            withParams:[msg.chatThread toJsonObject]];
 }
 
 - (void)getThreadConversation:(NSDictionary *)param

@@ -26,6 +26,11 @@
     NSString *reaction = param[@"reaction"];
     EMChatMessage *msg =
         [EMClient.sharedClient.chatManager getMessageWithMessageId:msgId];
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
     EMMessageReaction *msgReaction = [msg getReaction:reaction];
     [self onResult:result
         withMethodType:aChannelName
@@ -39,6 +44,11 @@
     NSString *msgId = param[@"msgId"];
     EMChatMessage *msg =
         [EMClient.sharedClient.chatManager getMessageWithMessageId:msgId];
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
     NSMutableArray *list = [NSMutableArray array];
     for (EMMessageReaction *reaction in msg.reactionList) {
         [list addObject:[reaction toJsonObject]];
@@ -55,19 +65,15 @@
     NSString *msgId = param[@"msgId"];
     EMChatMessage *msg =
         [EMClient.sharedClient.chatManager getMessageWithMessageId:msgId];
-    if (msg != nil) {
-        [self onResult:result
-            withMethodType:aChannelName
-                 withError:nil
-                withParams:@(msg.groupAckCount ?: 0)];
-    } else {
-        [self onResult:result
-            withMethodType:aChannelName
-                 withError:[EMError
-                               errorWithDescription:@"No message was found."
-                                               code:1]
-                withParams:nil];
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
     }
+    [self onResult:result
+        withMethodType:aChannelName
+             withError:nil
+            withParams:@(msg.groupAckCount ?: 0)];
 }
 
 @end

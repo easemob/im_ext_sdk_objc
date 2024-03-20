@@ -61,7 +61,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)importMessages:(NSDictionary *)param
         withMethodType:(NSString *)aChannelName
                 result:(nonnull id<ExtSdkCallbackObjc>)result;
-
+- (void)downloadAttachmentInCombine:(NSDictionary *)param
+                     withMethodType:(NSString *)aChannelName
+                             result:(nonnull id<ExtSdkCallbackObjc>)result;
+- (void)downloadThumbnailInCombine:(NSDictionary *)param
+                    withMethodType:(NSString *)aChannelName
+                            result:(nonnull id<ExtSdkCallbackObjc>)result;
 - (void)downloadAttachment:(NSDictionary *)param
             withMethodType:(NSString *)aChannelName
                     result:(nonnull id<ExtSdkCallbackObjc>)result;

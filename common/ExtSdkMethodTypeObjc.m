@@ -78,6 +78,8 @@
           ExtSdkMethodKeyUpdateChatMessage : @(ExtSdkMethodKeyUpdateChatMessageValue),
           ExtSdkMethodKeyDownloadAttachment : @(ExtSdkMethodKeyDownloadAttachmentValue),
           ExtSdkMethodKeyDownloadThumbnail : @(ExtSdkMethodKeyDownloadThumbnailValue),
+          ExtSdkMethodKeyDownloadAttachmentInCombine : @(ExtSdkMethodKeyDownloadAttachmentInCombineValue),
+          ExtSdkMethodKeyDownloadThumbnailInCombine : @(ExtSdkMethodKeyDownloadThumbnailInCombineValue),
           ExtSdkMethodKeyImportMessages : @(ExtSdkMethodKeyImportMessagesValue),
           ExtSdkMethodKeyLoadAllConversations : @(ExtSdkMethodKeyLoadAllConversationsValue),
           ExtSdkMethodKeyGetConversationsFromServer : @(ExtSdkMethodKeyGetConversationsFromServerValue),

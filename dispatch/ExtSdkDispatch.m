@@ -220,6 +220,12 @@ static NSString *const TAG = @"ExtSdkDispatch";
     case ExtSdkMethodKeyUpdateChatMessageValue:
         [[ExtSdkChatManagerWrapper getInstance] updateChatMessage:ps withMethodType:methodType result:callback];
         break;
+    case ExtSdkMethodKeyDownloadAttachmentInCombineValue:
+        [[ExtSdkChatManagerWrapper getInstance] downloadAttachmentInCombine:ps withMethodType:methodType result:callback];
+        break;
+    case ExtSdkMethodKeyDownloadThumbnailInCombineValue:
+        [[ExtSdkChatManagerWrapper getInstance] downloadThumbnailInCombine:ps withMethodType:methodType result:callback];
+        break;
     case ExtSdkMethodKeyDownloadAttachmentValue:
         [[ExtSdkChatManagerWrapper getInstance] downloadAttachment:ps withMethodType:methodType result:callback];
         break;

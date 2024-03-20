@@ -833,7 +833,7 @@
         initWithLocalPath:[LocalFileHandler reset:path]
               displayName:displayName];
     ret.secretKey = aJson[@"secret"];
-    //    ret.remotePath = aJson[@"remotePath"];
+        ret.remotePath = aJson[@"remotePath"];
     ret.fileLength = [aJson[@"fileSize"] longLongValue];
     ret.downloadStatus =
         [ret downloadStatusFromInt:[aJson[@"fileStatus"] intValue]];
@@ -917,13 +917,13 @@
               displayName:displayName];
 
     ret.secretKey = aJson[@"secret"];
-    //    ret.remotePath = aJson[@"remotePath"];
+        ret.remotePath = aJson[@"remotePath"];
     ret.fileLength = [aJson[@"fileSize"] longLongValue];
     ret.downloadStatus =
         [ret downloadStatusFromInt:[aJson[@"fileStatus"] intValue]];
-    //    ret.thumbnailLocalPath = aJson[@"thumbnailLocalPath"];
-    //    ret.thumbnailRemotePath = aJson[@"thumbnailRemotePath"];
-    //    ret.thumbnailSecretKey = aJson[@"thumbnailSecret"];
+        ret.thumbnailLocalPath = aJson[@"thumbnailLocalPath"];
+        ret.thumbnailRemotePath = aJson[@"thumbnailRemotePath"];
+        ret.thumbnailSecretKey = aJson[@"thumbnailSecret"];
     ret.size =
         CGSizeMake([aJson[@"width"] floatValue], [aJson[@"height"] floatValue]);
     ret.thumbnailDownloadStatus =
@@ -968,11 +968,11 @@
               displayName:displayName];
     ret.duration = [aJson[@"duration"] intValue];
     ret.secretKey = aJson[@"secret"];
-    //    ret.remotePath = aJson[@"remotePath"];
+        ret.remotePath = aJson[@"remotePath"];
     ret.fileLength = [aJson[@"fileSize"] longLongValue];
-    //    ret.thumbnailLocalPath = aJson[@"thumbnailLocalPath"];
-    //    ret.thumbnailRemotePath = aJson[@"thumbnailRemotePath"];
-    //    ret.thumbnailSecretKey = aJson[@"thumbnailSecret"];
+        ret.thumbnailLocalPath = aJson[@"thumbnailLocalPath"];
+        ret.thumbnailRemotePath = aJson[@"thumbnailRemotePath"];
+        ret.thumbnailSecretKey = aJson[@"thumbnailSecret"];
     ret.thumbnailDownloadStatus =
         [ret downloadStatusFromInt:[aJson[@"thumbnailStatus"] intValue]];
     ret.thumbnailSize =
@@ -1014,7 +1014,7 @@
         initWithLocalPath:[LocalFileHandler reset:path]
               displayName:displayName];
     ret.secretKey = aJson[@"secret"];
-    //    ret.remotePath = aJson[@"remotePath"];
+        ret.remotePath = aJson[@"remotePath"];
     ret.duration = [aJson[@"duration"] intValue];
     ret.downloadStatus =
         [ret downloadStatusFromInt:[aJson[@"fileStatus"] intValue]];
@@ -1302,7 +1302,7 @@
     ret[@"memberCount"] = @(self.membersCount);
     ret[@"msgCount"] = @(self.messageCount);
     ret[@"createAt"] = @(self.createAt);
-    if (self.lastMessage) {
+    if (self.lastMessage && self.lastMessage.messageId.length > 0) {
         ret[@"lastMessage"] = [self.lastMessage toJsonObject];
     }
     return ret;

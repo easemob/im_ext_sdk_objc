@@ -198,6 +198,16 @@
                         EMChatMessage *dbMsg =
                             [EMClient.sharedClient.chatManager
                                 getMessageWithMessageId:msg.messageId];
+                        if ([weakSelf checkMessageParams:result
+                                          withMethodType:aChannelName
+                                             withMessage:msg]) {
+                            return;
+                        }
+                        if ([weakSelf checkMessageParams:result
+                                          withMethodType:aChannelName
+                                             withMessage:dbMsg]) {
+                            return;
+                        }
                         [self mergeMessage:msg withDBMessage:dbMsg];
 
                         EMError *error = nil;

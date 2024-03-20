@@ -183,14 +183,9 @@
     NSString *msgId = param[@"msg_id"];
     EMChatMessage *msg =
         [EMClient.sharedClient.chatManager getMessageWithMessageId:msgId];
-    if (!msg) {
-        EMError *error =
-            [EMError errorWithDescription:@"The message was not found"
-                                     code:EMErrorMessageInvalid];
-        [weakSelf onResult:result
-            withMethodType:aChannelName
-                 withError:error
-                withParams:nil];
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
         return;
     }
     [EMClient.sharedClient.chatManager
@@ -311,6 +306,106 @@
                                                         withError:aError
                                                        withParams:@(!aError)];
                                              }];
+}
+
+- (void)downloadAttachmentInCombine:(NSDictionary *)param
+                     withMethodType:(NSString *)aChannelName
+                             result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    __block EMChatMessage *msg =
+        [EMChatMessage fromJsonObject:param[@"message"]];
+
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
+
+    [EMClient.sharedClient.chatManager downloadMessageAttachment:msg
+        progress:^(int progress) {
+          [weakSelf onReceive:aChannelName
+                   withParams:@{
+                       @"progress" : @(progress),
+                       @"localTime" : @(msg.localTime),
+                       @"msgId" : msg.messageId,
+                       @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
+                   }];
+        }
+        completion:^(EMChatMessage *message, EMError *error) {
+          if (error) {
+              [weakSelf onReceive:aChannelName
+                       withParams:@{
+                           @"error" : [error toJsonObject],
+                           @"localTime" : @(msg.localTime),
+                           @"message" : [message toJsonObject],
+                           @"msgId" : msg.messageId,
+                           @"callbackType" : ExtSdkMethodKeyOnMessageError
+                       }];
+          } else {
+              [weakSelf onReceive:aChannelName
+                       withParams:@{
+                           @"message" : [message toJsonObject],
+                           @"localTime" : @(msg.localTime),
+                           @"msgId" : msg.messageId,
+                           @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
+                       }];
+          }
+        }];
+
+    [weakSelf onResult:result
+        withMethodType:aChannelName
+             withError:nil
+            withParams:[msg toJsonObject]];
+}
+
+- (void)downloadThumbnailInCombine:(NSDictionary *)param
+                    withMethodType:(NSString *)aChannelName
+                            result:(nonnull id<ExtSdkCallbackObjc>)result {
+    __weak typeof(self) weakSelf = self;
+    __block EMChatMessage *msg =
+        [EMChatMessage fromJsonObject:param[@"message"]];
+
+    if ([self checkMessageParams:result
+                  withMethodType:aChannelName
+                     withMessage:msg]) {
+        return;
+    }
+
+    [EMClient.sharedClient.chatManager downloadMessageThumbnail:msg
+        progress:^(int progress) {
+          [weakSelf onReceive:aChannelName
+                   withParams:@{
+                       @"progress" : @(progress),
+                       @"localTime" : @(msg.localTime),
+                       @"msgId" : msg.messageId,
+                       @"callbackType" : ExtSdkMethodKeyOnMessageProgressUpdate
+                   }];
+        }
+        completion:^(EMChatMessage *message, EMError *error) {
+          if (error) {
+              [weakSelf onReceive:aChannelName
+                       withParams:@{
+                           @"error" : [error toJsonObject],
+                           @"localTime" : @(msg.localTime),
+                           @"message" : [message toJsonObject],
+                           @"msgId" : msg.messageId,
+                           @"callbackType" : ExtSdkMethodKeyOnMessageError
+                       }];
+          } else {
+              [weakSelf onReceive:aChannelName
+                       withParams:@{
+                           @"message" : [message toJsonObject],
+                           @"localTime" : @(msg.localTime),
+                           @"msgId" : msg.messageId,
+                           @"callbackType" : ExtSdkMethodKeyOnMessageSuccess
+                       }];
+          }
+        }];
+
+    [weakSelf onResult:result
+        withMethodType:aChannelName
+             withError:nil
+            withParams:[msg toJsonObject]];
 }
 
 - (void)downloadAttachment:(NSDictionary *)param
